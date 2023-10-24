@@ -107,3 +107,10 @@ Route::controller(SearchController::class)->group(function () {
     Route::get('/search', 'global_search')->name('search.results');
 });
 
+
+Route::get('/search', [SearchController::class, 'index'])->name('search.results');
+
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
+
