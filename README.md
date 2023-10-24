@@ -13,7 +13,8 @@ O administrador terá a capacidade de bloquear ou desbloquear contas de usuário
 
 ## Autores
 
-- Nelson Campos, [up202103345](up202005083@edu.fe.up.pt)
-- Ntsay Zacarias, [up202103345](up202008863@edu.fe.up.pt)
-- Rodrigo Ribeiro, [up202103345](up202108679@edu.fe.up.pt)
-- Rui Teixeira, [up202103345](up202103345@edu.fe.up.pt)
+- Nelson Campos, up202005083@up.pt
+- Ntsay Zacarias, up202008863@up.pt
+- Rodrigo Ribeiro, up202108679@up.pt
+- Rui Teixeira, up202103345@up.pt
+
