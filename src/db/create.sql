@@ -12,6 +12,11 @@ DROP TABLE IF EXISTS notifications CASCADE;
 DROP TABLE IF EXISTS admins CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 
+CREATE DOMAIN Today AS DATE DEFAULT CURRENT_DATE;
+
+CREATE TYPE Types AS ENUM ('Friend', 'Followed', 'Following', 'None');
+
+
 -- users table
 CREATE TABLE users (
     userID SERIAL PRIMARY KEY,
