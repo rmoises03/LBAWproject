@@ -1,3 +1,17 @@
+DROP TABLE IF EXISTS blocks CASCADE;
+DROP TABLE IF EXISTS reports CASCADE;
+DROP TABLE IF EXISTS category_tags CASCADE;
+DROP TABLE IF EXISTS posts_tags CASCADE;
+DROP TABLE IF EXISTS category_posts CASCADE;
+DROP TABLE IF EXISTS tags CASCADE;
+DROP TABLE IF EXISTS categories CASCADE;
+DROP TABLE IF EXISTS comments CASCADE;
+DROP TABLE IF EXISTS posts CASCADE;
+DROP TABLE IF EXISTS user_relationships CASCADE;
+DROP TABLE IF EXISTS notifications CASCADE;
+DROP TABLE IF EXISTS admins CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+
 -- users table
 CREATE TABLE users (
     userID SERIAL PRIMARY KEY,
@@ -107,3 +121,85 @@ CREATE TABLE blocks (
     reason VARCHAR(255),
     UNIQUE(adminID, userID)
 );
+
+
+-----------------------------------------
+-- INDEXES
+-----------------------------------------
+CREATE INDEX idx_users_email 
+ON users USING btree(email);
+
+
+CREATE INDEX idx_posts_created_at 
+ON posts USING btree(created_at);
+CLUSTER posts USING idx_posts_created_at;
+
+CREATE INDEX idx_comments_postID ON comments 
+USING btree(postID);
+
+-- FULL-TEXT SEARCH
+
+CREATE INDEX idx_posts_fts ON posts 
+USING 
+gin(to_tsvector('english',setweight(title, 'A') || ' ' || setweight(description, 'B')));
+
+-----------------------------------------
+-- TRIGGERS and UDFs
+-----------------------------------------
+
+
+--- UDFs - most not  working 
+
+-- 
+CREATE OR REPLACE FUNCTION update_fts_index() RETURNS TRIGGER AS $$
+BEGIN
+    -- need to fix this
+    RAISE NOTICE 'FTS index would be updated for post %', NEW.postID;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION notify_followers_newpost() RETURNS TRIGGER AS $$
+DECLARE 
+    follower_id INT;
+BEGIN
+    FOR follower_id IN (
+        SELECT userID1 
+        FROM user_relationships 
+        WHERE userID2 = NEW.authorID AND relationship_type = 'follower'
+    ) LOOP
+        INSERT INTO notifications (userID, text, created_at, postID)
+        VALUES (follower_id, 'A user you follow has posted something new!', CURRENT_DATE, NEW.postID);
+    END LOOP;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- 
+CREATE OR REPLACE FUNCTION create_audit_log_entry() RETURNS TRIGGER AS $$
+BEGIN
+    -- 
+    RAISE NOTICE 'ALE: User % has been updated', NEW.userID;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE TRIGGER trg_update_fts_index 
+AFTER INSERT OR UPDATE ON posts 
+FOR EACH ROW EXECUTE FUNCTION update_fts_index();
+
+CREATE TRIGGER trg_notification_newpost 
+AFTER INSERT ON posts 
+FOR EACH ROW 
+EXECUTE FUNCTION notify_followers_newpost();
+
+CREATE TRIGGER trg_audit_log
+AFTER UPDATE ON users 
+FOR EACH ROW EXECUTE FUNCTION create_audit_log_entry();
+
+
+
+
+
