@@ -1,25 +1,26 @@
 openapi: 3.0.0
 
 info:
- version: '1.0'
- title: 'LBAW NEWS4U Web API'
- description: 'Web Resources Specification for NEWS4U'
+  version: '1.0'
+  title: 'LBAW MediaLibrary Web API'
+  description: 'Web Resources Specification (A7) for MediaLibrary'
 
 servers:
-- url: http://lbaw2382.fe.up.pt
- description: Production server
+- url: http://lbaw.fe.up.pt
+  description: Production server
 
-external Docs:
- description: Find more info here.
- url: https://git.fe.up.pt/lbaw/lbaw2324/lbaw2382/-/wikis/EAP
+externalDocs:
+  description: Find more info here.
+  url: https://web.fe.up.pt/~ssn/wiki/teach/lbaw/medialib/a07
 
 tags:
- - name: 'M01: Authentication and Individual Profile'
- - name: 'M02: Posts'
- - name: 'M03: Socials'
- - name: 'M04: User Administration and Static pages'
+  - name: 'M01: Authentication and Individual Profile'
+  - name: 'M02: Works'
+  - name: 'M03: Reviews and Wish list'
+  - name: 'M04: Loans'
+  - name: 'M05: User Administration and Static pages'
 
- paths:
+paths:
 
   /login:
     get:
@@ -235,4 +236,3 @@ tags:
                     year: 1995
                     owner: Manuel Teixeira
                     type: DVD
-
