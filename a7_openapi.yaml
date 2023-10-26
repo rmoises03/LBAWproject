@@ -2,8 +2,8 @@ openapi: 3.0.0
 
 info:
   version: '1.0'
-  title: 'LBAW MediaLibrary Web API'
-  description: 'Web Resources Specification (A7) for MediaLibrary'
+  title: 'LBAW NEWS4U Web API'
+  description: 'Web Resources Specification for NEWS4U'
 
 servers:
 - url: http://lbaw.fe.up.pt
@@ -15,10 +15,9 @@ externalDocs:
 
 tags:
   - name: 'M01: Authentication and Individual Profile'
-  - name: 'M02: Works'
-  - name: 'M03: Reviews and Wish list'
-  - name: 'M04: Loans'
-  - name: 'M05: User Administration and Static pages'
+  - name: 'M02: Posts'
+  - name: 'M03: Socials'
+  - name: 'M04: User Administration and Static pages'
 
 paths:
 
