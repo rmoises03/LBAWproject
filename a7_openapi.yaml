@@ -3,7 +3,7 @@ openapi: 3.0.0
 info:
   version: '1.0'
   title: 'LBAW NEWS4U Web API'
-  description: 'Web Resources Specification for NEWS4U'
+  description: 'Web Resources Specification (A7) for NEWS4U'
 
 servers:
 - url: http://lbaw2382.fe.up.pt
