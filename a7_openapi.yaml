@@ -1,0 +1,20 @@
+openapi: 3.0.0
+
+info:
+ version: '1.0'
+ title: 'LBAW NEWS4U Web API'
+ description: 'Web Resources Specification for NEWS4U'
+
+servers:
+- url: http://lbaw2382.fe.up.pt
+ description: Production server
+
+external Docs:
+ description: Find more info here.
+ url: https://git.fe.up.pt/lbaw/lbaw2324/lbaw2382/-/wikis/EAP
+
+tags:
+ - name: 'M01: Authentication and Individual Profile'
+ - name: 'M02: Posts'
+ - name: 'M03: Socials'
+ - name: 'M04: User Administration and Static pages'
