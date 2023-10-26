@@ -19,7 +19,7 @@ tags:
   - name: 'M03: Socials'
   - name: 'M04: User Administration and Static pages'
 
-  paths:
+paths:
 
   /login:
     get:
