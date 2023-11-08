@@ -57,13 +57,15 @@
     
 
     <div class="comment-section">
-        <h2>Comments</h2>
-        <div class="comment-list">
-            @foreach ($comments as $comment)
-                @if ($comment->parent_comment_id == null)
-                    @include('posts.comment', ['comment' => $comment, 'depth' => 0])
-                @endif
-            @endforeach
+        <div class="post-flex-container">
+            <h2>Comments</h2>
+            <div class="comment-list">
+                @foreach ($comments as $comment)
+                    @if ($comment->parent_comment_id == null)
+                        @include('posts.comment', ['comment' => $comment, 'depth' => 0])
+                    @endif
+                @endforeach
+            </div>
         </div>
         
     </div>
@@ -77,8 +79,6 @@
         </form>
     </div>
     
-
-    </div>
 
     <div id="deletePostOverlay" class="overlay" style="display: none;">
         <div class="overlay-content">
