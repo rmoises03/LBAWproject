@@ -37,6 +37,7 @@ Route::controller(PostController::class)->group(function () {
     Route::post('posts/{post_id}/downvote', 'PostController@downvote_post')->name('post.downvote');
     Route::get('posts/{post_id}/upvotes', 'PostController@get_upvotes')->name('get_upvotes');
     Route::get('posts/{post_id}/downvotes', 'PostController@get_downvotes')->name('get_downvotes');
+    Route::put('/posts/{id}', 'update')->name('post.update');
 
 });
 
@@ -59,6 +60,8 @@ Route::controller(CommentController::class)->group(function () {
     Route::put('/api/posts/{post_id}', 'create');
     Route::post('/api/comment/{id}', 'update');
     Route::delete('/api/comment/{id}', 'delete');
+    
+
 });
 
 

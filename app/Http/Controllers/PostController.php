@@ -145,5 +145,20 @@ class PostController extends Controller
         return response()->json(['downvotes' => $downvotes]);
     }
     
+    public function update(Request $request, $id)
+{
+    $request->validate([
+        'title' => 'required|max:255',
+        'description' => 'required',
+    ]);
+
+    $post = Post::findOrFail($id);
+    $post->title = $request->title;
+    $post->description = $request->description;
+    $post->save();
+
+    return redirect()->route('post.open', ['id' => $id]);
+}
+
     
 }

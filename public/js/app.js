@@ -228,10 +228,15 @@ function addEventListeners() {
 }
 
 function upvotePost(postId) {
-  $.post('/posts/' + postId + '/upvote', {"_token": "{{ csrf_token() }}"}, function() {
-      refreshVotes(postId);
+  $.post('/posts/' + postId + '/upvote', {
+      "_token": "{{ csrf_token() }}",
+  }, function(response) {
+      // Handle the response
+  }).fail(function(jqXHR, textStatus, errorThrown) {
+      console.log("Request failed: " + textStatus + ", " + errorThrown);
   });
 }
+
 
 
 function downvotePost(postId) {
@@ -248,4 +253,21 @@ $.getJSON('{{ url("posts") }}/' + postId + '/upvotes', function(data) {
 $.getJSON('{{ url("posts") }}/' + postId + '/downvotes', function(data) {
   $("#downvotes-count-" + postId).text(data.downvotes);
 });
+}
+
+function openDeleteOverlay(actionUrl) {
+  document.getElementById('deletePostForm').action = actionUrl;
+  document.getElementById('deletePostOverlay').style.display = 'block';
+}
+
+function closeDeleteOverlay() {
+  document.getElementById('deletePostOverlay').style.display = 'none';
+}
+
+function openEditOverlay() {
+  document.getElementById('editPostOverlay').style.display = 'block';
+}
+
+function closeEditOverlay() {
+  document.getElementById('editPostOverlay').style.display = 'none';
 }

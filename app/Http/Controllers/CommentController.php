@@ -14,28 +14,29 @@ class CommentController extends Controller
     /**
      * Creates a new comment.
      */
-    public function create(Request $request, $post_id,$parent_comment_id)
+    public function create(Request $request, $post_id, $parent_comment_id)
     {
-        // Create a blank new comment.
+        // Create a new comment.
         $comment = new Comment();
-
-        // Set comment's post.
-        $comment->post_id = $post_id;
-
     
-        $comment->parent_comment_id = NULL;
+        // Set the comment's post.
+        $comment->post_id = $post_id;
+    
+        // Set the parent comment ID, if provided.
+        $comment->parent_comment_id = $parent_comment_id == '0' ? null : $parent_comment_id;
         $comment->user_id = Auth::id();
         $comment->text = $request->input('comment');
-
-        // Save the comment and return it as JSON.
+    
+        // Save the comment.
         $comment->save();
-        $post = Post::findOrFail($post_id);
-        $comments = Comment::where('post_id', $post_id)->orderBy('id')->get();
-        return view('posts.post_item', [
-            'post' => $post,
-            'comments' => $comments
-        ]);
+    
+        // Retrieve the post and all related comments.
+        $post = Post::with('comments')->findOrFail($post_id);
+    
+        // Redirect to the post with the new comment.
+        return redirect()->route('post.open', $post->id)->with('status', 'Comment added successfully!');
     }
+    
 
     /**
      * Updates the state of an individual comment.
@@ -71,6 +72,16 @@ class CommentController extends Controller
         $comment->delete();
         return response()->json($comment);
     }
+
+    public function create_child(Request $request, $post_id, $parent_comment_id)
+    {
+        $comment = new Comment();
+
+        // Redirect to the post with an anchor to the new comment
+        return redirect()->route('post.open', $post_id) . '#comment-' . $comment->id;
+    }
+
+    
 
     
 }
