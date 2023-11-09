@@ -89,6 +89,8 @@ paths:
 
   /socials/friends/{userId}:
     get:
+      tags:
+       - 'M03: Socials'
       summary: Get a list of user's friends
       responses:
         '200':
@@ -109,6 +111,8 @@ paths:
                   ]
                 }
     post:
+      tags:
+       - 'M03: Socials'
       summary: Add a new friend
       requestBody:
         description: Friend object
@@ -125,6 +129,8 @@ paths:
         '201':
           description: Friend created successfully
     put:
+      tags:
+       - 'M03: Socials'
       summary: Update an existing friend
       parameters:
         - name: friendId
@@ -147,6 +153,8 @@ paths:
         '200':
           description: Friend updated successfully
     delete:
+      tags:
+       - 'M03: Socials'
       summary: Remove a friend
       parameters:
         - name: friendId
