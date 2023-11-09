@@ -20,30 +20,67 @@ tags:
   - name: 'M04: User Administration and Static pages'
 
 paths:
-  /Socials/{userId}:
+  /socials/followers/{userId}:
     parameters:
       - name: userId
         in: path
         required: true
         schema:
           type: integer
-        description: ID of the user profile to retrieve
+        description: ID of the user whose followers you want to check
     get:
+      summary: Get followers of a user by ID
       tags:
-        - 'M03: Socials'
-      summary: Get user profile by ID
+       - 'M03: Socials'
       responses:
         '200':
           description: Successful response
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  userId:
-                    type: integer
-                    description: ID of the user
+                type: array
+                items:
+                  type: object
+                  properties:
+                    userId:
+                      type: integer
+                      description: ID of the follower
+                    username:
+                      type: string
+                      description: Username of the follower
         '404':
-          description: User profile not found
+          description: User not found
+        '500':
+          description: Internal server error
+
+
+  /socials/following/{userId}:
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: ID of the user whose followed people you want to retrieve
+    get:
+      summary: Get people followed by a user by ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    userId:
+                      type: integer
+                      description: ID of the person followed
+                    username:
+                      type: string
+                      description: Username of the person followed
+        '404':
+          description: User not found
         '500':
           description: Internal server error
