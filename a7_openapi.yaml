@@ -18,3 +18,44 @@ tags:
   - name: 'M02: Posts'
   - name: 'M03: Socials'
   - name: 'M04: User Administration and Static pages'
+
+paths:
+  /profile/{userId}:
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: ID of the user profile to retrieve
+    get:
+      summary: Get user profile by ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userId:
+                    type: integer
+                    description: ID of the user
+                  username:
+                    type: string
+                    description: Username of the user
+                  email:
+                    type: string
+                    format: email
+                    description: Email address of the user
+                  reputation:
+                    type: integer
+                    description: Reputation of the user
+                  date:
+                    type: string
+                    format: date
+                    description: Date of the user registration
+        '404':
+          description: User profile not found
+        '500':
+          description: Internal server error
