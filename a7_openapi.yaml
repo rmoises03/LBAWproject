@@ -29,7 +29,8 @@ paths:
           type: integer
         description: ID of the user profile to retrieve
     get:
-      tags: "M03: Socials"
+      tags:
+        - 'M03: Socials'
       summary: Get user profile by ID
       responses:
         '200':
