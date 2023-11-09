@@ -86,3 +86,75 @@ paths:
           description: User not found
         '500':
           description: Internal server error
+
+  /socials/friends/{userId}:
+    get:
+      summary: Get a list of user's friends
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: |
+                {
+                  "friends": [
+                    {
+                      "id": 1,
+                      "name": "John Doe"
+                    },
+                    {
+                      "id": 2,
+                      "name": "Jane Smith"
+                    }
+                  ]
+                }
+    post:
+      summary: Add a new friend
+      requestBody:
+        description: Friend object
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+
+      responses:
+        '201':
+          description: Friend created successfully
+    put:
+      summary: Update an existing friend
+      parameters:
+        - name: friendId
+          in: path
+          required: true
+          description: ID of the friend to update
+          schema:
+            type: integer
+      requestBody:
+        description: Updated friend object
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        '200':
+          description: Friend updated successfully
+    delete:
+      summary: Remove a friend
+      parameters:
+        - name: friendId
+          in: path
+          required: true
+          description: ID of the friend to remove
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Friend removed successfully
