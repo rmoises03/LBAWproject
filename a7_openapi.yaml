@@ -20,7 +20,7 @@ tags:
   - name: 'M04: User Administration and Static pages'
 
 paths:
-  /Socials/{userId}:
+  /Socials:
     parameters:
       - name: userId
         in: path
