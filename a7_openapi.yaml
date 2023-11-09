@@ -63,6 +63,8 @@ paths:
           type: integer
         description: ID of the user whose followed people you want to retrieve
     get:
+      tags:
+       - 'M03: Socials'
       summary: Get people followed by a user by ID
       responses:
         '200':
