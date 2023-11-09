@@ -20,7 +20,7 @@ tags:
   - name: 'M04: User Administration and Static pages'
 
 paths:
-  /Socials:
+  /Socials/Profile/{userId}:
     parameters:
       - name: userId
         in: path
@@ -43,20 +43,6 @@ paths:
                   userId:
                     type: integer
                     description: ID of the user
-                  username:
-                    type: string
-                    description: Username of the user
-                  email:
-                    type: string
-                    format: email
-                    description: Email address of the user
-                  reputation:
-                    type: integer
-                    description: Reputation of the user
-                  date:
-                    type: string
-                    format: date
-                    description: Date of the user registration
         '404':
           description: User profile not found
         '500':
