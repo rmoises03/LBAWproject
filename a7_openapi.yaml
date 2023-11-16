@@ -160,3 +160,278 @@ paths:
         '200':
           description: 'Ok. Show view profile UI'
 
+  /socials/friends/{userId}:
+    get:
+      tags:
+       - 'M03: Socials'
+      summary: Get a list of user's friends
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: |
+                {
+                  "friends": [
+                    {
+                      "id": 1,
+                      "name": "John Doe"
+                    },
+                    {
+                      "id": 2,
+                      "name": "Jane Smith"
+                    }
+                  ]
+                }
+    post:
+      tags:
+       - 'M03: Socials'
+      summary: Add a new friend
+      requestBody:
+        description: Friend object
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+
+      responses:
+        '201':
+          description: Friend created successfully
+    put:
+      tags:
+       - 'M03: Socials'
+      summary: Update an existing friend
+      parameters:
+        - name: friendId
+          in: path
+          required: true
+          description: ID of the friend to update
+          schema:
+            type: integer
+      requestBody:
+        description: Updated friend object
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        '200':
+          description: Friend updated successfully
+    delete:
+      tags:
+       - 'M03: Socials'
+      summary: Remove a friend
+      parameters:
+        - name: friendId
+          in: path
+          required: true
+          description: ID of the friend to remove
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Friend removed successfully
+
+  /socials/followers/{userId}:
+    get:
+      tags:
+        - 'M03: Socials'
+      summary: Get followers of a user by ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: |
+                {
+                  "followers": [
+                    {
+                      "followerId": 1,
+                      "username": "JohnDoe"
+                    },
+                    {
+                      "followerId": 2,
+                      "username": "JaneSmith"
+                    }
+                  ]
+                }
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error
+
+    post:
+      tags:
+        - 'M03: Socials'
+      summary: Add a new follower
+      requestBody:
+        description: Follower object
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+
+      responses:
+        '201':
+          description: Follower added successfully
+
+    put:
+      tags:
+       - 'M03: Socials'
+      summary: Update an existing follower
+      parameters:
+        - name: followerId
+          in: path
+          required: true
+          description: ID of the follower to update
+          schema:
+            type: integer
+      requestBody:
+        description: Updated follower object
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        '200':
+          description: Follower updated successfully
+
+    delete:
+      tags:
+        - 'M03: Socials'
+      summary: Remove a follower
+      parameters:
+        - name: followerId
+          in: path
+          required: true
+          description: ID of the follower to remove
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Follower removed successfully
+
+  /socials/following/{userId}:
+    get:
+      tags:
+        - 'M03: Socials'
+      summary: Get people followed by a user by ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: |
+                {
+                  "following": [
+                    {
+                      "userId": 1,
+                      "username": "JohnDoe"
+                    },
+                    {
+                      "userId": 2,
+                      "username": "JaneSmith"
+                    }
+                  ]
+                }
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error
+
+    post:
+      tags:
+        - 'M03: Socials'
+      summary: Add a new following
+      requestBody:
+        description: Following object
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+
+      responses:
+        '201':
+          description: Following added successfully
+
+    put:
+      tags:
+        - 'M03: Socials'
+      summary: Update an existing following
+      parameters:
+        - name: followingId
+          in: path
+          required: true
+          description: ID of the following to update
+          schema:
+            type: integer
+      requestBody:
+        description: Updated following object
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+      responses:
+        '200':
+          description: Following updated successfully
+
+    delete:
+      tags:
+        - 'M03: Socials'
+      summary: Unfollow a user
+      parameters:
+        - name: followingId
+          in: path
+          required: true
+          description: ID of the user to unfollow
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Unfollowed successfully
+ 
+
+  /socials/reputation/{userId}:
+    get:
+      tags:
+        - 'M03: Socials'
+      summary: Get reputation/score of a user by ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: |
+                {
+                  "userId": 1,
+                  "username": "JohnDoe",
+                  "reputation": 75
+                }
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error
