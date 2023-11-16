@@ -435,3 +435,262 @@ paths:
           description: User not found
         '500':
           description: Internal server error
+
+paths:
+  /admin/users/:
+    get:
+      operationId: R401
+      summary: 'R401: List Users'
+      description: 'List all users.'
+      tags:
+        - 'M04: User Administration and Static pages'
+
+      responses:
+        '200':
+          description: 'Ok. Users retrieved.'
+        '404':
+          description: 'Error! Users not found.'
+  
+  
+
+  /admin/users/create:
+   post:
+    operationId: R401
+    summary: 'R401: Create User'
+    description: 'Creates a new user.'
+    tags:
+      - 'M04: User Administration and Static pages'
+    requestBody:
+       required: true
+       content:
+         application/x-www-form-urlencoded:
+           schema:
+            type: object
+            properties:
+              username:
+                type: string
+              email:
+                type: string
+              password:
+                type: string
+            required:
+              - username
+              - email
+              - password
+    responses:
+       '302':
+         description: 'Redirect after processing the new user information.'
+         headers:
+           Location:
+             schema:
+               type: string
+             examples:
+               302Success:
+                 description: 'Created user successfuly. Redirect to user profile.'
+                 value: '/admin/users/{id}'
+               302Failure:
+                 description: 'Fail while creating user. Redirect to users page.'
+                 value: '/admin/users/'
+
+
+
+  /admin/users/{id}:
+    get:
+      operationId: R402
+      summary: 'R402: View User Information'
+      description: 'Show the individual user profile.'
+      tags:
+        - 'M04: User Administration and Static pages'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+          description: 'Ok. User information retrieved.'
+        '404':
+          description: 'Error! User not found.'
+
+  
+  /admin/users/block/{id}:
+    post:
+      operationId: R403
+      summary: 'R403: Block User'
+      description: 'Blocks an individual user.'
+      tags:
+        - 'M04: User Administration and Static pages'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '204':
+          description: 'Ok. User blocked.'
+        '400':
+          description: 'Bad Request. User already blocked.'
+        '404':
+          description: 'Bad Request. User not found.'
+
+  /admin/users/unblock/{id}:
+    post:
+      operationId: R404
+      summary: 'R404: Unblock User'
+      description: 'Unblocks an individual user.'
+      tags:
+        - 'M04: User Administration and Static pages'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '204':
+          description: 'Ok. User unblocked.'
+        '400':
+          description: 'Bad Request. User already unblocked.'
+        '404':
+          description: 'Bad Request. User not found.'
+
+  /admin/users/delete/{id}:
+    get:
+      operationId: R405
+      summary: 'R405: Delete User'
+      description: 'Deletes an individual user.'
+      tags:
+        - 'M04: User Administration and Static pages'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '204':
+          description: 'Ok. User deleted.'
+        '404':
+          description: 'Bad Request. User not found.'
+
+  /admin/posts/delete/{id}:
+    get:
+      operationId: R406
+      summary: 'R406: Delete Post'
+      description: 'Deletes an individual post.'
+      tags:
+        - 'M04: User Administration and Static pages'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '204':
+          description: 'Ok. Post deleted.'
+        '404':
+          description: 'Bad Request. Post not found.'
+
+  /admin/posts/edit/{id}:
+    get:
+      operationId: R407
+      summary: 'R407: Edit Post'
+      description: 'Edits an individual post.'
+      tags:
+        - 'M04: User Administration and Static pages'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+       required: false
+       content:
+         application/x-www-form-urlencoded:
+           schema:
+            type: object
+            properties:
+              post_title:
+                type: string
+              post_content:
+                type: string
+
+      responses:
+        '200':
+          description: 'Ok. Post edited.'
+        '404':
+          description: 'Bad Request. Post not found.'
+
+  /admin/posts/{post_id}/comments/delete/{comment_id}:
+    get:
+      operationId: R408
+      summary: 'R408: Delete Comment'
+      description: 'Deletes a comment in an individual post.'
+      tags:
+        - 'M04: User Administration and Static pages'
+
+      parameters:
+        - in: path
+          name: post_id
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: comment_id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '204':
+          description: 'Ok. Comment deleted.'
+        '404':
+          description: 'Bad Request. Comment not found.'
+
+  /admin/posts/{post_id}/comments/edit/{comment_id}:
+    post:
+      operationId: R409
+      summary: 'R409: Edit Comment'
+      description: 'Edits an individual comment.'
+      tags:
+        - 'M04: User Administration and Static pages'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+       required: true
+       content:
+         application/x-www-form-urlencoded:
+           schema:
+            type: object
+            properties:
+              comment:
+                type: string
+            required:
+              - comment
+
+      responses:
+        '200':
+          description: 'Ok. Comment edited.'
+        '404':
+          description: 'Bad Request. Comment not found.'
+
+  
+ 
