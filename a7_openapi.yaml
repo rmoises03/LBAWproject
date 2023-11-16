@@ -160,6 +160,273 @@ paths:
         '200':
           description: 'Ok. Show view profile UI'
 
+  /api/posts:
+    get:
+      operationId: R201
+      summary: 'R201: Search Posts API'
+      description: 'Searches for posts and returns the results as JSON. Access: PUB.'
+
+      tags:
+        - 'M02: Posts'
+
+      parameters:
+        - in: query
+          name: query
+          description: String to use for full-text search
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: item
+          description: Category of the works
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: loaned
+          description: Boolean with the loaned flag value
+          schema:
+            type: boolean
+          required: false
+        - in: query
+          name: owner
+          description: Boolean with the owner flag value
+          schema:
+            type: boolean
+          required: false
+        - in: query
+          name: classification
+          description: Integer corresponding to the work classification
+          schema:
+            type: integer
+          required: false
+
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    title:
+                      type: string
+                    obs:
+                      type: string
+                    date:
+                      type: string
+                    owner:
+                      type: string
+                    tag:
+                      type: string
+                example:
+                  - id: 1
+                    title: Ronaldo chega aos 1000 golos
+                    obs: ujwkfehf...
+                    date: 2025
+                    owner: Joana Lima
+                    tag: Desporto
+                  - id: 15
+                    title: Mr. Bean
+                    obs: trdyjcghk...
+                    date: 1995
+                    owner: Manuel Teixeira
+                    tag: Filmes
+
+    post:
+      operationId: R202
+      summary: 'R202: Create Post API'
+      description: 'Creates a new post. Access: AUTH.'
+
+      tags:
+        - 'M02: Posts'
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: 'The title of the post.'
+                obs:
+                  type: string
+                  description: 'Observations or additional information about the post.'
+                date:
+                  type: string
+                  format: date
+                  pattern: "DD-MM-YYYY"
+                  description: 'The date associated with the post.'
+                owner:
+                  type: string
+                  description: 'The owner of the post.'
+                tag:
+                  type: string
+                  description: 'The tag of the post (e.g., Desporto, Filmes...).'
+
+            examples:
+              example1:
+                value:
+                  title: 'New Music Album'
+                  obs: 'Amazing music collection.'
+                  date: '2023'
+                  owner: 'John Doe'
+                  type: 'Música'
+
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  message:
+                    type: string
+
+  /api/posts/{postid}: 
+    get:
+      operationId: R203
+      summary: 'R203: Get Post Details API'
+      description: 'Retrieves details about a specific post. Access: PUB.'
+
+      tags:
+        - 'M02: Posts'
+
+      parameters:
+        - in: path
+          name: postid
+          description: 'ID of the post to retrieve details.'
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  title:
+                    type: string
+                  obs:
+                    type: string
+                  date:
+                    type: string
+                  owner:
+                    type: string
+                  tag:
+                    type: string
+              example:
+                id: 1
+                title: 'Rihanna - Unapologetic'
+                obs: 'Good pop music album.'
+                date: '2012'
+                owner: 'Joana Lima'
+                tag: 'Música'
+
+    put:
+      operationId: R204
+      summary: 'R204: Update Post API'
+      description: 'Updates an existing post. Access: AUTH.'
+
+      tags:
+        - 'M02: Posts'
+
+      parameters:
+        - in: path
+          name: postid
+          description: 'ID of the post to update.'
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: 'The updated title of the post.'
+                obs:
+                  type: string
+                  description: 'Updated observations or additional information about the post.'
+                date:
+                  type: string
+                  description: 'The updated date associated with the post.'
+                owner:
+                  type: string
+                  description: 'The updated owner of the post.'
+                tag:
+                  type: string
+                  description: 'The updated type of the post (e.g., Desporto, Filmes).'
+
+            examples:
+              example1:
+                value:
+                  title: 'Updated Music Album'
+                  obs: 'Even more amazing music collection.'
+                  date: '2023'
+                  owner: 'John Doe'
+                  type: 'Música'
+
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: 'Update successful message.'
+
+    delete:
+      operationId: R205
+      summary: 'R205: Delete Post API'
+      description: 'Deletes a post. Access: AUTH.'
+
+      tags:
+        - 'M02: Posts'
+
+      parameters:
+        - in: path
+          name: postid
+          description: 'ID of the post to delete.'
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: 'Deletion successful message.'
+      
+
   /socials/friends/{userId}:
     get:
       tags:
@@ -692,5 +959,4 @@ paths:
         '404':
           description: 'Bad Request. Comment not found.'
 
-  
  
