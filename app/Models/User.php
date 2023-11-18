@@ -50,10 +50,18 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the cards for a user.
+     * Get the posts for a user.
      */
-    public function cards(): HasMany
+    public function posts(): HasMany
     {
-        return $this->hasMany(Card::class);
+        return $this->hasMany(Post::class);
+    }
+
+    /**
+     * Get the comments for a user.
+     */
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
     }
 }
