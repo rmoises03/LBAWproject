@@ -16,7 +16,15 @@ class Comment extends Model
     public $timestamps  = false;
 
     /**
-     * Get the post where the item is included.
+     * Get the user where the comment is included.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the post where the comment is included.
      */
     public function post(): BelongsTo
     {
