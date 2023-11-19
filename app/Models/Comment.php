@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 // Added to define Eloquent relationships.
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Item extends Model
+class Comment extends Model
 {
     use HasFactory;
 
@@ -16,10 +16,18 @@ class Item extends Model
     public $timestamps  = false;
 
     /**
-     * Get the card where the item is included.
+     * Get the user where the comment is included.
      */
-    public function card(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Card::class);
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the post where the comment is included.
+     */
+    public function post(): BelongsTo
+    {
+        return $this->belongsTo(Post::class);
     }
 }

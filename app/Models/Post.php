@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Card extends Model
+class Post extends Model
 {
     use HasFactory;
 
@@ -17,7 +17,7 @@ class Card extends Model
     public $timestamps  = false;
 
     /**
-     * Get the user that owns the card.
+     * Get the user that owns the post.
      */
     public function user(): BelongsTo
     {
@@ -25,10 +25,10 @@ class Card extends Model
     }
 
     /**
-     * Get the items for the card.
+     * Get the comments for the post.
      */
-    public function items(): HasMany
+    public function comments(): HasMany
     {
-        return $this->hasMany(Item::class);
+        return $this->hasMany(Comment::class);
     }
 }

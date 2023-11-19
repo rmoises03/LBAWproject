@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\CardController;
-use App\Http\Controllers\ItemController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -22,23 +22,23 @@ use App\Http\Controllers\Auth\RegisterController;
 // Home
 Route::redirect('/', '/login');
 
-// Cards
-Route::controller(CardController::class)->group(function () {
-    Route::get('/cards', 'list')->name('cards');
-    Route::get('/cards/{id}', 'show');
+// Posts
+Route::controller(PostController::class)->group(function () {
+    Route::get('/posts', 'list')->name('posts');
+    Route::get('/posts/{id}', 'show');
 });
 
 
 // API
-Route::controller(CardController::class)->group(function () {
-    Route::put('/api/cards', 'create');
-    Route::delete('/api/cards/{card_id}', 'delete');
+Route::controller(PostController::class)->group(function () {
+    Route::put('/api/posts', 'create');
+    Route::delete('/api/posts/{post_id}', 'delete');
 });
 
-Route::controller(ItemController::class)->group(function () {
-    Route::put('/api/cards/{card_id}', 'create');
-    Route::post('/api/item/{id}', 'update');
-    Route::delete('/api/item/{id}', 'delete');
+Route::controller(CommentController::class)->group(function () {
+    Route::put('/api/posts/{post_id}', 'create');
+    Route::post('/api/comment/{id}', 'update');
+    Route::delete('/api/comment/{id}', 'delete');
 });
 
 
