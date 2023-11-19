@@ -252,15 +252,22 @@ INSERT INTO tags (name) VALUES ('AI');
 INSERT INTO tags (name) VALUES ('VitaminD');
 
 
-INSERT INTO posts (title, description, user_id, created_at)
-VALUES ('Introduction to AI', 'A beginner guide to understanding AI', 1, '2023-01-01');
+INSERT INTO posts (id, title, description, user_id, created_at)
+VALUES (1, 'Introduction to AI', 'A beginner guide to understanding AI', 1, '2023-01-01');
 
-INSERT INTO posts (title, description, user_id, created_at)
-VALUES ('Benefits of Vitamin D', 'Understanding the benefits of Vitamin D', 2, '2023-02-01');
+INSERT INTO posts (id, title, description, user_id, created_at)
+VALUES (2, 'Benefits of Vitamin D', 'Understanding the benefits of Vitamin D', 2, '2023-02-01');
 
 
-INSERT INTO comments (id, user_id, text)
-VALUES (1, 2, 'Great introduction to AI!');
+INSERT INTO comments (id, post_id, user_id, text)
+VALUES (1, 1, 2, 'Great introduction to AI!');
+
+INSERT INTO comments (id, post_id, user_id, text)
+VALUES (2, 2, 1, 'Great introduction to Vitamin benefits!');
+
+INSERT INTO comments (id, post_id, user_id, text)
+VALUES (3, 2, 2, 'Thanks!');
+
 
 
 INSERT INTO category_posts (category_id, post_id) VALUES (1, 1);
