@@ -56,3 +56,11 @@ Route::controller(RegisterController::class)->group(function () {
 });
 
 
+Route::middleware(['admin'])->controller(AdminController::class)->group(function () {
+    Route::get('/admin/dashboard', 'showAdminDashboard')->name('admin.dashboard');
+    Route::post('/admin/login', 'adminLogin');
+});
+
+
+
+
