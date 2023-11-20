@@ -40,14 +40,14 @@ CREATE TABLE users (
     username VARCHAR(250) UNIQUE NOT NULL,
     email VARCHAR(250) UNIQUE NOT NULL,
     password VARCHAR NOT NULL,
-    remember_token VARCHAR
+    remember_token VARCHAR,
     date_of_birth DATE,
     reputation INT DEFAULT 0
 );
 
 -- admins table
 CREATE TABLE admins (
-    id SERIAL PRIMARY KEY
+    id SERIAL PRIMARY KEY REFERENCES users(id)
 );
 
 -- notifications table
@@ -240,6 +240,9 @@ INSERT INTO users VALUES (
 
 INSERT INTO users (email, password, name, username, date_of_birth, reputation)
 VALUES ('jane.smith@example.com', '$2a$12$vYNb4B0GDBSxZrT7IJG9UuYDoVjHHOVjsEyR27sthqqu.aNSSyN5W', 'Jane Smith', 'jane_smith', '1992-06-15', 150); -- Password is 0000. Generated using Hash::make('0000')
+
+INSERT INTO users (email, password, name, username, date_of_birth, reputation)
+VALUES ('john@admin.com', '$2a$12$vYNb4B0GDBSxZrT7IJG9UuYDoVjHHOVjsEyR27sthqqu.aNSSyN5W', 'John', 'john_smith', '1992-06-15', 150); -- Password is 0000. Generated using Hash::make('0000')
 
 
 INSERT INTO admins DEFAULT VALUES;
