@@ -1,0 +1,36 @@
+/* public/css/profile.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+div {
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 50%;
+}
+
+h1 {
+    color: #333;
+}
+
+p {
+    color: #666;
+}
+
+strong {
+    display: block;
+    margin-top: 10px;
+}

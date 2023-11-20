@@ -53,3 +53,8 @@ Route::controller(RegisterController::class)->group(function () {
     Route::get('/register', 'showRegistrationForm')->name('register');
     Route::post('/register', 'register');
 });
+
+
+// routes/web.php
+
+Route::get('/profile/{username}', 'App\Http\Controllers\ProfileController@show')->name('profile.show');
