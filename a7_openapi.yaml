@@ -46,7 +46,7 @@ paths:
             schema:
               type: object
               properties:
-                email:          # <!--- form field name
+                email:       # <!--- form field name
                   type: string
                 password:    # <!--- form field name
                   type: string
@@ -117,14 +117,28 @@ paths:
               properties:
                 name:
                   type: string
+                  maxLength: 250
+                username:
+                  type: string
+                  maxLength: 250
                 email:
                   type: string
-                picture:
+                  maxLength: 250
+                  format: email
+                password:
                   type: string
-                  format: binary
+                  minimum: 8
+                  format: password
+                confirm_password:
+                  type: string
+                  minimum: 8
+                  format: password
               required:
+                - name
+                - username
                 - email
                 - password
+                - confirm_password
 
       responses:
         '302':
