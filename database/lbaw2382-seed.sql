@@ -218,10 +218,10 @@ EXECUTE FUNCTION notify_followers_newpost();
 
 INSERT INTO users VALUES (
     DEFAULT,
-    'admin@example.com',  
-    '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W',
     'John Doe',
-    'admin'
+    'admin',
+    'admin@example.com',  
+    '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
 ); -- Password is 1234. Generated using Hash::make('1234')
 
 
