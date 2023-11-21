@@ -31,7 +31,21 @@ class PostController extends Controller
     /**
      * Shows all posts.
      */
-    public function list()
+    public function listPosts()
+    {
+        // Get posts for user ordered by id.
+        $posts = Post::orderBy('id')->get();
+
+        // Use the pages.posts template to display all posts.
+        return view('pages.posts', [
+            'posts' => $posts
+        ]);
+    }
+
+    /**
+     * Shows all posts of user.
+     */
+    public function listUserPosts()
     {
         // Check if the user is logged in.
         if (!Auth::check()) {
@@ -50,7 +64,7 @@ class PostController extends Controller
             // The current user is authorized to list posts.
 
             // Use the pages.posts template to display all posts.
-            return view('pages.posts', [
+            return view('pages.profile', [
                 'posts' => $posts
             ]);
         }

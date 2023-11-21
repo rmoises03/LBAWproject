@@ -24,7 +24,7 @@ Route::redirect('/', '/login');
 
 // Posts
 Route::controller(PostController::class)->group(function () {
-    Route::get('/posts', 'list')->name('posts');
+    Route::get('/posts', 'listPosts')->name('posts');
     Route::get('/posts/{id}', 'show');
 });
 
@@ -52,4 +52,9 @@ Route::controller(LoginController::class)->group(function () {
 Route::controller(RegisterController::class)->group(function () {
     Route::get('/register', 'showRegistrationForm')->name('register');
     Route::post('/register', 'register');
+});
+
+// Profile
+Route::controller(ProfileController::class)->group(function () {
+    Route::get('/profile', 'listUserPosts')->name('user_posts');
 });

@@ -5,12 +5,12 @@
 @section('content')
 
 <section id="posts">
-    @each('partials.post', $posts, 'post')
-    <article class="post">
+    <article id="create_new_post">
         <form class="new_post">
             <input type="text" name="name" placeholder="new post">
         </form>
     </article>
+    @each('partials.post', $posts, 'post')
 </section>
 
 @endsection

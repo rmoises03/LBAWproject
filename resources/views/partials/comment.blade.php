@@ -1,7 +1,7 @@
 <li class="comment" data-id="{{$comment->id}}">
     <label>
-        <input type="checkbox" {{ $comment->done?'checked':''}}>
-        <span>{{ $comment->description }}</span>
+        {{--<h4><?= $comment -> user_id ?> </h4>--}}
+        <span>{{ $comment->text }}</span>
         <a href="#" class="delete">&#10761;</a>
     </label>
 </li>
