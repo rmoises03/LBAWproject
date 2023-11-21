@@ -112,6 +112,10 @@ body {
   #content > form input {
     background-color: white;
   }
+
+  #votes {
+    text-align: right;
+  }
   @media (max-width: 70em) {
     #posts {
       grid-template-columns: repeat(2, 1fr);
