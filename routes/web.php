@@ -58,3 +58,8 @@ Route::controller(RegisterController::class)->group(function () {
 // routes/web.php
 
 Route::get('/profile/{username}', 'App\Http\Controllers\ProfileController@show')->name('profile.show');
+
+// routes/web.php
+
+Route::get('/profile/{username}/edit', 'ProfileController@edit')->name('profile.edit');
+
