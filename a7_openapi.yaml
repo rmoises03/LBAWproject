@@ -46,7 +46,7 @@ paths:
             schema:
               type: object
               properties:
-                email:          # <!--- form field name
+                email:       # <!--- form field name
                   type: string
                 password:    # <!--- form field name
                   type: string
@@ -117,14 +117,28 @@ paths:
               properties:
                 name:
                   type: string
+                  maxLength: 250
+                username:
+                  type: string
+                  maxLength: 250
                 email:
                   type: string
-                picture:
+                  maxLength: 250
+                  format: email
+                password:
                   type: string
-                  format: binary
+                  minimum: 8
+                  format: password
+                confirm_password:
+                  type: string
+                  minimum: 8
+                  format: password
               required:
+                - name
+                - username
                 - email
                 - password
+                - confirm_password
 
       responses:
         '302':
@@ -177,16 +191,16 @@ paths:
             type: string
           required: false
         - in: query
-          name: item
-          description: Category of the works
+          name: tag
+          description: Category of the post
           schema:
             type: string
           required: false
         - in: query
-          name: loaned
-          description: Boolean with the loaned flag value
+          name: postId
+          description: postId
           schema:
-            type: boolean
+            type: integer
           required: false
         - in: query
           name: owner
@@ -195,8 +209,14 @@ paths:
             type: boolean
           required: false
         - in: query
-          name: classification
-          description: Integer corresponding to the work classification
+          name: upvote
+          description: Integer corresponding to the upvotes of the post
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: downvote
+          description: Integer corresponding to the downvotes of the post
           schema:
             type: integer
           required: false

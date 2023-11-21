@@ -36,10 +36,11 @@ CREATE TYPE Types AS ENUM ('Friend', 'Followed', 'Following', 'None');
 -- users table
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    username VARCHAR(255) NOT NULL UNIQUE,
+    name VARCHAR(250) NOT NULL,
+    username VARCHAR(250) UNIQUE NOT NULL,
+    email VARCHAR(250) UNIQUE NOT NULL,
+    password VARCHAR NOT NULL,
+    remember_token VARCHAR,
     date_of_birth DATE,
     reputation INT DEFAULT 0
 );
@@ -227,10 +228,10 @@ FOR EACH ROW EXECUTE FUNCTION create_audit_log_entry();
 
 INSERT INTO users VALUES (
     DEFAULT,
-    'admin@example.com',  
-    '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W',
     'John Doe',
-    'admin'
+    'admin',
+    'admin@example.com',
+    '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
 ); -- Password is 1234. Generated using Hash::make('1234')
 
 
