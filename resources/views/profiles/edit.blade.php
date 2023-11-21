@@ -11,7 +11,6 @@
             @csrf
             @method('PUT')
 
-            <!-- Add form fields for editing profile information -->
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" value="{{ $user->username }}" required>
 
@@ -19,7 +18,7 @@
             <input type="date" id="date_of_birth" name="date_of_birth" value="{{ $user->date_of_birth }}" required>
 
             <label for="reputation">Reputation:</label>
-            <input type="number" id="reputation" name="reputation" value="{{ $user->reputation }}" required>
+            <input type="number" id="reputation" name="reputation" value="{{ $user->reputation }}" required class="uneditable">
 
             <button type="submit">Save Changes</button>
         </form>

@@ -29,21 +29,23 @@ class ProfileController extends Controller
         return view('profiles.edit', ['user' => $user]);
     }
 
+
     public function update(Request $request, $username)
-    {
-        $user = User::where('username', $username)->firstOrFail();
+{
+    $user = User::where('username', $username)->firstOrFail();
 
-        // Validate the form data
-        $validatedData = $request->validate([
-            'username' => 'required|string|max:255|unique:users,username,'.$user->id,
-            'date_of_birth' => 'required|date',
-            'reputation' => 'required|numeric',
-        ]);
+    // Validate the form data
+    $validatedData = $request->validate([
+        'username' => 'required|string|max:255|unique:users,username,'.$user->id,
+        'date_of_birth' => 'required|date',
+        'reputation' => 'required|numeric',
+    ]);
 
-        // Update the user's profile information
-        $user->update($validatedData);
+    // Update the user's profile information
+    $user->update($validatedData);
 
-        return redirect()->route('profile.show', ['username' => $user->username])
-            ->with('success', 'Profile updated successfully');
-    }
+    return redirect()->route('profile.show', ['username' => $user->username])
+        ->with('success', 'Profile updated successfully');
+}
+
 }
