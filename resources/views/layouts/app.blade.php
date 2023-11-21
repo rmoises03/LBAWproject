@@ -25,7 +25,7 @@
             <header>
                 <h1><a href="{{ url('/posts') }}">NEWS4U!</a></h1>
                 @if (Auth::check())
-                    <a class="button" href="{{ url('/logout') }}"> Logout </a><a class="button" href="{{ route('profile.show', ['username' => Auth::user()->username]) }}" class="btn">{{Auth::user()->name}}</a>
+                    <a class="button" href="{{ url('/logout') }}"> Logout </a><a class="button" href="{{ route('profile.show', ['username' => Auth::user()->username]) }}" class="btn">{{Auth::user()->username}}</a>
                 @endif
             </header>
             <section id="content">
