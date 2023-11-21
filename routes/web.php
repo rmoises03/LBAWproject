@@ -7,6 +7,8 @@ use App\Http\Controllers\CommentController;
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ProfileController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -52,4 +54,10 @@ Route::controller(LoginController::class)->group(function () {
 Route::controller(RegisterController::class)->group(function () {
     Route::get('/register', 'showRegistrationForm')->name('register');
     Route::post('/register', 'register');
+});
+
+Route::controller(ProfileController::class)->group(function () {
+    Route::get('/profile/{username}', 'show')->name('profile.show');
+    Route::get('/profile/{username}/edit', 'edit')->name('profile.edit');
+    Route::put('/profile/update/{username}', 'update')->name('profile.update');
 });
