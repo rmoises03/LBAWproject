@@ -220,7 +220,7 @@ INSERT INTO users VALUES (
     DEFAULT,
     'John Doe',
     'admin',
-    'admin@example.com',  
+    'admin@example.com',
     '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
 ); -- Password is 1234. Generated using Hash::make('1234')
 
