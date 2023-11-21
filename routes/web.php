@@ -8,6 +8,8 @@ use App\Http\Controllers\AdminController;
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ProfileController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +56,15 @@ Route::controller(RegisterController::class)->group(function () {
     Route::get('/register', 'showRegistrationForm')->name('register');
     Route::post('/register', 'register');
 });
+
+
+
+Route::get('/profile/{username}', 'App\Http\Controllers\ProfileController@show')->name('profile.show');
+
+Route::get('/profile/{username}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+
+Route::put('/profile/update/{username}', [ProfileController::class, 'update'])->name('profile.update');
+
 
 
 Route::middleware(['admin'])->controller(AdminController::class)->group(function () {
