@@ -57,22 +57,25 @@ class AdminController extends Controller
             ->with('success', 'User successfully created.');
     }
 
-    public function blockUser($id)
-    {
-        $user = User::find($id);
+    public function blockUser(Request $request)
+{
+    $request->validate([
+        'user_id' => 'required|integer|exists:users,id',
+        'reason' => 'required|string|max:255',
+    ]);
 
-        if (!$user) {
-            return response()->json(['message' => 'Bad Request. User not found.'], 404);
-        }
+    $adminId = Auth::id(); // Assuming you have the admin ID available
 
-        if (Block::where('user_id', $user->id)->exists()) {
-            return response()->json(['message' => 'Bad Request. User already blocked.'], 400);
-        }
+    Block::create([
+        'admin_id' => $adminId,
+        'user_id' => $request->user_id,
+        'blocked_at' => now(),
+        'reason' => $request->reason
+    ]);
 
-        Block::create(['user_id' => $user->id]);
+    return redirect()->back()->with('success', 'User blocked successfully.');
+}
 
-        return response()->json(['message' => 'Ok. User blocked.'], 204);
-    }
 
     public function unblockUser($id)
     {

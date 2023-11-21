@@ -21,16 +21,42 @@
                     </button>
                 </form>
 
-                <!-- Block/Unblock Button -->
-            <form method="POST" action="{{ $user->isBlocked() ? route('admin.unblockUser', $user) : route('admin.blockUser', $user) }}">
-                @csrf
-                <button type="submit" class="toggle-button">
-                    {{ $user->isBlocked() ? 'Unblock User' : 'Block User' }}
-                </button>
-            </form>
+                @if($user->isBlocked())
+                <button onclick="openUnblockOverlay({{ $user->id }})">Unblock User</button>
+            @else
+                <button onclick="openBlockOverlay({{ $user->id }})">Block User</button>
+            @endif
             </div>
         @endforeach
     </div>
+
+    <!-- Block User Overlay -->
+    <div id="blockUserOverlay" class="overlay" style="display: none;">
+        <div class="overlay-content">
+            <span class="close-button" onclick="closeBlockOverlay()">&times;</span>
+            <form method="POST" action="{{ route('admin.blockUser') }}">
+                @csrf
+                <input type="hidden" id="block_user_id" name="user_id">
+                <label for="reason">Reason for Blocking:</label>
+                <textarea id="reason" name="reason" required></textarea><br>
+                <button type="submit">Block User</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="unblockUserOverlay" class="overlay" style="display: none;">
+        <div class="overlay-content">
+            <span class="close-button" onclick="closeUnblockOverlay()">&times;</span>
+            <form method="POST">
+                @csrf
+                <input type="hidden" id="unblock_user_id" name="user_id">
+                <button type="submit">Unblock User</button>
+            </form>
+        </div>
+    </div>
+    
+
+
 
     <button id="addUserButton">Add New User</button>
 
@@ -128,6 +154,30 @@
         }
     
         document.getElementById("addUserButton").onclick = openOverlay;
+
+        function openBlockOverlay(userId) {
+            document.getElementById('block_user_id').value = userId;
+            document.getElementById('blockUserOverlay').style.display = 'block';
+        }
+
+        function openUnblockOverlay(userId) {
+            document.getElementById('unblock_user_id').value = userId;
+            document.getElementById('unblockUserOverlay').style.display = 'block';
+
+            // Set the form's action attribute
+            document.getElementById('unblockUserForm').action = `/admin/users/unblock/${userId}`;
+        }
+
+
+        function closeBlockOverlay() {
+            document.getElementById('blockUserOverlay').style.display = 'none';
+        }
+
+        function closeUnblockOverlay() {
+            document.getElementById('unblockUserOverlay').style.display = 'none';
+        }
+
+
     </script>
     
 @endsection

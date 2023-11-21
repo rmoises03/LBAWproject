@@ -64,7 +64,7 @@ Route::middleware(['admin'])->controller(AdminController::class)->group(function
     // API  - USERS
     Route::post('/admin/users/register','createUser')->name('admin.createUser');
     Route::post('/admin/users/{user}/toggle', 'toggleAdminStatus')->name('admin.toggleAdmin');
-    Route::post('/admin/users/block/{id}', 'blockUser')->name('admin.blockUser');
+    Route::post('/admin/users/block', 'blockUser')->name('admin.blockUser');
     Route::post('/admin/users/unblock/{id}', 'unblockUser')->name('admin.unblockUser');
 
 
