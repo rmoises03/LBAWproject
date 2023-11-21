@@ -40,9 +40,9 @@ CREATE TABLE users (
     username VARCHAR(250) UNIQUE NOT NULL,
     email VARCHAR(250) UNIQUE NOT NULL,
     password VARCHAR NOT NULL,
-    remember_token VARCHAR,
-    date_of_birth DATE,
-    reputation INT DEFAULT 0
+    date_of_birth DATE NOT NULL,
+    reputation INT DEFAULT 0,
+    remember_token VARCHAR
 );
 
 -- admins table
@@ -221,7 +221,8 @@ INSERT INTO users VALUES (
     'John Doe',
     'admin',
     'admin@example.com',
-    '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+    '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W',
+    '0001-01-01'
 ); -- Password is 1234. Generated using Hash::make('1234')
 
 

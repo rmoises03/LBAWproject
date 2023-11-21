@@ -3,49 +3,90 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
+use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\User;
+use Illuminate\Console\View\Components\Alert;
 
 class ProfileController extends Controller
 {
-
+    /**
+     * Show the profile for a given user by username.
+     */
     public function show($username)
     {
-        $user = User::where('username', $username)->firstOrFail();
+        // Check if the user is logged in.
+        if (!Auth::check()) {
+            // Not logged in, redirect to login.
+            return redirect('/login');
 
-        return view('profiles.show', compact('user'));
+        } else {
+            // The user is logged in.
+                
+            // Fetch the user based on the username
+            $user = User::where('username', $username)->firstOrFail();
+
+            return view('profiles.show', [
+                'user' => $user
+            ]);
+        }
     }
 
     public function edit($username)
     {
-        // Fetch the user based on the username
-        $user = User::where('username', $username)->first();
-    
-        // Check if the user exists
-        if (!$user) {
-            abort(404); // Or handle the case when the user is not found
+        // Check if the user is logged in.
+        if (!Auth::check()) {
+            // Not logged in, redirect to login.
+            return redirect('/login');
+
+        } else {
+            // The user is logged in.
+
+            // Fetch the user based on the username
+            $user = User::where('username', $username)->firstOrFail();
+            
+            // Check if the current user can edit the profile.
+            //$this->authorize('edit', $user);
+
+            // Pass the user data to the view
+            return view('profiles.edit', [
+                'user' => $user
+            ]);
         }
-    
-        // Pass the user data to the view
-        return view('profiles.edit', ['user' => $user]);
     }
 
-
     public function update(Request $request, $username)
-{
-    $user = User::where('username', $username)->firstOrFail();
+    {
+        // Check if the user is logged in.
+        if (!Auth::check()) {
+            // Not logged in, redirect to login.
+            return redirect('/login');
 
-    // Validate the form data
-    $validatedData = $request->validate([
-        'username' => 'required|string|max:255|unique:users,username,'.$user->id,
-        'date_of_birth' => 'required|date',
-        'reputation' => 'required|numeric',
-    ]);
+        } else {
+            // The user is logged in.
 
-    // Update the user's profile information
-    $user->update($validatedData);
+            // Fetch the user based on the username
+            $user = User::where('username', $username)->firstOrFail();
 
-    return redirect()->route('profile.show', ['username' => $user->username])
-        ->with('success', 'Profile updated successfully');
-}
+            // Check if the current user can update the profile.
+            //$this->authorize('updateProfile', $user);
+
+
+            // Validate the form data
+            $validatedData = $request->validate([
+                'username' => 'required|string|max:250|unique:users,username,'.$user->id,
+                'date_of_birth' => 'required|date',
+                'reputation' => 'required|numeric',
+            ]);
+
+            // Update the user's profile information
+            $user->update($validatedData);
+
+            return redirect()->route('profile.show', ['username' => $user->username])
+                ->with('success', 'Profile updated successfully');
+        }
+    }
 
 }

@@ -57,16 +57,24 @@ Route::controller(RegisterController::class)->group(function () {
     Route::post('/register', 'register');
 });
 
+// Profile
+Route::controller(ProfileController::class)->group(function () {
+    Route::get('/profile/{username}', 'show')->name('profile.show');
+    Route::get('/profile/{username}/edit', 'edit')->name('profile.edit');
+    Route::put('/profile/update/{username}', 'update')->name('profile.update');
+
+    Route::get('/profile/{username}/posts', 'listPosts')->name('profile.listPosts');
+    Route::get('/profile/{username}/comments', 'listComments')->name('profile.listComments');
+});
+
+// API - PROFILE
+Route::controller(ProfileController::class)->group(function () {
+    Route::post('/api/profile/{username}/update', 'update');
+    Route::post('/api/profile/{username}/delete', 'delete');
+});
 
 
-Route::get('/profile/{username}', 'App\Http\Controllers\ProfileController@show')->name('profile.show');
-
-Route::get('/profile/{username}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-
-Route::put('/profile/update/{username}', [ProfileController::class, 'update'])->name('profile.update');
-
-
-
+// Admin
 Route::middleware(['admin'])->controller(AdminController::class)->group(function () {
     // Views
     Route::get('/admin/dashboard', 'showAdminDashboard')->name('admin.dashboard');

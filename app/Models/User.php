@@ -69,13 +69,6 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
-/*
-    public function getProfilePictureAttribute()
-    {
-        // You might need to adjust this based on how you store profile pictures in your application
-        return 'path/to/profile/pictures/' . $this->attributes['username'] . '_profile_picture.jpg';
-    }*/
-
     /**
      * Get the notifications for a user.
      */
@@ -83,15 +76,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Notification::class);
     }
-
-        public function isAdmin()
+/*
+    public function getProfilePictureAttribute()
     {
-        return $this->hasOne(Admin::class, 'id', 'id');
-    }
-    public function isBlocked()
-    {
-        return Block::where('user_id', $this->id)->exists();
-    }
-
-
+        // You might need to adjust this based on how you store profile pictures in your application
+        return 'path/to/profile/pictures/' . $this->attributes['username'] . '_profile_picture.jpg';
+    }*/
 }
