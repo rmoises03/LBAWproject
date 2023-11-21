@@ -78,5 +78,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(Admin::class, 'id', 'id');
     }
+    public function isBlocked()
+    {
+        return Block::where('user_id', $this->id)->exists();
+    }
+
 
 }

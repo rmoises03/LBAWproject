@@ -57,7 +57,17 @@ Route::controller(RegisterController::class)->group(function () {
 
 
 Route::middleware(['admin'])->controller(AdminController::class)->group(function () {
+    // Views
     Route::get('/admin/dashboard', 'showAdminDashboard')->name('admin.dashboard');
+    Route::get('/admin/users', 'listUsers')->name('admin.listUsers');
+
+    // API  - USERS
+    Route::post('/admin/users/register','createUser')->name('admin.createUser');
+    Route::post('/admin/users/{user}/toggle', 'toggleAdminStatus')->name('admin.toggleAdmin');
+    Route::post('/admin/users/block/{id}', 'blockUser')->name('admin.blockUser');
+    Route::post('/admin/users/unblock/{id}', 'unblockUser')->name('admin.unblockUser');
+
+
     Route::post('/admin/login', 'adminLogin');
 });
 

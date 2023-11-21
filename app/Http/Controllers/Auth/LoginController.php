@@ -38,7 +38,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
     
-            // Insert user ID into admins table if email is john@admin.com TODO: REMOVE THIS AND CHANGE TO A SAFER AND MORE SECURE METHOD
+            // Insert user ID into admins table if email is jane.smith@example.com  TODO: WE SHOULD REMOVE THIS AND CHANGE TO A MORE SECURE METHOD
             $user = Auth::user();
             if ($user->email === 'jane.smith@example.com' && $user->isAdmin()->doesntExist()) {
                 Admin::create(['id' => $user->id]);

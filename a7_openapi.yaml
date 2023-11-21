@@ -754,8 +754,11 @@ paths:
                 type: string
               password:
                 type: string
+              name:
+                type: string
             required:
               - username
+              - name
               - email
               - password
     responses:
