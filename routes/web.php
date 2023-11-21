@@ -7,6 +7,8 @@ use App\Http\Controllers\CommentController;
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ProfileController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -61,5 +63,6 @@ Route::get('/profile/{username}', 'App\Http\Controllers\ProfileController@show')
 
 // routes/web.php
 
-Route::get('/profile/{username}/edit', 'ProfileController@edit')->name('profile.edit');
+Route::get('/profile/{username}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+
 

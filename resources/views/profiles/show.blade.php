@@ -1,4 +1,4 @@
-<!-- resources/views/profiles/show.blade.php -->
+<!-- In your profile show.blade.php view -->
 
 @extends('layouts.app')
 
@@ -16,16 +16,14 @@
                 <strong>Date of Birth: {{ $user->date_of_birth }}</strong>
                 <strong>Reputation: {{ $user->reputation }}</strong>
             </div>
+
+            <a class="button" href="{{ route('profile.edit', ['username' => Auth::user()->username]) }}" class="btn">Edit Profile</a>
+
+            <!-- resources/views/profiles/show.blade.php -->
+
+
+            <a class="button" href="{{ route('login') }}" class="btn">Go Back</a>
         </div>
     </div>
-    
-    <!-- resources/views/profiles/show.blade.php -->
-
-    @if (session('success'))
-        <div>
-            {{ session('success') }}
-        </div>
-    @endif
-
-
 @endsection
+

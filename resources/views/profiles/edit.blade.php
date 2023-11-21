@@ -4,7 +4,8 @@
 
 @section('content')
     <div>
-        <h1>Edit Your Profile</h1>
+        <!-- profiles/edit.blade.php -->
+        <h1>Edit Profile</h1>
 
         <form method="POST" action="{{ route('profile.update', ['username' => $user->username]) }}">
             @csrf

@@ -17,9 +17,16 @@ class ProfileController extends Controller
 
     public function edit($username)
     {
-        $user = User::where('username', $username)->firstOrFail();
-
-        return view('profiles.edit', compact('user'));
+        // Fetch the user based on the username
+        $user = User::where('username', $username)->first();
+    
+        // Check if the user exists
+        if (!$user) {
+            abort(404); // Or handle the case when the user is not found
+        }
+    
+        // Pass the user data to the view
+        return view('profiles.edit', ['user' => $user]);
     }
 
     public function update(Request $request, $username)
