@@ -198,14 +198,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- 
-CREATE OR REPLACE FUNCTION create_audit_log_entry() RETURNS TRIGGER AS $$
-BEGIN
-    -- 
-    RAISE NOTICE 'ALE: User % has been updated', NEW.user_id;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
+
 
 
 CREATE TRIGGER trg_update_fts_index 
@@ -217,9 +210,6 @@ AFTER INSERT ON posts
 FOR EACH ROW 
 EXECUTE FUNCTION notify_followers_newpost();
 
-CREATE TRIGGER trg_audit_log
-AFTER UPDATE ON users 
-FOR EACH ROW EXECUTE FUNCTION create_audit_log_entry();
 
 
 -----------------------------------------

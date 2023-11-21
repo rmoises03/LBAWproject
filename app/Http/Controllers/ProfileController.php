@@ -17,26 +17,35 @@ class ProfileController extends Controller
 
     public function edit($username)
     {
-        $user = User::where('username', $username)->firstOrFail();
-
-        return view('profiles.edit', compact('user'));
+        // Fetch the user based on the username
+        $user = User::where('username', $username)->first();
+    
+        // Check if the user exists
+        if (!$user) {
+            abort(404); // Or handle the case when the user is not found
+        }
+    
+        // Pass the user data to the view
+        return view('profiles.edit', ['user' => $user]);
     }
+
 
     public function update(Request $request, $username)
-    {
-        $user = User::where('username', $username)->firstOrFail();
+{
+    $user = User::where('username', $username)->firstOrFail();
 
-        // Validate the form data
-        $validatedData = $request->validate([
-            'username' => 'required|string|max:255|unique:users,username,'.$user->id,
-            'date_of_birth' => 'required|date',
-            'reputation' => 'required|numeric',
-        ]);
+    // Validate the form data
+    $validatedData = $request->validate([
+        'username' => 'required|string|max:255|unique:users,username,'.$user->id,
+        'date_of_birth' => 'required|date',
+        'reputation' => 'required|numeric',
+    ]);
 
-        // Update the user's profile information
-        $user->update($validatedData);
+    // Update the user's profile information
+    $user->update($validatedData);
 
-        return redirect()->route('profile.show', ['username' => $user->username])
-            ->with('success', 'Profile updated successfully');
-    }
+    return redirect()->route('profile.show', ['username' => $user->username])
+        ->with('success', 'Profile updated successfully');
+}
+
 }

@@ -160,8 +160,6 @@ body {
     border-color: #9b4dca;
   }
 
-/* Add this CSS to your existing or a new CSS file */
-
 .body-profile {
   font-family: 'Arial', sans-serif;
   background-color: #f5f5f5;
@@ -230,4 +228,10 @@ body {
 .profile-info .error-message {
   color: red;
   margin-top: 10px;
+}
+
+.uneditable {
+  background-color: #f0f0f0;
+  color: #777;
+  cursor: not-allowed;
 }
