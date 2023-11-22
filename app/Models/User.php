@@ -28,6 +28,9 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'username',
+        'date_of_birth',
+        'reputation',
     ];
 
     /**
@@ -72,5 +75,20 @@ class User extends Authenticatable
     public function notifications(): HasMany
     {
         return $this->hasMany(Notification::class);
+    }
+/*
+    public function getProfilePictureAttribute()
+    {
+        // You might need to adjust this based on how you store profile pictures in your application
+        return 'path/to/profile/pictures/' . $this->attributes['username'] . '_profile_picture.jpg';
+    }*/
+
+    public function isAdmin()
+    {
+        return Admin::where('id', $this->id);
+    }
+    public function isBlocked()
+    {
+        return Block::where('user_id', $this->id)->exists();
     }
 }
