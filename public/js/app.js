@@ -93,13 +93,7 @@ function addEventListeners() {
     if (title.trim() !== '' && description.trim() !== '') {
       sendAjaxRequest('put', '/api/posts/', { title: title, description: description }, postAddedHandler);
   }
-  /*  
-    for (var i = 0; i < titleInputs.length; i++) {
-        var title = titleInputs[i].value;
-        if (title.trim() !== '' && description.trim() !== '') {
-            sendAjaxRequest('put', '/api/posts/', { title: title, description: description }, postAddedHandler);
-        }
-    }*/
+  
     event.preventDefault();
   }
 
