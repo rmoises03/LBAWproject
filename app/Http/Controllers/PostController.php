@@ -74,43 +74,30 @@ class PostController extends Controller
     /**
      * Creates a new post.
      */
-    public function create(Request $request)
+        public function create(Request $request)
     {
-        // Create a blank new Post.
-        $post = new Post();
+        $this->authorize('create', Post::class);
 
-        // Check if the current user is authorized to create this post.
-        $this->authorize('create', $post);
-
-        // Validate the request
         $request->validate([
-            'titles' => 'required|array|max:255',
-            'descriptions' => 'required|array',
+            'title' => 'required|max:255',
+            'description' => 'required',
         ]);
 
-        // Set post details
-        $post->title = $request->input('title');
-        $post->description = $request->input('description');
-        $post->user_id = $request->input('usre_id');
-
-        // Save the post and return it as JSON.
+        $post = new Post();
+        $post->title = $request->title;
+        $post->description = $request->description;
+        $post->user_id = Auth::id(); // Or $request->user()->id
         $post->save();
-        return response()->json($post, 201, ['message' => 'Posts created successfully']);
+
+        return redirect()->route('posts');
     }
 
-    /**
-     * Delete a post.
-     */
-    public function delete(Request $request, $id)
+    public function delete($id)
     {
-        // Find the post.
-        $post = Post::find($id);
-
-        // Check if the current user is authorized to delete this post.
+        $post = Post::findOrFail($id);
         $this->authorize('delete', $post);
 
-        // Delete the post and return it as JSON.
         $post->delete();
-        return response()->json($post);
+        return redirect()->route('posts');
     }
 }

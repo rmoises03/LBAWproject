@@ -22,11 +22,10 @@ use App\Http\Controllers\Auth\RegisterController;
 // Home
 Route::redirect('/', '/login');
 
-// Posts
-Route::controller(PostController::class)->group(function () {
-    Route::get('/posts', 'listPosts')->name('posts');
-    Route::get('/posts/{id}', 'show');
-});
+// Posts - change to group
+Route::get('/posts', [PostController::class, 'listPosts'])->name('posts');
+Route::post('/posts', [PostController::class, 'create'])->name('post.create');
+Route::delete('/posts/{id}', [PostController::class, 'delete'])->name('post.delete');
 
 
 // API
