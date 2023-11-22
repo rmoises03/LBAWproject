@@ -5,8 +5,8 @@
         <a href="#" class="delete">&#10761;</a>
     </header>
     <p>{{ $post->description }}</p>
-    <div class="votes"> <a href="#" class="upvote">+</a> <?= $post->upvotes  -  $post->downvotes ;?> <a href="#" class="downvote">-</a></div> </div>        
-    <div class="comments">Comments</div>
+    <div class="votes"><a href="#" class="upvote">+</a> <?= $post->upvotes  -  $post->downvotes ;?> <a href="#" class="downvote">-</a></div> </div>        
+    <h5 class="comments">Comments</h5>
     <ul>
         @each('partials.comment', $post->comments()->orderBy('id')->get(), 'comment')
     </ul>
