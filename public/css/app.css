@@ -31,7 +31,7 @@ body {
 
   #create_new_post {
     display: flex;
-    background-color: #d3edc3;
+    background-color: #c3dded;
     padding: 1em;
     margin: 1em;
     border-radius: 0.8em;
@@ -40,7 +40,7 @@ body {
   #newPostForm {
     display: flex;
     flex-direction: column;
-    background-color: #d3edc3;
+    background-color: #c3dded;
     padding: 1em;
     margin: 1em;
     border-radius: 0.8em;
@@ -185,6 +185,42 @@ body {
   a {
     color: #4d5cca;
   }
+
+  #admin_button {
+    display: flex;
+    background-color: #4d5cca;
+    padding: 1em;
+    margin: 1em;
+    border-radius: 0.8em;
+    vertical-align: center;
+  }
+
+  #logout_button {
+    display: flex;
+    background-color: #4d5cca;
+    padding: 1em;
+    margin: 1em;
+    border-radius: 0.8em;
+    vertical-align: center;
+  }
+
+  #profile_button {
+    display: flex;
+    background-color: #4d5cca;
+    padding: 1em;
+    margin: 1em;
+    border-radius: 0.8em;
+    vertical-align: center;
+
+  }
+
+  #buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: center;
+  }
+
   input[type=text]:focus,
   input[type=email]:focus,
   input[type=password]:focus {
