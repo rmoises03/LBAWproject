@@ -55,7 +55,7 @@
             
 
 
-            <a class="button" href="{{ route('login') }}" class="btn">Go Back</a>
+            <a class="button" href="{{ url()->previous() }}">Go Back</a>
         </div>
     </div>
 @endsection
