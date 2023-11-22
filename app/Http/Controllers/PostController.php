@@ -81,13 +81,22 @@ class PostController extends Controller
         // Check if the current user is authorized to create this post.
         $this->authorize('create', $post);
 
-        // Set post details.
-        $post->name = $request->input('name');
-        $post->user_id = Auth::user()->id;
+        // Validate the request
+        $request->validate([
+            'titles' => 'required|array',
+            'descriptions' => 'required|array',
+        ]);
 
-        // Save the post and return it as JSON.
-        $post->save();
-        return response()->json($post);
+        // Loop through the input and store posts
+        foreach ($request->input('titles') as $key => $title) {
+            $post = new Post();
+            $post->name = $title;
+            $post->description = $request->input('descriptions')[$key];
+            $post->user_id = Auth::user()->id;
+            $post->save();
+        }
+
+        return response()->json($post, 201, ['message' => 'Posts created successfully']);
     }
 
     /**

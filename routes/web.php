@@ -33,6 +33,7 @@ Route::controller(PostController::class)->group(function () {
 Route::controller(PostController::class)->group(function () {
     Route::put('/api/posts', 'create');
     Route::delete('/api/posts/{post_id}', 'delete');
+
 });
 
 Route::controller(CommentController::class)->group(function () {
@@ -49,6 +50,7 @@ Route::controller(LoginController::class)->group(function () {
     Route::get('/logout', 'logout')->name('logout');
 });
 
+// Registration
 Route::controller(RegisterController::class)->group(function () {
     Route::get('/register', 'showRegistrationForm')->name('register');
     Route::post('/register', 'register');
