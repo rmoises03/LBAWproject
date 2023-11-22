@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -47,17 +48,21 @@ class AdminController extends Controller
             'email' => 'required|email|max:250|unique:users',
             'password' => 'required|min:8|confirmed'
         ]);
-    
+
+        $defaultDateOfBirth = Carbon::create(2000, 1, 1);
+
         User::create([
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'date_of_birth' => $defaultDateOfBirth 
         ]);
-    
+
         return redirect()->route('admin.dashboard')
             ->with('success', 'User successfully created.');
     }
+
 
     public function blockUser(Request $request)
 {
