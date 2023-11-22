@@ -20,9 +20,10 @@ function addEventListeners() {
     });
   
     let postCreator = document.querySelector('article.post button.create_new_post');
-    if (postCreator != null)
-      postCreator.addEventListener('submit', sendCreatePostRequest);
+    if (postCreator != null){
       postCreator.addEventListener('click', showCreatePostForm);
+      postCreator.addEventListener('submit', sendCreatePostRequest);
+    }
   }
   
   function encodeForAjax(data) {
@@ -87,12 +88,13 @@ function addEventListeners() {
 
   function sendCreatePostRequest(event) {
     //var titleInputs = document.getElementsByName('title[]');
-    var title = document.querySelector('textarea[name="title"]').value;
+    var title = document.querySelector('input[name="title"]').value;
     var description = document.querySelector('textarea[name="description"]').value;
+    let user_id = document.getElementById('user_id').value;
 
     if (title.trim() !== '' && description.trim() !== '') {
-      sendAjaxRequest('put', '/api/posts/', { title: title, description: description }, postAddedHandler);
-  }
+      sendAjaxRequest('put', '/api/posts', { title: title, description: description, user_id: user_id }, postAddedHandler);
+    }
   /*  
     for (var i = 0; i < titleInputs.length; i++) {
         var title = titleInputs[i].value;
@@ -104,14 +106,30 @@ function addEventListeners() {
   }
 
   function showCreatePostForm() {
-    var createPostForm = document.getElementById('create_post_form');
+    let createPostForm = document.getElementById('create_post_form');
     createPostForm.style.display = 'block';
+
+    let postCreatorButton = document.querySelector('#create_new_post button.create_new_post');
+    postCreatorButton.innerText = 'Cancel';
+
+    postCreatorButton.removeEventListener('click', showCreatePostForm);
+    postCreatorButton.addEventListener('click', hideCreatePostForm);
+  }
+
+  function hideCreatePostForm() {
+    let createPostForm = document.getElementById('create_post_form');
+    createPostForm.style.display = 'none';
+    
+    let postCreatorButton = document.querySelector('#create_new_post button.create_new_post');
+    postCreatorButton.textContent = 'Create New Post';
+
+    postCreatorButton.removeEventListener('click', hideCreatePostForm);
+    postCreatorButton.addEventListener('click', showCreatePostForm);
   }
   
   function commentUpdatedHandler() {
     let comment = JSON.parse(this.responseText);
     let element = document.querySelector('li.comment[data-id="' + comment.id + '"]');
-    let input = element.querySelector('input[type=checkbox]');
     element.checked = comment.done == "true";
   }
   
@@ -146,14 +164,14 @@ function addEventListeners() {
   }
   
   function postAddedHandler() {
-    if (this.status != 200) window.location = '/';
+    if (this.status != 201) window.location = '/';
     let post = JSON.parse(this.responseText);
   
     // Create the new post
     let new_post = createPost(post);
   
     // Reset the new post input
-    let form = document.querySelector('article.post form.new_post');
+    let form = document.querySelector('#newPostForm');
     form.querySelector('[type=text]').value="";
   
     // Insert the new post

@@ -10,9 +10,10 @@
         <div id="create_post_form" style="display: none;">
             <form id="newPostForm">
                 <div id="input_container"></div>
-                <textarea name="title" placeholder="Title"></textarea>
-                <textarea name="description" placeholder="Description"></textarea>
-                <button type="submit" onclick="sendCreatePostRequest(event)">Submit</button>
+                <input name="title" type="Text" placeholder="Title" required></input>
+                <textarea name="description" type="Text" placeholder="Description" required></textarea>
+                <input id="user_id" name="user_id" type="hidden" value="{{ Auth::user()->id }}"></input>
+                <button type="submit" onsubmit="sendCreatePostRequest(event)">Submit</button>
             </form>
     </article>
     @each('partials.post', $posts, 'post')
