@@ -24,8 +24,15 @@
         <main>
             <header>
                 <h1><a href="{{ url('/posts') }}">NEWS4U!</a></h1>
+                <form action="{{ route('search.results') }}" method="GET">
+                    <input type="text" name="query" placeholder="Search...">
+                    <button type="submit">Search</button>
+                </form>                
+                @if(Auth::check() && Auth::user()->isAdmin()->exists() && !Route::is('admin.dashboard'))
+                    <a class="button" href="{{ route('admin.dashboard') }}">Admin</a>
+                @endif
                 @if (Auth::check())
-                    <a class="button" href="{{ url('/logout') }}"> Logout </a> <span>{{ Auth::user()->name }}</span>
+                    <a class="button" href="{{ url('/logout') }}"> Logout </a><a class="button" href="{{ route('profile.show', ['username' => Auth::user()->username]) }}" class="btn">{{Auth::user()->username}}</a>
                 @endif
             </header>
             <section id="content">
