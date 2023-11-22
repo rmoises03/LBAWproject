@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 use App\Models\User;
+use Carbon\Carbon;
 
 class RegisterController extends Controller
 {
@@ -33,12 +34,14 @@ class RegisterController extends Controller
             'email' => 'required|email|max:250|unique:users',
             'password' => 'required|min:8|confirmed'
         ]);
+        $defaultDateOfBirth = Carbon::create(2000, 1, 1);
 
         User::create([
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'date_of_birth' => $defaultDateOfBirth 
         ]);
 
         $credentials = $request->only('email', 'password');
