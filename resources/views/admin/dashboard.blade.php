@@ -13,7 +13,8 @@
     <div style="max-height: 400px; overflow-y: auto;">
         @foreach ($users as $user)
             <div class="user-item">
-                {{ $user->username}} - {{ $user->isAdmin()->exists() ? 'admin' : 'user' }}
+                <a class="" href="{{ route('profile.show', ['username' => $user->username]) }}" class="btn">{{ $user->username}} </a>
+                    - {{ $user->isAdmin()->exists() ? 'admin' : 'user' }}
                 <form method="POST" action="{{ route('admin.toggleAdmin', $user) }}">
                     @csrf
                     <button type="submit" class="toggle-button">
@@ -62,7 +63,7 @@
 
     <div id="addUserOverlay" class="overlay">
         <div class="overlay-content">
-            <span class="close-button" onclick="closeOverlay()">&times;</span>
+            <span class="close-button" onclick="closeNewUserOverlay()">&times;</span>
             <form method="POST" action="{{ route('admin.createUser') }}">
                 @csrf
                 <label for="name">Name:</label>
@@ -145,15 +146,15 @@
 
     </style>
     <script>
-        function openOverlay() {
+        function openNewUserOverlay() {
             document.getElementById("addUserOverlay").style.display = "block";
         }
     
-        function closeOverlay() {
+        function closeNewUserOverlay() {
             document.getElementById("addUserOverlay").style.display = "none";
         }
     
-        document.getElementById("addUserButton").onclick = openOverlay;
+        document.getElementById("addUserButton").onclick = openNewUserOverlay;
 
         function openBlockOverlay(userId) {
             document.getElementById('block_user_id').value = userId;
