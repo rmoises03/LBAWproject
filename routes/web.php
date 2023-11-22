@@ -27,7 +27,9 @@ Route::redirect('/', '/login');
 
 // Posts
 Route::controller(PostController::class)->group(function () {
-    Route::get('/posts', 'list')->name('posts');
+    Route::get('/posts', 'listPosts')->name('posts');
+    Route::post('/posts', 'create')->name('post.create');
+    Route::delete('/posts/{id}', 'delete')->name('post.delete');
     Route::get('/posts/{id}', 'show');
 });
 
@@ -59,6 +61,7 @@ Route::controller(LoginController::class)->group(function () {
     Route::get('/logout', 'logout')->name('logout');
 });
 
+// Registration
 Route::controller(RegisterController::class)->group(function () {
     Route::get('/register', 'showRegistrationForm')->name('register');
     Route::post('/register', 'register');
@@ -70,7 +73,7 @@ Route::controller(ProfileController::class)->group(function () {
     Route::get('/profile/{username}/edit', 'edit')->name('profile.edit');
     Route::put('/profile/update/{username}', 'update')->name('profile.update');
 
-    Route::get('/profile/{username}/posts', 'listPosts')->name('profile.listPosts');
+    Route::get('/profile/{username}/posts', 'listUserPosts')->name('profile.listPosts');
     Route::get('/profile/{username}/comments', 'listComments')->name('profile.listComments');
 });
 

@@ -54,13 +54,14 @@
     <div id="unblockUserOverlay" class="overlay" style="display: none;">
         <div class="overlay-content">
             <span class="close-button" onclick="closeUnblockOverlay()">&times;</span>
-            <form method="POST">
+            <form id="unblockUserForm" method="POST">
                 @csrf
                 <input type="hidden" id="unblock_user_id" name="user_id">
                 <button type="submit">Unblock User</button>
             </form>
         </div>
     </div>
+    
     
 
 
@@ -173,6 +174,7 @@
 
             // Set the form's action attribute
             document.getElementById('unblockUserForm').action = `/admin/users/unblock/${userId}`;
+            form.action = `/admin/users/unblock/${userId}`;
         }
 
 

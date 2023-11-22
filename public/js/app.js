@@ -19,9 +19,11 @@ function addEventListeners() {
       deleter.addEventListener('click', sendDeletePostRequest);
     });
   
-    let postCreator = document.querySelector('article.post form.new_post');
-    if (postCreator != null)
+    let postCreator = document.querySelector('article.post button.create_new_post');
+    if (postCreator != null){
+      postCreator.addEventListener('click', showCreatePostForm);
       postCreator.addEventListener('submit', sendCreatePostRequest);
+    }
   }
   
   function encodeForAjax(data) {
@@ -71,19 +73,41 @@ function addEventListeners() {
     sendAjaxRequest('delete', '/api/posts/' + id, null, postDeletedHandler);
   }
   
+  /*function sendCreatePostRequest(event) {
+
+    let title = document.querySelector('input[name="title"]').value;
+    let description = document.querySelector('textarea[name="description"]').value;
+
+    // Check if title is not empty and send an AJAX request
+    if (title.trim() !== '' && description.trim() !== '') {
+        sendAjaxRequest('put', '/api/posts/', { title: title, description: description }, postAddedHandler);
+    }
+
+    event.preventDefault();
+  }*/
+
   function sendCreatePostRequest(event) {
-    let name = this.querySelector('input[name=name]').value;
-  
-    if (name != '')
-      sendAjaxRequest('put', '/api/posts/', {name: name}, postAddedHandler);
-  
+    //var titleInputs = document.getElementsByName('title[]');
+    var title = document.querySelector('input[name="title"]').value;
+    var description = document.querySelector('textarea[name="description"]').value;
+    let user_id = document.getElementById('user_id').value;
+
+    if (title.trim() !== '' && description.trim() !== '') {
+      sendAjaxRequest('put', '/api/posts', { title: title, description: description, user_id: user_id }, postAddedHandler);
+    }
+  /*  
+    for (var i = 0; i < titleInputs.length; i++) {
+        var title = titleInputs[i].value;
+        if (title.trim() !== '' && description.trim() !== '') {
+            sendAjaxRequest('put', '/api/posts/', { title: title, description: description }, postAddedHandler);
+        }
+    }*/
     event.preventDefault();
   }
   
   function commentUpdatedHandler() {
     let comment = JSON.parse(this.responseText);
     let element = document.querySelector('li.comment[data-id="' + comment.id + '"]');
-    let input = element.querySelector('input[type=checkbox]');
     element.checked = comment.done == "true";
   }
   
@@ -118,14 +142,14 @@ function addEventListeners() {
   }
   
   function postAddedHandler() {
-    if (this.status != 200) window.location = '/';
+    if (this.status != 201) window.location = '/';
     let post = JSON.parse(this.responseText);
   
     // Create the new post
     let new_post = createPost(post);
   
     // Reset the new post input
-    let form = document.querySelector('article.post form.new_post');
+    let form = document.querySelector('#newPostForm');
     form.querySelector('[type=text]').value="";
   
     // Insert the new post
@@ -133,7 +157,7 @@ function addEventListeners() {
     let section = article.parentElement;
     section.insertBefore(new_post, article);
   
-    // Focus on adding an comment to the new post
+    // Focus on adding a comment to the new post
     new_post.querySelector('[type=text]').focus();
   }
   
@@ -142,14 +166,16 @@ function addEventListeners() {
     new_post.classList.add('post');
     new_post.setAttribute('data-id', post.id);
     new_post.innerHTML = `
-  
     <header>
-      <h2><a href="posts/${post.id}">${post.name}</a></h2>
-      <a href="#" class="delete">&#10761;</a>
+        <h2><a href="posts/${post.id}">${post.name}</a></h2>
+        <a href="#" class="delete">&#10761;</a>
     </header>
     <ul></ul>
     <form class="new_comment">
-      <input name="description" type="text">
+        <input name="title" type="text" placeholder="Title">
+        <textarea name="description" placeholder="Description"></textarea>
+        <button type="button" onclick="addInputField()">Add Title Input</button>
+        <button type="submit" onclick="sendCreatePostRequest(event)">Submit</button>
     </form>`;
   
     let creator = new_post.querySelector('form.new_comment');
@@ -177,5 +203,26 @@ function addEventListeners() {
     return new_comment;
   }
   
+  function addInputField() {
+    let inputContainer = document.querySelector('form.new_comment');
+    let newInput = document.createElement('input');
+    newInput.type = 'text';
+    newInput.name = 'title[]';
+    newInput.placeholder = 'Title';
+    inputContainer.appendChild(newInput);
+}
+
   addEventListeners();
   
+
+  function toggleCreatePostForm() {
+    var form = document.getElementById('create_new_post_form');
+    let button = document.getElementById('create_new_post_button');
+    if (form.style.display === 'none') {
+        form.style.display = 'block';
+        button.textContent = 'Cancel';
+    } else {
+        form.style.display = 'none';
+        button.textContent = 'Create New Post';
+    }
+}

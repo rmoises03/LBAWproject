@@ -8,6 +8,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Post;
+use App\Models\User;
 
 class PostController extends Controller
 {
@@ -31,7 +32,21 @@ class PostController extends Controller
     /**
      * Shows all posts.
      */
-    public function list()
+    public function listPosts()
+    {
+        // Get posts for user ordered by id.
+        $posts = Post::orderBy('id')->get();
+
+        // Use the pages.posts template to display all posts.
+        return view('pages.posts', [
+            'posts' => $posts
+        ]);
+    }
+
+    /**
+     * Shows all posts of user.
+     */
+    public function listUserPosts()
     {
         // Check if the user is logged in.
         if (!Auth::check()) {
@@ -50,7 +65,7 @@ class PostController extends Controller
             // The current user is authorized to list posts.
 
             // Use the pages.posts template to display all posts.
-            return view('pages.posts', [
+            return view('pages.profile', [
                 'posts' => $posts
             ]);
         }
@@ -59,36 +74,30 @@ class PostController extends Controller
     /**
      * Creates a new post.
      */
-    public function create(Request $request)
+        public function create(Request $request)
     {
-        // Create a blank new Post.
+        $this->authorize('create', Post::class);
+
+        $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'required',
+        ]);
+
         $post = new Post();
-
-        // Check if the current user is authorized to create this post.
-        $this->authorize('create', $post);
-
-        // Set post details.
-        $post->name = $request->input('name');
-        $post->user_id = Auth::user()->id;
-
-        // Save the post and return it as JSON.
+        $post->title = $request->title;
+        $post->description = $request->description;
+        $post->user_id = Auth::id(); // Or $request->user()->id
         $post->save();
-        return response()->json($post);
+
+        return redirect()->route('posts');
     }
 
-    /**
-     * Delete a post.
-     */
-    public function delete(Request $request, $id)
+    public function delete($id)
     {
-        // Find the post.
-        $post = Post::find($id);
-
-        // Check if the current user is authorized to delete this post.
+        $post = Post::findOrFail($id);
         $this->authorize('delete', $post);
 
-        // Delete the post and return it as JSON.
         $post->delete();
-        return response()->json($post);
+        return redirect()->route('posts');
     }
 }
