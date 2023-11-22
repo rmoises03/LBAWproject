@@ -26,16 +26,33 @@
 
             <div class="user-posts">
                 <h3>Posts</h3>
-                @forelse ($user->posts as $post)
-                    <div class="post">
-                        <h4>{{ $post->title }}</h4>
-                        <p>{{ $post->content }}</p>
-                        <!-- Add more post details if needed -->
-                    </div>
-                @empty
-                    <p>No posts to display.</p>
-                @endforelse
+                <div class="scrollable-content">
+                    @forelse ($user->posts as $post)
+                        <div class="post">
+                            <h4>{{ $post->title }}</h4>
+                            <p>{{ $post->description }}</p>
+                        </div>
+                    @empty
+                        <p>No posts to display.</p>
+                    @endforelse
+                </div>
             </div>
+            
+            <div class="user-comments">
+                <h3>Comments</h3>
+                <div class="scrollable-content">
+                    @forelse ($user->comments as $comment)
+                        <div class="comment">
+                            <p>{{ $comment->post->title ?? 'Post not found' }}</p>
+                            <p><strong>{{ $comment->text }}</strong></p>
+                        </div>
+                    @empty
+                        <p>No comments to display.</p>
+                    @endforelse
+                </div>
+            </div>
+            
+            
 
 
             <a class="button" href="{{ route('login') }}" class="btn">Go Back</a>

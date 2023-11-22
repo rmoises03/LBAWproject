@@ -252,4 +252,28 @@ body {
   margin-top: 0;
 }
 
-/* Add more CSS as needed to style the posts */
+.user-comments {
+  margin-top: 20px;
+}
+
+.comment {
+  background-color: #f8f8f8;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.scrollable-content {
+  max-height: 500px;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.user-posts h3, .user-comments h3 {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  padding: 10px;
+  margin-top: 0; 
+}

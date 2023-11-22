@@ -20,12 +20,18 @@ class ProfileController extends Controller
         if (!Auth::check()) {
             return redirect('/login');
         } else {
-            $user = User::with('posts')->where('username', $username)->firstOrFail();
+            // Load the user with all comments they've made and the associated posts
+            $user = User::with(['comments.post' => function ($query) {
+                $query->select('id', 'title');
+            }])->where('username', $username)->firstOrFail();
+    
             return view('profiles.show', [
                 'user' => $user
             ]);
         }
     }
+    
+
 
 
     public function edit($username)
