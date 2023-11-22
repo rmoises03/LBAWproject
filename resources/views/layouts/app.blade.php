@@ -33,7 +33,8 @@
                         <a id="admin_button" class="button" href="{{ route('admin.dashboard') }}">Dashboard</a>
                     @endif
                     @if (Auth::check())
-                        <a id="logout_button" class="button" href="{{ url('/logout') }}"> Logout </a><a id="profile_button" class="button" href="{{ route('profile.show', ['username' => Auth::user()->username]) }}" class="btn">{{Auth::user()->username}}</a>
+                        <a id="logout_button" class="button" href="{{ url('/logout') }}"> Logout </a>
+                        <a id="profile_button" class="button" href="{{ route('profile.show', ['username' => Auth::user()->username]) }}" class="btn">{{Auth::user()->username}}</a>
                     @endif
                 </div>
             </header>

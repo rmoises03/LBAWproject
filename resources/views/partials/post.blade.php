@@ -11,6 +11,6 @@
         @each('partials.comment', $post->comments()->orderBy('id')->get(), 'comment')
     </ul>
     <form class="new_comment">
-        <input type="text" name="description" placeholder="new comment">
+        <input type="text" name="description" placeholder="new comment" required>
     </form>
 </article>

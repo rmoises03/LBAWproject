@@ -21,7 +21,7 @@ body {
     margin: 1em;
     justify-self: center;
   }
-  #posts {
+  #posts, #create_post {
     display: flex;
     flex-direction: column;
     grid-template-columns: repeat(3, 1fr);
@@ -29,12 +29,16 @@ body {
     margin-right: 6em;
   }
 
-  #create_new_post {
+  .create_new_post {
     display: flex;
     background-color: #c3dded;
     padding: 1em;
     margin: 1em;
     border-radius: 0.8em;
+  }
+
+  textarea {
+    resize: vertical;
   }
 
   #newPostForm {
@@ -188,39 +192,19 @@ body {
     color: #4d5cca;
   }
 
-  #admin_button {
-    display: flex;
-    background-color: #4d5cca;
-    padding: 1em;
-    margin: 1em;
-    border-radius: 0.8em;
-    vertical-align: center;
-  }
-
-  #logout_button {
-    display: flex;
-    background-color: #4d5cca;
-    padding: 1em;
-    margin: 1em;
-    border-radius: 0.8em;
-    vertical-align: center;
-  }
-
-  #profile_button {
-    display: flex;
-    background-color: #4d5cca;
-    padding: 1em;
-    margin: 1em;
-    border-radius: 0.8em;
-    vertical-align: center;
-
-  }
-
   #buttons {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    text-align: center;
+    align-content: center;
+  }
+
+  #admin_button, #logout_button, #profile_button {
+    display: flex;
+    background-color: #4d5cca;
+    margin: 1em;
+    border-radius: 8px;
+    vertical-align: middle;
   }
 
   input[type=text]:focus,
