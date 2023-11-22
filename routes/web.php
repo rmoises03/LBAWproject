@@ -32,12 +32,19 @@ Route::controller(PostController::class)->group(function () {
 });
 
 
-// API
+// API - POSTS
 Route::controller(PostController::class)->group(function () {
     Route::put('/api/posts', 'create');
     Route::delete('/api/posts/{post_id}', 'delete');
 });
 
+// Comments
+Route::controller(CommentController::class)->group(function () {
+    Route::get('/posts/{post_id}/comments', 'list');
+    Route::get('/posts/{post_id}/comments/{id}', 'show');
+});
+
+// API - COMMENTS
 Route::controller(CommentController::class)->group(function () {
     Route::put('/api/posts/{post_id}', 'create');
     Route::post('/api/comment/{id}', 'update');
