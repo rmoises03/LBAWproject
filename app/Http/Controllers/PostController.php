@@ -8,6 +8,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Post;
+use App\Models\User;
 
 class PostController extends Controller
 {
@@ -83,19 +84,17 @@ class PostController extends Controller
 
         // Validate the request
         $request->validate([
-            'titles' => 'required|array',
+            'titles' => 'required|array|max:255',
             'descriptions' => 'required|array',
         ]);
 
-        // Loop through the input and store posts
-        foreach ($request->input('titles') as $key => $title) {
-            $post = new Post();
-            $post->name = $title;
-            $post->description = $request->input('descriptions')[$key];
-            $post->user_id = Auth::user()->id;
-            $post->save();
-        }
+        // Set post details
+        $post->title = $request->input('title');
+        $post->description = $request->input('description');
+        $post->user_id = $request->input('usre_id');
 
+        // Save the post and return it as JSON.
+        $post->save();
         return response()->json($post, 201, ['message' => 'Posts created successfully']);
     }
 
