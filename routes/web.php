@@ -27,7 +27,7 @@ Route::redirect('/', '/login');
 
 // Posts
 Route::controller(PostController::class)->group(function () {
-    Route::get('/post', 'listPosts')->name('posts');
+    Route::get('/posts', 'listPosts')->name('posts');
     Route::get('/posts/{id}', 'show');
 });
 
