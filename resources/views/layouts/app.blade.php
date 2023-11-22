@@ -24,6 +24,9 @@
         <main>
             <header>
                 <h1><a href="{{ url('/posts') }}">NEWS4U!</a></h1>
+                @if(Auth::check() && Auth::user()->isAdmin()->exists() && !Route::is('admin.dashboard'))
+                    <a class="button" href="{{ route('admin.dashboard') }}">Admin</a>
+                @endif
                 @if (Auth::check())
                     <a class="button" href="{{ url('/logout') }}"> Logout </a><a class="button" href="{{ route('profile.show', ['username' => Auth::user()->username]) }}" class="btn">{{Auth::user()->username}}</a>
                 @endif

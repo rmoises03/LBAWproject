@@ -1,12 +1,12 @@
 body {
     background-color: #ffffff;
-    color: #9b4dca;
+    color: #4d5cca;
   }
   main > header {
     display: grid;
     grid-template-columns: 1fr auto auto;
     align-items: center;
-    background-color: #d2afe7;
+    background-color: #afc2e7;
     padding: 1em;
     margin: 1em;
   }
@@ -28,7 +28,7 @@ body {
   #posts article.post {
     display: flex;
     flex-direction: column;
-    background-color: #d3edc3;
+    background-color: #c3dded;
     padding: 1em;
     margin: 1em;
   }
@@ -141,23 +141,23 @@ body {
    * Some styles might be missing
    **/
   button {
-    background-color: #9b4dca;
-    border-color: #9b4dca;
+    background-color: #4d5cca;
+    border-color: #4d5cca;
   }
   a.button {
-    background-color: #9b4dca;
-    border-color: #9b4dca;
+    background-color: #4d5cca;
+    border-color: #4d5cca;
   }
   a.button.button-outline {
-    color: #9b4dca;
+    color: #4d5cca;
   }
   a {
-    color: #9b4dca;
+    color: #4d5cca;
   }
   input[type=text]:focus,
   input[type=email]:focus,
   input[type=password]:focus {
-    border-color: #9b4dca;
+    border-color: #4d5cca;
   }
 
 .body-profile {
