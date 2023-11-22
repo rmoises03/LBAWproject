@@ -283,3 +283,93 @@ INSERT INTO reports (name) VALUES ('Spam');
 
 INSERT INTO blocks (admin_id, user_id, blocked_at, reason)
 VALUES (1, 2, '2023-03-01', 'Violation of community guidelines');
+
+
+
+-- Add a TSVECTOR column to the posts table
+ALTER TABLE posts ADD COLUMN tsv TSVECTOR;
+
+-- Update the posts table to set the tsv column
+UPDATE posts SET tsv = to_tsvector('english', coalesce(title, '') || ' ' || coalesce(description, ''));
+
+-- Create a GIN index on the tsv column
+CREATE INDEX posts_tsv_idx ON posts USING GIN(tsv);
+
+-- Create a trigger function to update the tsv column
+CREATE OR REPLACE FUNCTION posts_tsvector_trigger() RETURNS trigger AS $$
+BEGIN
+  NEW.tsv := to_tsvector('english', coalesce(NEW.title, '') || ' ' || coalesce(NEW.description, ''));
+  RETURN NEW;
+END
+$$ LANGUAGE plpgsql;
+
+-- Create a trigger for auto-updating the tsv column
+CREATE TRIGGER tsvectorupdate_posts BEFORE INSERT OR UPDATE
+ON posts FOR EACH ROW EXECUTE FUNCTION posts_tsvector_trigger();
+
+
+
+
+-- --------  USERS
+
+-- Add a TSVECTOR column to the users table
+ALTER TABLE users ADD COLUMN tsv TSVECTOR;
+
+-- Update the users table to set the tsv column
+UPDATE users SET tsv = to_tsvector('english', coalesce(email, '') || ' ' || coalesce(username, ''));
+
+-- Create a GIN index on the tsv column
+CREATE INDEX users_tsv_idx ON users USING GIN(tsv);
+
+-- Create a trigger function for the users table
+CREATE OR REPLACE FUNCTION users_tsvector_trigger() RETURNS trigger AS $$
+BEGIN
+  NEW.tsv := to_tsvector('english', coalesce(NEW.email, '') || ' ' || coalesce(NEW.username, ''));
+  RETURN NEW;
+END
+$$ LANGUAGE plpgsql;
+
+-- Create a trigger for the users table
+CREATE TRIGGER tsvectorupdate_users BEFORE INSERT OR UPDATE
+ON users FOR EACH ROW EXECUTE FUNCTION users_tsvector_trigger();
+
+
+
+
+---- COMMENTS
+
+
+-- Add a TSVECTOR column to the comments table
+ALTER TABLE comments ADD COLUMN tsv TSVECTOR;
+
+-- Update the comments table to set the tsv column
+UPDATE comments SET tsv = to_tsvector('english', coalesce(text, ''));
+
+-- Create a GIN index on the tsv column
+CREATE INDEX comments_tsv_idx ON comments USING GIN(tsv);
+
+-- Create a trigger function for the comments table
+CREATE OR REPLACE FUNCTION comments_tsvector_trigger() RETURNS trigger AS $$
+BEGIN
+  NEW.tsv := to_tsvector('english', coalesce(NEW.text, ''));
+  RETURN NEW;
+END
+$$ LANGUAGE plpgsql;
+
+-- Create a trigger for the comments table
+CREATE TRIGGER tsvectorupdate_comments BEFORE INSERT OR UPDATE
+ON comments FOR EACH ROW EXECUTE FUNCTION comments_tsvector_trigger();
+
+
+
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
+-- GIN indexes using pg_trgm
+-- For posts (title and description)
+CREATE INDEX posts_title_description_trgm_idx ON posts USING GIN ((title || ' ' || description) gin_trgm_ops);
+
+-- For users (email and username)
+CREATE INDEX users_email_username_trgm_idx ON users USING GIN ((email || ' ' || username) gin_trgm_ops);
+
+-- For comments (text)
+CREATE INDEX comments_text_trgm_idx ON comments USING GIN (text gin_trgm_ops);
