@@ -17,22 +17,16 @@ class ProfileController extends Controller
      */
     public function show($username)
     {
-        // Check if the user is logged in.
         if (!Auth::check()) {
-            // Not logged in, redirect to login.
             return redirect('/login');
-
         } else {
-            // The user is logged in.
-                
-            // Fetch the user based on the username
-            $user = User::where('username', $username)->firstOrFail();
-
+            $user = User::with('posts')->where('username', $username)->firstOrFail();
             return view('profiles.show', [
                 'user' => $user
             ]);
         }
     }
+
 
     public function edit($username)
     {

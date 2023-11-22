@@ -16,14 +16,32 @@
                 <strong>Date of Birth: {{ $user->date_of_birth }}</strong>
                 <strong>Reputation: {{ $user->reputation }}</strong>
             </div>
+            
+            @if(Auth::user()->id == $user->id || Auth::user()->isAdmin()->exists())
+                <a class="button" href="{{ route('profile.edit', ['username' => $user->username]) }}" class="btn">Edit Profile</a>
+            @endif
 
-            <a class="button" href="{{ route('profile.edit', ['username' => Auth::user()->username]) }}" class="btn">Edit Profile</a>
 
             <!-- resources/views/profiles/show.blade.php -->
+
+            <div class="user-posts">
+                <h3>Posts</h3>
+                @forelse ($user->posts as $post)
+                    <div class="post">
+                        <h4>{{ $post->title }}</h4>
+                        <p>{{ $post->content }}</p>
+                        <!-- Add more post details if needed -->
+                    </div>
+                @empty
+                    <p>No posts to display.</p>
+                @endforelse
+            </div>
 
 
             <a class="button" href="{{ route('login') }}" class="btn">Go Back</a>
         </div>
     </div>
 @endsection
+
+
 

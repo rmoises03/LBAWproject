@@ -235,3 +235,21 @@ body {
   color: #777;
   cursor: not-allowed;
 }
+
+.user-posts {
+  margin-top: 20px;
+}
+
+.post {
+  background-color: #f8f8f8;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.post h4 {
+  margin-top: 0;
+}
+
+/* Add more CSS as needed to style the posts */
