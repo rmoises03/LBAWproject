@@ -100,7 +100,7 @@ class AdminController extends Controller
 
         $block->delete();
 
-        return response()->json(['message' => 'Ok. User unblocked.'], 204);
+        return redirect()->back()->with('success', 'User unblocked successfully.');
     }
     
 
