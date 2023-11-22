@@ -7,29 +7,35 @@
 @section('content')
     <h2>Dashboard</h2>
 
-   
-
-    <h3>Users</h3>
-    <div style="max-height: 400px; overflow-y: auto;">
-        @foreach ($users as $user)
-            <div class="user-item">
-                <a class="" href="{{ route('profile.show', ['username' => $user->username]) }}" class="btn">{{ $user->username}} </a>
-                    - {{ $user->isAdmin()->exists() ? 'admin' : 'user' }}
-                <form method="POST" action="{{ route('admin.toggleAdmin', $user) }}">
-                    @csrf
-                    <button type="submit" class="toggle-button">
-                        {{ $user->isAdmin()->exists() ? 'Remove Admin' : 'Make Admin' }}
-                    </button>
-                </form>
-
-                @if($user->isBlocked())
-                <button onclick="openUnblockOverlay({{ $user->id }})">Unblock User</button>
-            @else
-                <button onclick="openBlockOverlay({{ $user->id }})">Block User</button>
-            @endif
+    <div class="user-section">
+        <div class="section-wrapper">
+            <h3>Users</h3>
+            <div class="user-list">
+                @foreach ($users as $user)
+                    <div class="user-item">
+                        <a href="{{ route('profile.show', ['username' => $user->username]) }}" class="user-link">{{ $user->username }}</a>
+                        - {{ $user->isAdmin()->exists() ? 'admin' : 'user' }}
+        
+                        <form method="POST" action="{{ route('admin.toggleAdmin', $user) }}" class="admin-form">
+                            @csrf
+                            <button type="submit" class="toggle-button">
+                                {{ $user->isAdmin()->exists() ? 'Remove Admin' : 'Make Admin' }}
+                            </button>
+                        </form>
+        
+                        @if($user->isBlocked())
+                            <button onclick="openUnblockOverlay({{ $user->id }})" class="block-button">Unblock User</button>
+                        @else
+                            <button onclick="openBlockOverlay({{ $user->id }})" class="block-button">Block User</button>
+                        @endif
+                    </div>
+                @endforeach
             </div>
-        @endforeach
+            <button id="addUserButton">Add New User</button>
+        </div>
+       
     </div>
+    
 
     <!-- Block User Overlay -->
     <div id="blockUserOverlay" class="overlay" style="display: none;">
@@ -59,7 +65,7 @@
 
 
 
-    <button id="addUserButton">Add New User</button>
+    
 
     <div id="addUserOverlay" class="overlay">
         <div class="overlay-content">

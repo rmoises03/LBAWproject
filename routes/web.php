@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AdminController;
-
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ProfileController;
@@ -99,4 +99,4 @@ Route::middleware(['admin'])->controller(AdminController::class)->group(function
 
 
 
-
+Route::get('/search', [SearchController::class, 'index'])->name('search.results');
