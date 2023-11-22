@@ -161,7 +161,7 @@ function addEventListeners() {
     let section = article.parentElement;
     section.insertBefore(new_post, article);
   
-    // Focus on adding an comment to the new post
+    // Focus on adding a comment to the new post
     new_post.querySelector('[type=text]').focus();
   }
   
