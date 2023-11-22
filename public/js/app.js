@@ -104,28 +104,6 @@ function addEventListeners() {
     }*/
     event.preventDefault();
   }
-
-  function showCreatePostForm() {
-    let createPostForm = document.getElementById('create_post_form');
-    createPostForm.style.display = 'block';
-
-    let postCreatorButton = document.querySelector('#create_new_post button.create_new_post');
-    postCreatorButton.innerText = 'Cancel';
-
-    postCreatorButton.removeEventListener('click', showCreatePostForm);
-    postCreatorButton.addEventListener('click', hideCreatePostForm);
-  }
-
-  function hideCreatePostForm() {
-    let createPostForm = document.getElementById('create_post_form');
-    createPostForm.style.display = 'none';
-    
-    let postCreatorButton = document.querySelector('#create_new_post button.create_new_post');
-    postCreatorButton.textContent = 'Create New Post';
-
-    postCreatorButton.removeEventListener('click', hideCreatePostForm);
-    postCreatorButton.addEventListener('click', showCreatePostForm);
-  }
   
   function commentUpdatedHandler() {
     let comment = JSON.parse(this.responseText);
@@ -238,10 +216,13 @@ function addEventListeners() {
   
 
   function toggleCreatePostForm() {
-    var form = document.getElementById('create_new_post');
+    var form = document.getElementById('create_new_post_form');
+    let button = document.getElementById('create_new_post_button');
     if (form.style.display === 'none') {
         form.style.display = 'block';
+        button.textContent = 'Cancel';
     } else {
         form.style.display = 'none';
+        button.textContent = 'Create New Post';
     }
 }

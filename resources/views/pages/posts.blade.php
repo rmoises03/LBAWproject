@@ -1,20 +1,22 @@
 @extends('layouts.app') 
 
 @section('content')
-    {{-- Post Creation Form Toggle Button --}}
-    <button class="create_new_post" onclick="toggleCreatePostForm()">Create New Post</button>
+    <section id="create_post">
+        {{-- Post Creation Form Toggle Button --}}
+        <button id="create_new_post_button" onclick="toggleCreatePostForm()">Create New Post</button>
 
-    {{-- Post Creation Form (Initially Hidden) --}}
-    <article id="create_new_post" style="display: none;">
-        <div id="create_post_form">
+        {{-- Post Creation Form (Initially Hidden) --}}
+        <article id="create_new_post_form" class="post" style="display: none;">
             <form method="POST" action="{{ route('post.create') }}">
                 @csrf
                 <input name="title" type="text" placeholder="Title" required>
                 <textarea name="description" placeholder="Description" required></textarea>
                 <button type="submit">Submit</button>
             </form>
-        </div>
-    </article>
+        </article>
+    </section>
+    
+    
 
     {{-- List of Posts --}}
     <section id="posts">

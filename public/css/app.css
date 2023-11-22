@@ -21,7 +21,7 @@ body {
     margin: 1em;
     justify-self: center;
   }
-  #posts {
+  #posts, #create_post {
     display: flex;
     flex-direction: column;
     grid-template-columns: repeat(3, 1fr);
@@ -29,12 +29,16 @@ body {
     margin-right: 6em;
   }
 
-  #create_new_post {
+  .create_new_post {
     display: flex;
     background-color: #c3dded;
     padding: 1em;
     margin: 1em;
     border-radius: 0.8em;
+  }
+
+  textarea {
+    resize: vertical;
   }
 
   #newPostForm {
@@ -203,7 +207,7 @@ body {
     padding: 1em;
     margin: 1em;
     border-radius: 0.8em;
-    vertical-align: center;
+    vertical-align: middle;
   }
 
   #profile_button {
