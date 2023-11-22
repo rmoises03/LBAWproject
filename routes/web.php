@@ -27,7 +27,9 @@ Route::redirect('/', '/login');
 
 // Posts
 Route::controller(PostController::class)->group(function () {
-    Route::get('/posts', 'listPosts')->name('posts');
+    Route::get('/post', 'listPosts')->name('posts');
+    Route::post('/posts', 'create')->name('post.create');
+    Route::delete('/posts/{id}', 'delete')->name('post.delete');
     Route::get('/posts/{id}', 'show');
 });
 

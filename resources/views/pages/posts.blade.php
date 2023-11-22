@@ -1,22 +1,36 @@
-@extends('layouts.app')
-
-@section('title', 'Posts')
+@extends('layouts.app') 
 
 @section('content')
+    {{-- Post Creation Form Toggle Button --}}
+    <button class="create_new_post" onclick="toggleCreatePostForm()">Create New Post</button>
 
-<section id="posts">
-    <article id="create_new_post">
-        <button class="create_new_post" onclick="showCreatePostForm()">Create New Post</button>
-        <div id="create_post_form" style="display: none;">
-            <form id="newPostForm">
-                <div id="input_container"></div>
-                <input name="title" type="Text" placeholder="Title" required></input>
-                <textarea name="description" type="Text" placeholder="Description" required></textarea>
-                <input id="user_id" name="user_id" type="hidden" value="{{ Auth::user()->id }}"></input>
-                <button type="submit" onsubmit="sendCreatePostRequest(event)">Submit</button>
+    {{-- Post Creation Form (Initially Hidden) --}}
+    <article id="create_new_post" style="display: none;">
+        <div id="create_post_form">
+            <form method="POST" action="{{ route('post.create') }}">
+                @csrf
+                <input name="title" type="text" placeholder="Title" required>
+                <textarea name="description" placeholder="Description" required></textarea>
+                <button type="submit">Submit</button>
             </form>
+        </div>
     </article>
-    @each('partials.post', $posts, 'post')
-</section>
 
+    {{-- List of Posts --}}
+    <section id="posts">
+        @foreach ($posts as $post)
+            <article class="post">
+                <h2>{{ $post->title }}</h2>
+                <p>{{ $post->description }}</p>
+                {{-- Delete Button (shown only if authorized) --}}
+                @can('delete', $post)
+                    <form method="POST" action="{{ route('post.delete', $post->id) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Delete Post</button>
+                    </form>
+                @endcan
+            </article>
+        @endforeach
+    </section>
 @endsection

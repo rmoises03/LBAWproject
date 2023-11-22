@@ -236,3 +236,12 @@ function addEventListeners() {
 
   addEventListeners();
   
+
+  function toggleCreatePostForm() {
+    var form = document.getElementById('create_new_post');
+    if (form.style.display === 'none') {
+        form.style.display = 'block';
+    } else {
+        form.style.display = 'none';
+    }
+}
