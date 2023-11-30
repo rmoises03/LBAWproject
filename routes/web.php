@@ -100,6 +100,7 @@ Route::middleware(['admin'])->controller(AdminController::class)->group(function
     Route::post('/admin/login', 'adminLogin');
 });
 
+Route::controller(SearchController::class)->group(function () {
+    Route::get('/search', 'global_search')->name('search.results');
+});
 
-
-Route::get('/search', [SearchController::class, 'index'])->name('search.results');
