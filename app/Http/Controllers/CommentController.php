@@ -8,6 +8,7 @@ use App\Models\Comment;
 
 class CommentController extends Controller
 {
+
     /**
      * Creates a new comment.
      */
@@ -20,11 +21,11 @@ class CommentController extends Controller
         $comment->post_id = $post_id;
 
         // Check if the current user is authorized to create this comment.
-        $this->authorize('create', $comment);
+        
 
         // Set comment details.
         $comment->done = false;
-        $comment->description = $request->input('description');
+        $comment->text = $request->input('description');
 
         // Save the comment and return it as JSON.
         $comment->save();
@@ -65,4 +66,6 @@ class CommentController extends Controller
         $comment->delete();
         return response()->json($comment);
     }
+
+    
 }

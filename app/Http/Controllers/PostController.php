@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Comment;
 
 class PostController extends Controller
 {
@@ -26,6 +27,20 @@ class PostController extends Controller
         // Use the pages.post template to display the post.
         return view('pages.post', [
             'post' => $post
+        ]);
+    }
+
+    /**
+     * Show the post for a given id.
+     */
+    public function open(string $id): View
+    {
+        // Get the post.
+        $post = Post::findOrFail($id);
+        $comments = Comment::where('post_id', $id)->orderBy('id')->get();
+        return view('posts.post_item', [
+            'post' => $post,
+            'comments' => $comments
         ]);
     }
 

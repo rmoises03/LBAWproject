@@ -1,0 +1,81 @@
+
+/* ==========   INDIVIDUAL POST     ========*/
+.container-post {
+  max-width: 900px;
+  margin: 50px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.post-info {
+  margin-top: 20px;
+}
+
+.post-info h1 {
+  color: #333;
+}
+
+.post-info p {
+  color: #666;
+}
+
+.post-info strong {
+  display: block;
+  margin-top: 10px;
+}
+
+.post-info label {
+  display: block;
+  margin-top: 10px;
+}
+
+.post-info input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+
+.post-info button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.post-info button:hover {
+  background-color: #45a049;
+}
+
+.post-info .error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+.post-body {
+  max-height: 500px;
+  overflow-y: auto;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.container-comment {
+  max-width: 900px;
+  margin: 50px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.comment-item {
+  margin-top: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+

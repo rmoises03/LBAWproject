@@ -31,6 +31,8 @@ Route::controller(PostController::class)->group(function () {
     Route::post('/posts', 'create')->name('post.create');
     Route::delete('/posts/{id}', 'delete')->name('post.delete');
     Route::get('/posts/{id}', 'show');
+    Route::get('/posts/{id}', 'open')->name('post.open');
+    Route::get('/posts/{id}/edit', 'edit')->name('post.edit');
 });
 
 
@@ -44,6 +46,7 @@ Route::controller(PostController::class)->group(function () {
 Route::controller(CommentController::class)->group(function () {
     Route::get('/posts/{post_id}/comments', 'list');
     Route::get('/posts/{post_id}/comments/{id}', 'show');
+    Route::post('/posts/{post_id}/comments', 'create')->name('comment.create');
 });
 
 // API - COMMENTS
