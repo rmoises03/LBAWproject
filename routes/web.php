@@ -46,7 +46,7 @@ Route::controller(PostController::class)->group(function () {
 Route::controller(CommentController::class)->group(function () {
     Route::get('/posts/{post_id}/comments', 'list');
     Route::get('/posts/{post_id}/comments/{id}', 'show');
-    Route::post('/posts/{post_id}/comments', 'create')->name('comment.create');
+    Route::post('/posts/{post_id}/comments/{parent_comment_id}', 'create')->name('comment.create');
 });
 
 // API - COMMENTS

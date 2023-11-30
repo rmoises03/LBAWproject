@@ -28,7 +28,7 @@
                 @foreach ($comments as $comment)
                     <div class="comment-item">
                         <div class="comment-header">
-                            <h4>{{ $comment->user->name }}</h4>
+                            <h4></h4>
                             <a href="{{ route('profile.show', ['username' => $comment->user->username]) }}" class="user-link">{{ $comment->user->username }}</a> 
                             <span class="comment-date">{{ $comment->created_at }}</span>
                         </div>
@@ -42,7 +42,7 @@
         
         <div class="add-comment">
             <h2>Add Comment</h2>
-            <form method="POST" action="{{ route('comment.create', ['post_id' => $post->id]) }}">
+            <form method="POST" action="{{ route('comment.create', ['post_id' => $post->id, 'parent_comment_id' => '0']) }}">
                 @csrf
                 <input type="hidden" name="post_id" value="{{ $post->id }}">
                 <textarea name="comment" required></textarea><br>

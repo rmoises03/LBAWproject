@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 use App\Models\Comment;
+
 
 class CommentController extends Controller
 {
@@ -12,7 +13,7 @@ class CommentController extends Controller
     /**
      * Creates a new comment.
      */
-    public function create(Request $request, $post_id)
+    public function create(Request $request, $post_id,$parent_comment_id)
     {
         // Create a blank new comment.
         $comment = new Comment();
@@ -20,12 +21,10 @@ class CommentController extends Controller
         // Set comment's post.
         $comment->post_id = $post_id;
 
-        // Check if the current user is authorized to create this comment.
-        
-
-        // Set comment details.
-        $comment->done = false;
-        $comment->text = $request->input('description');
+    
+        $comment->parent_comment_id = NULL;
+        $comment->user_id = Auth::id();
+        $comment->text = $request->input('comment');
 
         // Save the comment and return it as JSON.
         $comment->save();
