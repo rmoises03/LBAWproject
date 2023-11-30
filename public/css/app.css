@@ -199,7 +199,7 @@ body {
     align-content: center;
   }
 
-  #admin_button, #logout_button, #profile_button {
+  #admin_button, #logout_button, #profile_button{
     display: flex;
     background-color: #4d5cca;
     margin: 1em;
@@ -421,4 +421,13 @@ body {
 .toggle-button, .block-button {
   display: inline-block; 
 
+}
+
+.mission,
+.ecosystem,
+.features,
+.join,
+.contacts {
+    margin-left: 40px;
+    margin-right: 40px;
 }

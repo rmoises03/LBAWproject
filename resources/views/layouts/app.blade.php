@@ -37,6 +37,7 @@
                         <a id="profile_button" class="button" href="{{ route('profile.show', ['username' => Auth::user()->username]) }}" class="btn">{{Auth::user()->username}}</a>
                     @endif
                 </div>
+                <a id="aboutus_button" class="button" href="{{ route('about') }}" class="btn">About Us</a>
             </header>
             <section id="content">
                 @yield('content')

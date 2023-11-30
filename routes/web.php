@@ -103,3 +103,8 @@ Route::middleware(['admin'])->controller(AdminController::class)->group(function
 
 
 Route::get('/search', [SearchController::class, 'index'])->name('search.results');
+
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
+
