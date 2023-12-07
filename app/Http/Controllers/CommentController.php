@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Comment;
+use App\Models\Post;
 
 
 class CommentController extends Controller
@@ -28,7 +29,12 @@ class CommentController extends Controller
 
         // Save the comment and return it as JSON.
         $comment->save();
-        return response()->json($comment);
+        $post = Post::findOrFail($post_id);
+        $comments = Comment::where('post_id', $post_id)->orderBy('id')->get();
+        return view('posts.post_item', [
+            'post' => $post,
+            'comments' => $comments
+        ]);
     }
 
     /**
