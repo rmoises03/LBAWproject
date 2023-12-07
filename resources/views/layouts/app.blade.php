@@ -23,7 +23,7 @@
     <body>
         <main>
             <header>
-                <h1><a href="{{ url('/posts') }}">NEWS4U!</a></h1>
+                <h1><a href="{{ url('/posts') }}">NEWS4U</a></h1>
                 <form action="{{ route('search.results') }}" method="GET">
                     <input type="text" name="query" placeholder="Search...">
                     <button type="submit">Search</button>
@@ -35,9 +35,11 @@
                     @if (Auth::check())
                         <a id="logout_button" class="button" href="{{ url('/logout') }}"> Logout </a>
                         <a id="profile_button" class="button" href="{{ route('profile.show', ['username' => Auth::user()->username]) }}" class="btn">{{Auth::user()->username}}</a>
+                    @else
+                        <a id="login_button" class="button" href="{{ url('/login') }}"> Login </a>
                     @endif
+                    <a id="aboutus_button" class="button" href="{{ route('about') }}" class="btn">About Us</a>
                 </div>
-                <a id="aboutus_button" class="button" href="{{ route('about') }}" class="btn">About Us</a>
             </header>
             <section id="content">
                 @yield('content')

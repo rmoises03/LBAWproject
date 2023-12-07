@@ -28,7 +28,6 @@
 
     <div class="contacts">
         <h2>Contact Us</h2>
-        <p>Email: info@example.com</p>
-        <p>Phone: +123 456 7890</p>
+        <p>Email: news4u@gmail.com</p>
     </div>
 @endsection
