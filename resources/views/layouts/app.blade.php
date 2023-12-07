@@ -38,8 +38,8 @@
                     @else
                         <a id="login_button" class="button" href="{{ url('/login') }}"> Login </a>
                     @endif
+                    <a id="aboutus_button" class="button" href="{{ route('about') }}" class="btn">About Us</a>
                 </div>
-                <a id="aboutus_button" class="button" href="{{ route('about') }}" class="btn">About Us</a>
             </header>
             <section id="content">
                 @yield('content')
