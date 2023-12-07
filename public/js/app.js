@@ -226,3 +226,26 @@ function addEventListeners() {
         button.textContent = 'Create New Post';
     }
 }
+
+function upvotePost(postId) {
+  $.post('/posts/' + postId + '/upvote', {"_token": "{{ csrf_token() }}"}, function() {
+      refreshVotes(postId);
+  });
+}
+
+
+function downvotePost(postId) {
+  $.post('/posts/' + postId + '/downvote', {"_token": "{{ csrf_token() }}"}, function() {
+      refreshVotes(postId);
+  });
+}
+
+
+function refreshVotes(postId) {
+$.getJSON('{{ url("posts") }}/' + postId + '/upvotes', function(data) {
+  $("#upvotes-count-" + postId).text(data.upvotes);
+});
+$.getJSON('{{ url("posts") }}/' + postId + '/downvotes', function(data) {
+  $("#downvotes-count-" + postId).text(data.downvotes);
+});
+}

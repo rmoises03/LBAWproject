@@ -3,9 +3,14 @@
 @extends('layouts.app')
 
 @section('content')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+       
+    </script>
     <link rel="stylesheet" href="{{ asset('css/posts/individual_post.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
     <div class="container-post">
         <div class="post-info">
             <h1>{{ $post->title }}</h1>
@@ -18,16 +23,33 @@
             @endif
         </div>
     </div>
+    @if (Auth::check() && Auth::user()->id == $post->user_id)
+    <div class="">
+        <a href="{{ route('post.edit', $post->id) }}" class="button">Edit Post</a>
+        <!-- The delete button can be a form to send a DELETE request -->
+        <form action="{{ route('post.delete', $post->id) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="button">Delete Post</button>
+        </form>
+    </div>
+@endif
+
     <div class="post-data">
         <div>
-            Upvotes : <p> {{$post->upvotes}} </p> 
-            Downvotes : <p> {{$post->downvotes}} </p> 
+            Upvotes: <span id="upvotes-count-{{ $post->id }}">{{ $post->upvotes }}</span>
+            Downvotes: <span id="downvotes-count-{{ $post->id }}">{{ $post->downvotes }}</span>
+            <p>Posted on: {{ \Carbon\Carbon::parse($post->created_at)->format('F d, Y') }}</p>
+            <p>Author: {{ $post->user->name }}</p> <!-- Display author's name -->
         </div>
     </div>
-    <div class="float-right interactive-post-buttons">
-       <a href={{route('post.upvote', ['post_id' => $post->id])}} ><button class="bi bi-arrow-up"></button> </a>
-        <button class="bi bi-arrow-down"></button>
+    
+    <div class="interactive-post-buttons">
+        <button onclick="upvotePost({{ $post->id }})" class="bi bi-arrow-up"></button>
+        <button onclick="downvotePost({{ $post->id }})" class="bi bi-arrow-down"></button>
     </div>
+    
+
     
     
  
