@@ -35,6 +35,8 @@
                     @if (Auth::check())
                         <a id="logout_button" class="button" href="{{ url('/logout') }}"> Logout </a>
                         <a id="profile_button" class="button" href="{{ route('profile.show', ['username' => Auth::user()->username]) }}" class="btn">{{Auth::user()->username}}</a>
+                    @else
+                        <a id="login_button" class="button" href="{{ url('/login') }}"> Login </a>
                     @endif
                 </div>
                 <a id="aboutus_button" class="button" href="{{ route('about') }}" class="btn">About Us</a>
