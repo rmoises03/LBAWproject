@@ -115,4 +115,15 @@ class PostController extends Controller
         $post->delete();
         return redirect()->route('posts');
     }
+
+
+    public function upvote_post($post_id){
+        $post = Post::findOrFail($post_id);
+        $post->upvotes += 1;
+    }
+
+    public function downvote_post($post_id){
+        $post = Post::findOrFail($post_id);
+        $post->downvotes += 1;
+    }
 }

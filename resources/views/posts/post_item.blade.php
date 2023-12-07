@@ -4,7 +4,8 @@
 
 @section('content')
     <link rel="stylesheet" href="{{ asset('css/posts/individual_post.css') }}">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <div class="container-post">
         <div class="post-info">
             <h1>{{ $post->title }}</h1>
@@ -17,7 +18,18 @@
             @endif
         </div>
     </div>
-
+    <div class="post-data">
+        <div>
+            Upvotes : <p> {{$post->upvotes}} </p> 
+            Downvotes : <p> {{$post->downvotes}} </p> 
+        </div>
+    </div>
+    <div class="float-right interactive-post-buttons">
+       <a href={{route('post.upvote', ['post_id' => $post->id])}} ><button class="bi bi-arrow-up"></button> </a>
+        <button class="bi bi-arrow-down"></button>
+    </div>
+    
+    
  
 
 

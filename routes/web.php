@@ -33,6 +33,9 @@ Route::controller(PostController::class)->group(function () {
     Route::get('/posts/{id}', 'show');
     Route::get('/posts/{id}', 'open')->name('post.open');
     Route::get('/posts/{id}/edit', 'edit')->name('post.edit');
+    Route::get('posts/{post_id}/upvotes','get_upvotes')->name('get_upvotes');
+    Route::post('posts/{post_id}/upvote','upvote_post')->name('post.upvote');
+
 });
 
 
@@ -107,8 +110,6 @@ Route::controller(SearchController::class)->group(function () {
     Route::get('/search', 'global_search')->name('search.results');
 });
 
-
-Route::get('/search', [SearchController::class, 'index'])->name('search.results');
 
 Route::get('/about', function () {
     return view('about');
