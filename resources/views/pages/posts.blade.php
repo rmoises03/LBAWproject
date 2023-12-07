@@ -22,7 +22,9 @@
     <section id="posts">
         @foreach ($posts as $post)
             <article class="post">
-                <h2>{{ $post->title }}</h2>
+                <a href="{{ route('post.open', ['id' => $post->id]) }}">
+                    <h2>{{ $post->title }}</h2>
+                    </a>
                 <p>{{ $post->description }}</p>
                 {{-- Delete Button (shown only if authorized) --}}
                 @can('delete', $post)

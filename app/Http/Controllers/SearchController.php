@@ -9,20 +9,21 @@ use App\Models\Comment;
 
 class SearchController extends Controller
 {
-    public function index(Request $request)
-{
-    $query = $request->input('query');
+    public function global_search(Request $request)
+    {
+        $query = $request->input('query');
+        $ftsQuery = pg_escape_string($query); // Properly escape the query string for FTS
 
-    // Search in posts using pg_trgm
-    $posts = Post::whereRaw("title || ' ' || description ILIKE ?", ['%' . $query . '%'])->get();
+        // Full-Text Search in posts (for title and description)
+        $posts = Post::whereRaw("tsv @@ to_tsquery('english', ?)", [$ftsQuery])->get();
 
-    // Search in users using pg_trgm
-    $users = User::whereRaw("email ILIKE ? OR username ILIKE ?", ['%' . $query . '%', '%' . $query . '%'])->get();
+        // Full-Text Search in comments (for comment text)
+        $comments = Comment::whereRaw("tsv @@ to_tsquery('english', ?)", [$ftsQuery])->get();
 
-    // Search in comments using pg_trgm
-    $comments = Comment::whereRaw("text ILIKE ?", ['%' . $query . '%'])->get();
+        // Trigram search in users (for name and username)
+        // using ILIKE for partial and case-insensitive matching
+        $users = User::whereRaw("name ILIKE ? OR username ILIKE ?", ['%' . $query . '%', '%' . $query . '%'])->get();
 
-    return view('search.results', compact('posts', 'users', 'comments'));
-}
-
+        return view('search.results', compact('posts', 'users', 'comments'));
+    }
 }
