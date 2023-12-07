@@ -23,7 +23,7 @@
     <body>
         <main>
             <header>
-                <h1><a href="{{ url('/posts') }}">NEWS4U!</a></h1>
+                <h1><a href="{{ url('/posts') }}">NEWS4U</a></h1>
                 <form action="{{ route('search.results') }}" method="GET">
                     <input type="text" name="query" placeholder="Search...">
                     <button type="submit">Search</button>
