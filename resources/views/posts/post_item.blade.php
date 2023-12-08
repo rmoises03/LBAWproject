@@ -34,30 +34,39 @@
                     <span>Downvotes: <span id="downvotes-count-{{ $post->id }}">{{ $post->downvotes }}</span>
                 </div>
             </div>
-            <div>
-                
-                    <div class="interactive-post-buttons">
-                        <span>
-                            <button onclick="upvotePost({{ $post->id }})" class="bi bi-arrow-up"></button>
-                        </span>
-                        <span>
-                            <button onclick="downvotePost({{ $post->id }})" class="bi bi-arrow-down"></button>
-                        </span>
-                    </div>
+        
+
+            <div class="interactive-post-buttons">
+                <span>
+                    <button onclick="upvotePost({{ $post->id }})" class="bi bi-arrow-up"></button>
+                </span>
+                <span>
+                    <button onclick="downvotePost({{ $post->id }})" class="bi bi-arrow-down"></button>
+                </span>
             </div>
         </div>
         @if (Auth::check() && Auth::user()->id == $post->user_id)
-        <div class="">
+        <div class="post-data">
             <button type="button" onclick="openEditOverlay()">Edit Post</button>
             <!-- The delete button can be a form to send a DELETE request -->
             <button type="button" onclick="openDeleteOverlay('{{ route('post.delete', $post->id) }}')">Delete Post</button>
         </div>
         @endif
     </div>
+
     
+    <div class="comment-section">
+        <div class="add-comment">
+            <h2>Add Comment</h2>
+            <form method="POST" action="{{ route('comment.create', ['post_id' => $post->id, 'parent_comment_id' => '0']) }}">
+                @csrf
+                <textarea name="comment" required placeholder="Write a comment"></textarea><br>
+                <button type="submit">Add Comment</button>
+            </form>
+        </div>
+    </div>
 
     <div class="comment-section">
-        <div class="post-flex-container">
             <h2>Comments</h2>
             <div class="comment-list">
                 @foreach ($comments as $comment)
@@ -66,19 +75,13 @@
                     @endif
                 @endforeach
             </div>
-        </div>
         
     </div>
     
-    <div class="add-comment">
-        <h2>Add Comment</h2>
-        <form method="POST" action="{{ route('comment.create', ['post_id' => $post->id, 'parent_comment_id' => '0']) }}">
-            @csrf
-            <textarea name="comment" required placeholder="Write a comment"></textarea><br>
-            <button type="submit">Add Comment</button>
-        </form>
-    </div>
     
+    
+
+
 
     <div id="deletePostOverlay" class="overlay" style="display: none;">
         <div class="overlay-content">
