@@ -43,7 +43,13 @@
                 <div class="scrollable-content">
                     @forelse ($user->comments as $comment)
                         <div class="comment">
-                            <p>{{ $comment->post->title ?? 'Post not found' }}</p>
+                            @if ($comment->post)
+                                <a href="{{ route('post.open', ['id' => $comment->post->id]) }}">
+                                    <p>{{ $comment->post->title }}</p>
+                                </a>
+                            @else
+                                <p>Post not found</p>
+                            @endif
                             <p><strong>{{ $comment->text }}</strong></p>
                         </div>
                     @empty
