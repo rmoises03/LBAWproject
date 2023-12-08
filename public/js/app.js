@@ -271,3 +271,12 @@ function openEditOverlay() {
 function closeEditOverlay() {
   document.getElementById('editPostOverlay').style.display = 'none';
 }
+
+document.getElementById('closeSidebar').onclick = function() {
+  document.getElementById('sidebarMenu').style.width = '0';
+}
+
+document.getElementById('menuToggle').onclick = function() {
+  var sidebar = document.getElementById('sidebarMenu');
+  sidebar.style.width = sidebar.style.width === '250px' ? '0' : '250px';
+}

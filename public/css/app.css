@@ -2,25 +2,59 @@ body {
     background-color: #ffffff;
     color: #4d5cca;
   }
+  
   main > header {
     display: grid;
-    grid-template-columns: 1fr auto auto;
+    grid-template-columns: 1fr 2fr 1fr; 
     align-items: center;
     background-color: #afc2e7;
     padding: 1em;
     margin: 1em;
-  }
-  main > header h1 {
-    margin: 0;
-  }
+}
+main > header h1 {
+  margin: 0;
+  justify-self: start; 
+}
   main > header a.button {
     margin: 1em;
     justify-self: center;
   }
   main > header span {
-    margin: 1em;
-    justify-self: center;
+      margin: 1em;
+      justify-self: center;
+    }
+    
+
+    main > header form {
+      justify-self: center; 
+      width: 100%; 
+      max-width: 700px; 
+      display: flex;
+      gap: 10px; 
   }
+
+  main > header form input[type="text"] {
+      width: 100%; 
+      padding: 8px;
+      border: 2px solid #4d5cca; 
+      border-radius: 25px; 
+      outline: none;
+      color: #4d5cca;
+      
+  }
+  main > header form input[type="text"]:focus {
+    border-color: #3644b1; /* Darker blue border on focus */
+    box-shadow: 0 0 10px rgba(77, 92, 204, 0.5); /* Optional: Add a glow effect */
+}
+
+
+  main > header #menuToggle {
+    justify-self: end; 
+    margin: 0; 
+}
+
+
+
   #posts, #create_post {
     display: flex;
     flex-direction: column;
@@ -431,4 +465,77 @@ body {
     margin-left: 40px;
     margin-right: 40px;
 }
+
+.sidebar {
+  height: 100%;
+  width: 0;  /* Initial width is 0 to keep it hidden */
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: #afc2e7;
+  overflow-x: hidden;  /* Prevent horizontal scroll */
+  transition: 0.5s;  /* Smooth transition for opening/closing */
+  padding-top: 60px;  /* Adjust padding as needed */
+}
+
+.sidebar a {
+  padding: 10px 15px;  /* Padding for each link/button */
+  text-decoration: none;
+  font-size: 18px;  /* Adjust font size as needed */
+  color: white;  /* Text color */
+  display: block;  /* This makes each link take a full line */
+  border-bottom: 1px solid #ddd;  /* Optional: adds a separator between buttons */
+}
+
+.sidebar a:hover {
+  color: #f1f1f1;  /* Hover color change */
+}
+
+#menuToggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;  /* Adjust to position the toggle button */
+  font-size: 24px;  /* Adjust the font size for the toggle button */
+  cursor: pointer;  /* Change cursor to pointer */
+  color: white;  /* Color of the toggle button */
+}
+
+#sidebarMenu #buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+#sidebarMenu #buttons a.button {
+  display: flex; /* Use flexbox for alignment */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  margin-bottom: 10px; /* Space between buttons */
+  background-color: #4d5cca ; /* Button background color */
+  color: white; /* Button text color */
+  padding: 10px 15px; /* Adjust padding as needed */
+  border-radius: 4px; /* Rounded corners for buttons */
+  text-decoration: none; /* Remove underline from links */
+  height: 40px; /* Adjust height as needed */
+}
+
+#sidebarMenu #buttons a.button:hover {
+  background-color: #3644b1; 
+}
+
+.close-sidebar {
+  position: absolute;
+  top: 10px;  /* Adjust as necessary */
+  right: 15px; /* Adjust as necessary */
+  font-size: 30px; /* Adjust as necessary */
+  color: white; /* Adjust as necessary */
+  cursor: pointer;
+}
+
+/* Optionally, style for hover effect */
+.close-sidebar:hover {
+  color: #f1f1f1;
+}
+
+
 
