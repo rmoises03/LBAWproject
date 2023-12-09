@@ -3,6 +3,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="container-profile">
     <div>
         <!-- profiles/edit.blade.php -->
         <h1>Edit Profile</h1>
@@ -39,4 +40,5 @@
             <button type="submit">Save Changes</button>
         </form>
     </div>
+</div>
 @endsection
