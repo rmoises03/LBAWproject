@@ -20,5 +20,4 @@
             @include('posts.comment', ['comment' => $reply, 'depth' => $depth + 1])
         @endforeach
     @endif
-@endif
 </div>
