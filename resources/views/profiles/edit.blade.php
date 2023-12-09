@@ -7,6 +7,22 @@
         <!-- profiles/edit.blade.php -->
         <h1>Edit Profile</h1>
 
+        @if ($message = Session::get('success'))
+            <div class="alert alert-success alert-block">
+                <strong>{{$message}}</strong>
+            </div>
+
+            <img src="{{ asset('images/'.Session::get('image')) }}" />
+        @endif
+
+        <form method="POST" action="{{ route('image.store') }}" enctype="multipart/form-data">
+            @csrf
+            <input type="file" class="form-control" name="image" />
+
+            <button type="submit" class="btn btn-sm">Upload</button>
+        </form>
+        
+
         <form method="POST" action="{{ route('profile.update', ['username' => $user->username]) }}">
             @csrf
             @method('PUT')

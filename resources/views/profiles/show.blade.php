@@ -6,23 +6,7 @@
     <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
 
     <div class="container-profile">
-        <div id="contact" class="container">
-            @if ($message = Session::get('success'))
-                <div class="alert alert-success alert-block">
-                    <strong>{{$message}}</strong>
-                </div>
-
-                <img src="{{ asset('images/'.Session::get('image')) }}" />
-            @endif
-
-            <form method="POST" action="{{ route('image.store') }}" enctype="multipart/form-data">
-                @csrf
-                <input type="file" class="form-control" name="image" />
-
-                <button type="submit" class="btn btn-sm">Upload</button>
-            </form>
-
-        </div>
+        <img src="{{ asset('images/' . $user->profile_image) }}" alt="Profile Picture" class="profile-picture">
         <div class="profile-info">
             <h1>{{ $user->name }}</h1>
             <p>{{ $user->description }}</p>

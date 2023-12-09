@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
@@ -18,9 +19,13 @@ class ImageController extends Controller
         $request->validate([
             'image' => 'required|image|mimes:png,jpg,jpeg|max:2048'
         ]);
-
+    
         $imageName = time().'.'.$request->image->extension();
-
-        $request->image->storeAs('images', $imageName, 's3');
+    
+        // Move the image to the public directory
+        $request->image->move(public_path('images'), $imageName);
+    
+        return back()->with('success', 'Image uploaded Successfully!')
+                     ->with('image', $imageName);
     }
 }
