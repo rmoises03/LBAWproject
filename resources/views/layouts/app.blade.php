@@ -24,10 +24,10 @@
         <main>
             <header>
                 <h1><a href="{{ url('/posts') }}">NEWS4U!</a></h1>
-                <form action="{{ route('search.results') }}" method="GET">
+                <form action="{{ route('search.results') }}" method="GET" id="search_bar">
                     <input type="text" name="query" placeholder="Search...">
                     <button type="submit">Search</button>
-                </form>  
+                </form>
                 <div id="buttons">
                     @if(Auth::check() && Auth::user()->isAdmin()->exists() && !Route::is('admin.dashboard'))
                         <a id="admin_button" class="button" href="{{ route('admin.dashboard') }}">Dashboard</a>
