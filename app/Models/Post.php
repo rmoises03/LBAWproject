@@ -16,7 +16,9 @@ class Post extends Model
     // Don't add create and update timestamps in database.
     public $timestamps  = false;
 
-    protected $fillable = ['name', 'description', 'user_id'];
+    protected $fillable = ['title', 'description', 'user_id'];
+
+    protected $dates = ['created_at', 'updated_at'];
 
     /**
      * Get the user that owns the post.

@@ -24,8 +24,8 @@
             <article class="post">
                 <a href="{{ route('post.open', ['id' => $post->id]) }}">
                     <h2>{{ $post->title }}</h2>
-                    </a>
-                <p>{{ $post->description }}</p>
+                </a>
+                <p>{{ \Illuminate\Support\Str::limit($post->description, 250, '...') }}</p>
                 {{-- Delete Button (shown only if authorized) --}}
                 @can('delete', $post)
                     <form method="POST" action="{{ route('post.delete', $post->id) }}">
@@ -37,4 +37,5 @@
             </article>
         @endforeach
     </section>
+    
 @endsection

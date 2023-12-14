@@ -23,24 +23,27 @@
     <body>
         <main>
             <header>
-                <h1><a href="{{ url('/posts') }}">NEWS4U!</a></h1>
+                <h1><a href="{{ url('/posts') }}">NEWS4U</a></h1>
                 <form action="{{ route('search.results') }}" method="GET" id="search_bar">
                     <input type="text" name="query" placeholder="Search...">
-                    <button type="submit">Search</button>
                 </form>
-                <div id="buttons">
-                    @if(Auth::check() && Auth::user()->isAdmin()->exists() && !Route::is('admin.dashboard'))
-                        <a id="admin_button" class="button" href="{{ route('admin.dashboard') }}">Dashboard</a>
-                    @endif
-                    @if (Auth::check())
-                        <a id="logout_button" class="button" href="{{ url('/logout') }}"> Logout </a>
-                        <a id="profile_button" class="button" href="{{ route('profile.show', ['username' => Auth::user()->username]) }}" class="btn">{{Auth::user()->username}}</a>
-                    @else
-                        <a id="login_button" class="button" href="{{ url('/login') }}"> Login </a>
-                    @endif
-                    <a id="aboutus_button" class="button" href="{{ route('about') }}" class="btn">About Us</a>
+                <button id="menuToggle" class="button">☰</button> <!-- Menu Toggle Button -->
+                <div id="sidebarMenu" class="sidebar">
+                    <span id="closeSidebar" class="close-sidebar">&times;</span>
+                    <div id="buttons">
+                        @if(Auth::check() && Auth::user()->isAdmin()->exists() && !Route::is('admin.dashboard'))
+                            <a class="button" href="{{ route('admin.dashboard') }}">Dashboard</a>
+                        @endif
+                        @if (Auth::check())
+                            <a class="button" href="{{ url('/logout') }}">Logout</a>
+                            <a class="button" href="{{ route('profile.show', ['username' => Auth::user()->username]) }}">{{Auth::user()->username}}</a>
+                        @else
+                            <a class="button" href="{{ url('/login') }}">Login</a>
+                        @endif
+                        <a class="button" href="{{ route('about') }}">About Us</a>
+                    </div>
                 </div>
-            </header>
+            </header>            
             <section id="content">
                 @yield('content')
             </section>

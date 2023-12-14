@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 // Added to define Eloquent relationships.
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany; 
 
 class Comment extends Model
 {
@@ -31,5 +32,9 @@ class Comment extends Model
     public function post(): BelongsTo
     {
         return $this->belongsTo(Post::class);
+    }
+    public function replies(): HasMany
+    {
+        return $this->hasMany(Comment::class, 'parent_comment_id');
     }
 }

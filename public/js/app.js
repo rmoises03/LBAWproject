@@ -226,3 +226,57 @@ function addEventListeners() {
         button.textContent = 'Create New Post';
     }
 }
+
+function upvotePost(postId) {
+  $.post('/posts/' + postId + '/upvote', {
+      "_token": "{{ csrf_token() }}",
+  }, function(response) {
+      // Handle the response
+  }).fail(function(jqXHR, textStatus, errorThrown) {
+      console.log("Request failed: " + textStatus + ", " + errorThrown);
+  });
+}
+
+
+
+function downvotePost(postId) {
+  $.post('/posts/' + postId + '/downvote', {"_token": "{{ csrf_token() }}"}, function() {
+      refreshVotes(postId);
+  });
+}
+
+
+function refreshVotes(postId) {
+$.getJSON('{{ url("posts") }}/' + postId + '/upvotes', function(data) {
+  $("#upvotes-count-" + postId).text(data.upvotes);
+});
+$.getJSON('{{ url("posts") }}/' + postId + '/downvotes', function(data) {
+  $("#downvotes-count-" + postId).text(data.downvotes);
+});
+}
+
+function openDeleteOverlay(actionUrl) {
+  document.getElementById('deletePostForm').action = actionUrl;
+  document.getElementById('deletePostOverlay').style.display = 'block';
+}
+
+function closeDeleteOverlay() {
+  document.getElementById('deletePostOverlay').style.display = 'none';
+}
+
+function openEditOverlay() {
+  document.getElementById('editPostOverlay').style.display = 'block';
+}
+
+function closeEditOverlay() {
+  document.getElementById('editPostOverlay').style.display = 'none';
+}
+
+document.getElementById('closeSidebar').onclick = function() {
+  document.getElementById('sidebarMenu').style.width = '0';
+}
+
+document.getElementById('menuToggle').onclick = function() {
+  var sidebar = document.getElementById('sidebarMenu');
+  sidebar.style.width = sidebar.style.width === '250px' ? '0' : '250px';
+}

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Log;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Comment;
@@ -115,4 +115,50 @@ class PostController extends Controller
         $post->delete();
         return redirect()->route('posts');
     }
+
+
+    public function upvote_post($post_id){
+        try {
+            $post = Post::findOrFail($post_id);
+            $post->increment('upvotes');
+            return response()->json(['upvotes' => $post->upvotes]);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json(['error' => 'An error occurred'], 500);
+        }
+    }
+    
+    public function downvote_post($post_id){
+        $post = Post::findOrFail($post_id);
+        $post->increment('downvotes');
+        return response()->json(['downvotes' => $post->downvotes]);
+    }
+    
+
+    public function get_upvotes($post_id){
+        $upvotes = Post::findOrFail($post_id)->upvotes;
+        return response()->json(['upvotes' => $upvotes]);
+    }
+    
+    public function get_downvotes($post_id){
+        $downvotes = Post::findOrFail($post_id)->downvotes;
+        return response()->json(['downvotes' => $downvotes]);
+    }
+    
+    public function update(Request $request, $id)
+{
+    $request->validate([
+        'title' => 'required|max:255',
+        'description' => 'required',
+    ]);
+
+    $post = Post::findOrFail($id);
+    $post->title = $request->title;
+    $post->description = $request->description;
+    $post->save();
+
+    return redirect()->route('post.open', ['id' => $id]);
+}
+
+    
 }

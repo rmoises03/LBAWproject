@@ -8,7 +8,11 @@
             <h3>Posts</h3>
             <div class="results">
                 @forelse ($posts as $post)
-                    <div class="result-item">{{ $post->title }}</div>
+                    <div class="result-item">
+                        <a href="{{ route('post.open', ['id' => $post->id]) }}">
+                        {{ $post->title }}
+                        </a>
+                    </div>
                 @empty
                     <p>No posts found.</p>
                 @endforelse
@@ -34,7 +38,11 @@
             <h3>Comments</h3>
             <div class="results">
                 @forelse ($comments as $comment)
-                    <div class="result-item">{{ $comment->text }}</div>
+                    <div class="result-item">
+                        <a href="{{ route('post.open', ['id' => $comment->post_id]) }}">
+                        {{ $comment->text }}
+                        </a>
+                    </div>
                 @empty
                     <p>No comments found.</p>
                 @endforelse

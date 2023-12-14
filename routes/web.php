@@ -33,6 +33,12 @@ Route::controller(PostController::class)->group(function () {
     Route::get('/posts/{id}', 'show');
     Route::get('/posts/{id}', 'open')->name('post.open');
     Route::get('/posts/{id}/edit', 'edit')->name('post.edit');
+    Route::post('posts/{post_id}/upvote', 'PostController@upvote_post')->name('post.upvote');
+    Route::post('posts/{post_id}/downvote', 'PostController@downvote_post')->name('post.downvote');
+    Route::get('posts/{post_id}/upvotes', 'PostController@get_upvotes')->name('get_upvotes');
+    Route::get('posts/{post_id}/downvotes', 'PostController@get_downvotes')->name('get_downvotes');
+    Route::put('/posts/{id}', 'update')->name('post.update');
+
 });
 
 
@@ -54,6 +60,8 @@ Route::controller(CommentController::class)->group(function () {
     Route::put('/api/posts/{post_id}', 'create');
     Route::post('/api/comment/{id}', 'update');
     Route::delete('/api/comment/{id}', 'delete');
+    
+
 });
 
 
@@ -107,8 +115,6 @@ Route::controller(SearchController::class)->group(function () {
     Route::get('/search', 'global_search')->name('search.results');
 });
 
-
-Route::get('/search', [SearchController::class, 'index'])->name('search.results');
 
 Route::get('/about', function () {
     return view('about');

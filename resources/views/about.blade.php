@@ -14,9 +14,11 @@
     <div class="features">
         <h2>Main Features</h2>
         <ul>
-            <li>Feature 1</li>
-            <li>Feature 2</li>
-            <li>Feature 3</li>
+            <li>Publish and Edit News Articles</li>
+            <li>Comment and Edit Comments in News Articles</li>
+            <li>Get Notifications When Someone Comments or Upvotes/Downvotes Your Posts</li>
+            <li>Visit Other Users Profile</li>
+            <li>Follow Other Users</li>
         </ul>
     </div>
 
@@ -28,7 +30,6 @@
 
     <div class="contacts">
         <h2>Contact Us</h2>
-        <p>Email: info@example.com</p>
-        <p>Phone: +123 456 7890</p>
+        <p>Email: news4u@gmail.com</p>
     </div>
 @endsection
