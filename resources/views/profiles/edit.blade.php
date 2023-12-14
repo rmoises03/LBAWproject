@@ -17,9 +17,6 @@
             <label for="date_of_birth">Date of Birth:</label>
             <input type="date" id="date_of_birth" name="date_of_birth" value="{{ $user->date_of_birth }}" required>
 
-            <label for="reputation">Reputation:</label>
-            <input type="number" id="reputation" name="reputation" value="{{ $user->reputation }}" required class="uneditable">
-
             <button type="submit">Save Changes</button>
         </form>
     </div>
