@@ -173,13 +173,21 @@ body {
     margin-bottom: 1em;
   }
 
+  #search_bar {
+    margin: auto;
+  }
+
+  #search_bar > input {
+    margin: auto;
+  }
+
   @media (max-width: 70em) {
     #posts {
       grid-template-columns: repeat(2, 1fr);
     }
     main > header {
       display: grid;
-      grid-template-columns: 1fr auto;
+      grid-template-columns: 2fr 5fr 1fr;
     }
     main > header h1 {
       grid-row-end: span 2;
@@ -495,7 +503,7 @@ body {
 }
 
 #menuToggle {
-  position: absolute;
+  /*position: absolute;
   top: 20px;
   right: 20px;  /* Adjust to position the toggle button */
   font-size: 24px;  /* Adjust the font size for the toggle button */
