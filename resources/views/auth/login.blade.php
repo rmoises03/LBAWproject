@@ -19,6 +19,8 @@
             {{ $errors->first('password') }}
         </span>
     @endif
+    
+    <a href="{{ route('password.request') }}">Forgot Password!</a>
 
     <label>
         <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
