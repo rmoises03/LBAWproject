@@ -45,6 +45,13 @@ CREATE TABLE users (
     remember_token VARCHAR
 );
 
+-- password-resets table
+CREATE TABLE password_reset_tokens (
+    email varchar(250) NOT NULL PRIMARY KEY,
+    token varchar(250) NOT NULL,
+    created_at timestamp NULL DEFAULT NULL
+);
+
 -- admins table
 CREATE TABLE admins (
     id SERIAL PRIMARY KEY REFERENCES users(id)
