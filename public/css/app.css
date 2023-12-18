@@ -537,5 +537,15 @@ main > header h1 {
   color: #f1f1f1;
 }
 
+#delete{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: red
+}
+
+#delete:hover {
+  background-color: #777272;
+}
 
 

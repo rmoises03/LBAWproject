@@ -16,13 +16,20 @@
                 <strong>Date of Birth: {{ $user->date_of_birth }}</strong>
                 <strong>Reputation: {{ $user->reputation }}</strong>
             </div>
-            
-            @if(Auth::user()->id == $user->id || Auth::user()->isAdmin()->exists())
-                <a class="button" href="{{ route('profile.edit', ['username' => $user->username]) }}" class="btn">Edit Profile</a>
-            @endif
 
+        @if(Auth::user()->id == $user->id || Auth::user()->isAdmin()->exists())
+            <a class="button" href="{{ route('profile.edit', ['username' => $user->username]) }}" class="btn">Edit Profile</a>
 
-            <!-- resources/views/profiles/show.blade.php -->
+            <div>
+                <form method="POST" action="{{ route('profile.destroy', ['username' => $user->username]) }}">
+                    @csrf
+                    @method('DELETE')
+
+                    <button class="button" id="delete" type="submit" onclick="return confirm('Are you sure you want to delete your account?')">Delete Account</button>
+                </form>
+            </div>
+        @endif
+
 
             <div class="user-posts">
                 <h3>Posts</h3>
