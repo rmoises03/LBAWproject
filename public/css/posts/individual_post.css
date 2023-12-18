@@ -172,6 +172,15 @@
   background-color: #dc3545;
 }
 
+.upvoted-class {
+  color: green; 
+}
+
+.downvoted-class {
+  color: red; 
+}
+
+
 
 
 

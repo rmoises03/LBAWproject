@@ -92,6 +92,16 @@ CREATE TABLE posts (
     created_at DATE
 );
 
+CREATE TABLE user_votes (
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id),
+    post_id INT REFERENCES posts(id),
+    vote_type INT, -- 1 for upvote, -1 for downvote
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(user_id, post_id)
+);
+
+
 -- adding the ref for comments to posts after the posts table is defined (to avoid circular references)
 ALTER TABLE comments ADD FOREIGN KEY (post_id) REFERENCES posts(id);
 

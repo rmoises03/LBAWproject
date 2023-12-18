@@ -35,4 +35,25 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+        /**
+     * The categories that belong to the post.
+     */
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class, 'category_posts');
+    }
+
+    /**
+     * The tags that belong to the post.
+     */
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class, 'posts_tags');
+    }
+    public function userVotes() {
+        return $this->hasMany(UserVote::class);
+    }
+    
+
 }

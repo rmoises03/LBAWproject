@@ -13,6 +13,10 @@
         <!-- Styles -->
         <link href="{{ url('css/milligram.min.css') }}" rel="stylesheet">
         <link href="{{ url('css/app.css') }}" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script type="text/javascript">
+            var ajaxSearchUrl = "{{ route('ajax.search') }}";
+        </script>
         <script type="text/javascript">
             // Fix for Firefox autofocus CSS bug
             // See: http://stackoverflow.com/questions/18943276/html-5-autofocus-messes-up-css-loading/18945951#18945951
@@ -24,9 +28,16 @@
         <main>
             <header>
                 <h1><a href="{{ url('/posts') }}">NEWS4U</a></h1>
-                <form action="{{ route('search.results') }}" method="GET">
-                    <input type="text" name="query" placeholder="Search...">
-                </form>  
+                <form action="javascript:void(0);">
+                    <input type="text" name="query" placeholder="Search..." onkeyup="searchQuery()">
+                </form>
+                <div class="category-buttons" style="display: none;">
+                    <button onclick="showCategory('posts')">Posts</button>
+                    <button onclick="showCategory('users')">Users</button>
+                    <button onclick="showCategory('comments')">Comments</button>
+                </div>
+                <div class="search-results"></div>
+                  
                 <button id="menuToggle" class="button">☰</button> <!-- Menu Toggle Button -->
                 <div id="sidebarMenu" class="sidebar">
                     <span id="closeSidebar" class="close-sidebar">&times;</span>
