@@ -120,3 +120,4 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
+Route::delete('/profile/{username}', 'App\Http\Controllers\ProfileController@destroy')->name('profile.destroy');
