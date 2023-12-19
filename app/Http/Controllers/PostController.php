@@ -11,6 +11,8 @@ use App\Models\Post;
 use App\Models\User;
 use App\Models\Comment;
 use App\Notifications\PostLiked;
+use App\Models\UserVote;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PostController extends Controller
 {
@@ -38,12 +40,24 @@ class PostController extends Controller
     {
         // Get the post.
         $post = Post::findOrFail($id);
+
+        // Get the comments for the post.
         $comments = Comment::where('post_id', $id)->orderBy('id')->get();
+
+
+        $user_id = Auth::user()->id;
+
+        // Retrieve user's vote for the post.
+        $postVote = UserVote::where('user_id', $user_id)->where('post_id', $id)->first();
+
+
         return view('posts.post_item', [
             'post' => $post,
-            'comments' => $comments
+            'comments' => $comments,
+            'postVote' => $postVote,
         ]);
     }
+
 
     /**
      * Shows all posts.
@@ -129,6 +143,8 @@ class PostController extends Controller
             return response()->json(['error' => 'An error occurred'], 500);
         }
     }
+
+
     
     public function downvote_post($post_id){
         $post = Post::findOrFail($post_id);
@@ -146,6 +162,60 @@ class PostController extends Controller
         $downvotes = Post::findOrFail($post_id)->downvotes;
         return response()->json(['downvotes' => $downvotes]);
     }
+
+    public function vote(Request $request, $post_id, $vote_type){
+        try {
+            $user_id = $request->user()->id; // Assuming user authentication
+            $existingVote = UserVote::where('user_id', $user_id)->where('post_id', $post_id)->first();
+    
+            $post = Post::findOrFail($post_id);
+    
+            if ($existingVote) {
+                // Check if the user is unvoting
+                if ($existingVote->vote_type == $vote_type) {
+                    // Unvote logic
+                    if ($vote_type == 1) {
+                        $post->decrement('upvotes');
+                    } else {
+                        $post->decrement('downvotes');
+                    }
+                    $existingVote->delete(); // Delete the vote
+                } else {
+                    // Change vote type logic
+                    if ($vote_type == 1) {
+                        $post->increment('upvotes');
+                        $post->decrement('downvotes');
+                    } else {
+                        $post->decrement('upvotes');
+                        $post->increment('downvotes');
+                    }
+                    $existingVote->vote_type = $vote_type;
+                    $existingVote->save();
+                }
+            } else {
+                // No existing vote, create a new one
+                if ($vote_type == 1) {
+                    $post->increment('upvotes');
+                } else {
+                    $post->increment('downvotes');
+                }
+    
+                UserVote::create([
+                    'user_id' => $user_id,
+                    'post_id' => $post_id,
+                    'vote_type' => $vote_type
+                ]);
+            }
+    
+            return response()->json(['upvotes' => $post->upvotes, 'downvotes' => $post->downvotes]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Post not found'], 404);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json(['error' => 'An error occurred'], 500);
+        }
+    }
+    
     
     public function update(Request $request, $id)
 {

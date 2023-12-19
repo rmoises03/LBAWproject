@@ -89,4 +89,17 @@ class ProfileController extends Controller
         }
     }
 
+    public function destroy($username)
+    {
+        // Find the user by username
+        $user = User::where('username', $username)->firstOrFail();
+
+        // Additional authorization check if needed (e.g., user is deleting their own account)
+
+        // Delete the user account
+        $user->delete();
+
+        // Redirect to a suitable page (e.g., homepage) after deletion
+        return redirect('./login');
+    }
 }

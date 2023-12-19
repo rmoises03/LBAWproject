@@ -34,14 +34,23 @@
                     <span>Downvotes: <span id="downvotes-count-{{ $post->id }}">{{ $post->downvotes }}</span>
                 </div>
             </div>
+            <div class="post-data">
+                
+            </div>
+
         
+
+            @php
+                $upvoted = $postVote && $postVote->vote_type == 1;
+                $downvoted = $postVote && $postVote->vote_type == -1;
+            @endphp
 
             <div class="interactive-post-buttons">
                 <span>
-                    <button onclick="upvotePost({{ $post->id }})" class="bi bi-arrow-up"></button>
+                    <button onclick="votePost({{ $post->id }}, 1)" class="bi bi-arrow-up {{ $upvoted ? 'upvoted-class' : '' }}"></button>
                 </span>
                 <span>
-                    <button onclick="downvotePost({{ $post->id }})" class="bi bi-arrow-down"></button>
+                    <button onclick="votePost({{ $post->id }}, -1)" class="bi bi-arrow-down {{ $downvoted ? 'downvoted-class' : '' }}"></button>
                 </span>
             </div>
         </div>
