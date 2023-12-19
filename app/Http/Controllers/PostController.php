@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Comment;
+use App\Notifications\PostLiked;
 
 class PostController extends Controller
 {
@@ -121,6 +122,7 @@ class PostController extends Controller
         try {
             $post = Post::findOrFail($post_id);
             $post->increment('upvotes');
+            $post->user->notify(new PostLiked($post));
             return response()->json(['upvotes' => $post->upvotes]);
         } catch (\Exception $e) {
             Log::error($e->getMessage());

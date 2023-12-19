@@ -11,12 +11,14 @@ class PostLiked extends Notification
 {
     use Queueable;
 
+    protected $post;
+
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct($post)
     {
-        //
+        $this->post = $post;
     }
 
     /**
@@ -34,10 +36,15 @@ class PostLiked extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
+        $url = url('/posts/'.$this->post->id);
+
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->subject('Your post received an upvote')
+                    ->greeting('Hello '.$notifiable->name.'!')
+                    ->line('Your post "'.$this->post->title.'" has received an upvote:')
+                    ->line('Current votes'.$this->post->upvotes - $this->post->downvotes)
+                    ->action('View Post', $url)
+                    ->line('Thank you for using our website!');
     }
 
     /**
