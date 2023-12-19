@@ -44,7 +44,7 @@ class CommentReplied extends Notification
 
         return (new MailMessage)
                     ->subject('New reply to your comment')
-                    ->greeting('Hello '.$notifiable->name.'!')
+                    ->greeting('Hello '.$notifiable->username.'!')
                     ->line('Your comment on "'.$this->post->title.'" has received a new reply:')
                     ->line('You: '.$this->parentComment->text)
                     ->line('Reply: '.$this->comment->text)

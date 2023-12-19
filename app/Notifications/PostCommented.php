@@ -42,7 +42,7 @@ class PostCommented extends Notification
 
         return (new MailMessage)
                     ->subject('New comment on your post')
-                    ->greeting('Hello '.$notifiable->name.'!')
+                    ->greeting('Hello '.$notifiable->username.'!')
                     ->line('Your post "'.$this->post->title.'" has received a new comment:')
                     ->line($this->comment->text)
                     ->action('View Post', $url)

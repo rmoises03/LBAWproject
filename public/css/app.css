@@ -308,8 +308,10 @@ body {
 }
 
 .container-profile {
-  max-width: 800px;
-  margin: 50px auto;
+  display: block;
+  /*max-width: 800px;
+  margin: 50px auto;*/
+  margin: 50px 0;
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;

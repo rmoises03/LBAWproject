@@ -20,7 +20,8 @@
         </span>
     @endif
     
-    <a href="{{ route('password.request') }}">Forgot Password!</a>
+    <a href="{{ route('password.request') }}" class="error">Forgot Password!</a>
+    <p></p>
 
     <label>
         <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me

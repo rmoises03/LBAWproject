@@ -42,7 +42,7 @@ class CommentLiked extends Notification
 
         return (new MailMessage)
                     ->subject('Your comment received an upvote')
-                    ->greeting('Hello '.$notifiable->name.'!')
+                    ->greeting('Hello '.$notifiable->username.'!')
                     ->line('Your comment in the post "'.$this->post->title.'" has received an upvote:')
                     ->line('Comment:'.$this->comment->text)
                     ->line('Current votes'.$this->comment->upvotes - $this->comment->downvotes)

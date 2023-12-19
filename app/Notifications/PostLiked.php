@@ -40,7 +40,7 @@ class PostLiked extends Notification
 
         return (new MailMessage)
                     ->subject('Your post received an upvote')
-                    ->greeting('Hello '.$notifiable->name.'!')
+                    ->greeting('Hello '.$notifiable->username.'!')
                     ->line('Your post "'.$this->post->title.'" has received an upvote:')
                     ->line('Current votes'.$this->post->upvotes - $this->post->downvotes)
                     ->action('View Post', $url)
