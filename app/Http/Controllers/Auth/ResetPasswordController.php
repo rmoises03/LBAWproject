@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+
+use function Laravel\Prompts\alert;
 
 class ResetPasswordController extends Controller
 {
@@ -18,13 +22,9 @@ class ResetPasswordController extends Controller
      */
     public function showResetForm(Request $request, $token = null)
     {
-        if (Auth::check()) {
-            return redirect('/posts');
-        } else {
-            return view('auth.password.reset-password')->with(
-                ['token' => $token, 'email' => $request->email]
-            );
-        }
+        return view('auth.password.reset-password')->with(
+            ['token' => $token, 'email' => $request->email]
+        );
     }
 
     /**
@@ -34,15 +34,26 @@ class ResetPasswordController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function reset(Request $request)
-    {
-        $request->validate($this->rules(), $this->validationErrorMessages());
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|min:8|confirmed',
+        'token' => 'required',
+    ]);
 
-        $this->broker()->reset(
-            $this->credentials($request), function ($user, $password) {
-                $this->resetPassword($user, $password);
-            }
-        );
+    $status = Password::reset(
+        $request->only('email', 'password', 'token'),
+        function ($user, $password) {
+            $user->password = Hash::make($password);
+            $user->save();
+        }
+    );
 
-        return redirect()->route('login')->with('status', trans('passwords.reset'));
+    if ($status === Password::PASSWORD_RESET) {
+        alert('Your password has been reset. Please log in.');
+        return redirect()->route('login')->with('status', trans('password.reset'));
+    } else {
+        return back()->withInput($request->only('email'))->withErrors(['email' => trans($status)]);
     }
+}
 }

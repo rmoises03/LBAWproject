@@ -4,15 +4,23 @@
 <form method="POST" action="{{ route('password.email') }}">
     @csrf
 
-    <div>
-        <label for="email">{{ __('Email') }}</label>
-        <input id="email" type="email" name="email" value="{{ old('email') }}" required>
-    </div>
+    <label for="email">{{ __('Email') }}</label>
+    <input id="email" type="email" name="email" value="{{ old('email') }}" required>
+    @if ($errors->has('email'))
+        <span class="error">
+            {{ $errors->first('email') }}
+        </span>
+    @endif
 
-    <div>
-        <button type="submit">
-            {{ __('Send Password Reset Link') }}
-        </button>
+    <button type="submit">
+        {{ __('Send Password Reset Link') }}
+    </button>
+    
+    @if(session('status'))
+    <div class="alert alert-success">
+        Email sent. Please check your inbox.
     </div>
+    @endif
+
 </form>
 @endsection
