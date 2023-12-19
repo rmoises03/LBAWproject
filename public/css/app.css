@@ -2,7 +2,7 @@ body {
     background-color: #ffffff;
     color: #4d5cca;
   }
-  
+
   main > header {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr; 
@@ -10,77 +10,71 @@ body {
     background-color: #afc2e7;
     padding: 1em;
     margin: 1em;
-}
-main > header {
-  position: relative; /* Add this to make it a parent for absolute positioning */
-}
+  }
+  main > header {
+    position: relative; /* Add this to make it a parent for absolute positioning */
+  }
 
-.search-results {
-  position: absolute;
-  top: 100%; /* Position right below the search input */
-  left: 0;
-  width: 100%; /* Match width with parent */
-  background: white; /* Optional: to make it stand out */
-  z-index: 1000; /* High index to float above other elements */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional: for better visibility */
-  max-height: 300px; /* Optional: limit height */
-  overflow-y: auto; /* Optional: add scrollbar for overflow */
-}
+  .search-results {
+    position: absolute;
+    top: 100%; /* Position right below the search input */
+    left: 0;
+    width: 100%; /* Match width with parent */
+    background: white; /* Optional: to make it stand out */
+    z-index: 1000; /* High index to float above other elements */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional: for better visibility */
+    max-height: 300px; /* Optional: limit height */
+    overflow-y: auto; /* Optional: add scrollbar for overflow */
+  }
 
+  .category-buttons {
+    text-align: center;
+    margin-bottom: 10px;
+  }
 
+  .category-buttons button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #4d5cca;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
 
+  .category-buttons button:focus {
+    outline: none;
+  }
 
-.category-buttons {
-  text-align: center;
-  margin-bottom: 10px;
-}
+  .search-category {
+    display: none; /* Hide all categories initially */
+  }
 
-.category-buttons button {
-  margin: 0 5px;
-  padding: 5px 10px;
-  background-color: #4d5cca;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
+  .search-category.active {
+    display: block; /* Show active category */
+  }
 
-.category-buttons button:focus {
-  outline: none;
-}
+  main > header h1 {
+    margin: 0;
+    justify-self: start; 
+  }
 
-.search-category {
-  display: none; /* Hide all categories initially */
-}
-
-.search-category.active {
-  display: block; /* Show active category */
-}
-
-
-
-
-
-main > header h1 {
-  margin: 0;
-  justify-self: start; 
-}
   main > header a.button {
     margin: 1em;
     justify-self: center;
   }
-  main > header span {
-      margin: 1em;
-      justify-self: center;
-    }
-    
 
-    main > header form {
-      justify-self: center; 
-      width: 100%; 
-      max-width: 700px; 
-      display: flex;
-      gap: 10px; 
+  main > header span {
+    margin: 1em;
+    justify-self: center;
+  }
+
+  main > header form {
+    justify-self: center; 
+    width: 100%; 
+    max-width: 700px; 
+    display: flex;
+    gap: 10px; 
   }
 
   main > header form input[type="text"] {
@@ -95,24 +89,25 @@ main > header h1 {
   main > header form input[type="text"]:focus {
     border-color: #3644b1; /* Darker blue border on focus */
     box-shadow: 0 0 10px rgba(77, 92, 204, 0.5); /* Optional: Add a glow effect */
-}
+  }
 
 
   main > header #menuToggle {
     justify-self: end; 
     margin: 0; 
-}
+  }
 
-
-
-  #posts, #create_post {
+  #content {
     display: flex;
     flex-direction: column;
     grid-template-columns: repeat(3, 1fr);
     margin-left: 6em;
     margin-right: 6em;
   }
-
+  #create_post {
+    display: flex;
+    flex-direction: column;
+  }
   .create_new_post {
     display: flex;
     background-color: #c3dded;
@@ -220,13 +215,21 @@ main > header h1 {
     margin-bottom: 1em;
   }
 
+  #search_bar {
+    margin: auto;
+  }
+
+  #search_bar > input {
+    margin: auto;
+  }
+
   @media (max-width: 70em) {
     #posts {
       grid-template-columns: repeat(2, 1fr);
     }
     main > header {
       display: grid;
-      grid-template-columns: 1fr auto;
+      grid-template-columns: 2fr 5fr 1fr;
     }
     main > header h1 {
       grid-row-end: span 2;
@@ -305,8 +308,10 @@ main > header h1 {
 }
 
 .container-profile {
-  max-width: 800px;
-  margin: 50px auto;
+  display: block;
+  /*max-width: 800px;
+  margin: 50px auto;*/
+  margin: 50px 0;
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
@@ -512,8 +517,7 @@ main > header h1 {
 .features,
 .join,
 .contacts {
-    margin-left: 40px;
-    margin-right: 40px;
+  margin: 1em 0;
 }
 
 .sidebar {
@@ -543,7 +547,7 @@ main > header h1 {
 }
 
 #menuToggle {
-  position: absolute;
+  /*position: absolute;
   top: 20px;
   right: 20px;  /* Adjust to position the toggle button */
   font-size: 24px;  /* Adjust the font size for the toggle button */

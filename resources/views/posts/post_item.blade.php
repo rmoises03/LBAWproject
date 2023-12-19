@@ -25,7 +25,7 @@
             <div class="post-data">
                 <div>
                     <span>{{ \Carbon\Carbon::parse($post->created_at)->format('F d, Y') }}</span>
-                    <span>by  <a href="{{ route('profile.show', ['username' => $post->user->username]) }}">{{ $post->user->name }} </a></span>
+                    <span>by  <a href="{{ route('profile.show', ['username' => $post->user->username]) }}">{{ $post->user->username }} </a></span>
                 </div>
             </div>
             <div class="post-data">

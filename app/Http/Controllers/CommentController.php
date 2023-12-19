@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Comment;
 use App\Models\Post;
+use App\Notifications\PostCommented;
+use App\Notifications\CommentReplied;
 
 
 class CommentController extends Controller
 {
-
     /**
      * Creates a new comment.
      */
@@ -33,6 +34,15 @@ class CommentController extends Controller
         // Retrieve the post and all related comments.
         $post = Post::with('comments')->findOrFail($post_id);
     
+        if ($parent_comment_id == '0') {
+            // This is a root comment, so notify the post's author.
+            $post->user->notify(new PostCommented($post, $comment));
+        } else {
+            // This is a reply, so notify the parent comment's author.
+            $parent_comment = Comment::find($parent_comment_id);
+            $parent_comment->user->notify(new CommentReplied($post, $comment, $parent_comment));
+        }
+
         // Redirect to the post with the new comment.
         return redirect()->route('post.open', $post->id)->with('status', 'Comment added successfully!');
     }

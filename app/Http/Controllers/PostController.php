@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Comment;
+use App\Notifications\PostLiked;
 use App\Models\UserVote;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 

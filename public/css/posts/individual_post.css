@@ -1,8 +1,9 @@
 
 /* ==========   INDIVIDUAL POST     ========*/
 .container-post {
-  max-width: 900px;
-  margin: 50px auto;
+  /*max-width: 900px;
+  margin: 50px auto;*/
+  margin: 1em 0;
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
@@ -92,8 +93,9 @@
 }
 
 .comment-section {
-  max-width: 900px;
-  margin: 50px auto;
+  /*max-width: 900px;
+  margin: 50px auto;*/
+  margin: 1em 0;
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
