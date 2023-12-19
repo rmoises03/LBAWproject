@@ -41,7 +41,7 @@ class CommentLiked extends Notification
         $url = url('/posts/'.$this->post->id);
 
         return (new MailMessage)
-                    -->subject('Your comment received an upvote')
+                    ->subject('Your comment received an upvote')
                     ->greeting('Hello '.$notifiable->name.'!')
                     ->line('Your comment in the post "'.$this->post->title.'" has received an upvote:')
                     ->line('Comment:'.$this->comment->text)
