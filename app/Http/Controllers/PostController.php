@@ -44,7 +44,6 @@ class PostController extends Controller
         // Get the comments for the post.
         $comments = Comment::where('post_id', $id)->orderBy('id')->get();
 
-
         $user_id = Auth::user()->id;
 
         // Retrieve user's vote for the post.
@@ -217,19 +216,19 @@ class PostController extends Controller
     
     
     public function update(Request $request, $id)
-{
-    $request->validate([
-        'title' => 'required|max:255',
-        'description' => 'required',
-    ]);
+    {
+        $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'required',
+        ]);
 
-    $post = Post::findOrFail($id);
-    $post->title = $request->title;
-    $post->description = $request->description;
-    $post->save();
+        $post = Post::findOrFail($id);
+        $post->title = $request->title;
+        $post->description = $request->description;
+        $post->save();
 
-    return redirect()->route('post.open', ['id' => $id]);
-}
+        return redirect()->route('post.open', ['id' => $id]);
+    }
 
     
 }
