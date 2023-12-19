@@ -28,7 +28,7 @@
         <main>
             <header>
                 <h1><a href="{{ url('/posts') }}">NEWS4U</a></h1>
-                <form action="javascript:void(0);">
+                <form action="javascript:void(0);" id="search_bar">
                     <input type="text" name="query" placeholder="Search..." onkeyup="searchQuery()">
                 </form>
                 <div class="category-buttons" style="display: none;">
