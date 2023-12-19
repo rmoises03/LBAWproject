@@ -11,12 +11,16 @@ class PostCommented extends Notification
 {
     use Queueable;
 
+    protected $post;
+    protected $comment;
+
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct($post, $comment)
     {
-        //
+        $this->post = $post;
+        $this->comment = $comment;
     }
 
     /**
@@ -34,10 +38,15 @@ class PostCommented extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
+        $url = url('/posts/'.$this->post->id);
+
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->subject('New comment on your post')
+                    ->greeting('Hello '.$notifiable->name.'!')
+                    ->line('Your post "'.$this->post->title.'" has received a new comment:')
+                    ->line($this->comment->text)
+                    ->action('View Post', $url)
+                    ->line('Thank you for using our website!');
     }
 
     /**

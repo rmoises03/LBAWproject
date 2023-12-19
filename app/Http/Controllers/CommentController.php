@@ -40,7 +40,7 @@ class CommentController extends Controller
         } else {
             // This is a reply, so notify the parent comment's author.
             $parent_comment = Comment::find($parent_comment_id);
-            $parent_comment->user->notify(new CommentReplied($post, $comment));
+            $parent_comment->user->notify(new CommentReplied($post, $comment, $parent_comment));
         }
 
         // Redirect to the post with the new comment.

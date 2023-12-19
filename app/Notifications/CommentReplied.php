@@ -11,12 +11,18 @@ class CommentReplied extends Notification
 {
     use Queueable;
 
+    protected $post;
+    protected $comment;
+    protected $parentComment;
+
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct($post, $comment, $parentComment)
     {
-        //
+        $this->post = $post;
+        $this->comment = $comment;
+        $this->parentComment = $parentComment;
     }
 
     /**
@@ -34,10 +40,15 @@ class CommentReplied extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
+        $url = url('/posts/'.$this->post->id);
+
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->subject('New reply to your comment')
+                    ->greeting('Hello '.$notifiable->name.'!')
+                    ->line('Your comment on "'.$this->post->title.'" has received a new reply:')
+                    ->line($this->comment->text)
+                    ->action('View Post', $url)
+                    ->line('Thank you for using our website!');
     }
 
     /**
