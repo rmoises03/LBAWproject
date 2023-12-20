@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Console\View\Components\Alert;
 
+use function Laravel\Prompts\alert;
+
 class ProfileController extends Controller
 {
     /**
@@ -31,9 +33,6 @@ class ProfileController extends Controller
         }
     }
     
-
-
-
     public function edit($username)
     {
         // Check if the user is logged in.
@@ -73,12 +72,10 @@ class ProfileController extends Controller
             // Check if the current user can update the profile.
             //$this->authorize('updateProfile', $user);
 
-
             // Validate the form data
             $validatedData = $request->validate([
                 'username' => 'required|string|max:250|unique:users,username,'.$user->id,
                 'date_of_birth' => 'required|date',
-                'reputation' => 'required|numeric',
             ]);
 
             // Update the user's profile information
