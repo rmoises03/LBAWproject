@@ -21,6 +21,32 @@
                         {{ $errors->first('description') }}
                     </span>
                 @endif
+
+                <label for="category">Category:</label>
+                <select name="category" required>
+                    <option value="" disabled selected>Select a Category</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
+                @if ($errors->has('category'))
+                    <span class="error">
+                        {{ $errors->first('category') }}
+                    </span>
+                @endif
+
+                <label for="tags">Tags:</label>
+                <select name="tags[]" multiple>
+                    @foreach ($tags as $tag)
+                        <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                    @endforeach
+                </select>
+                @if ($errors->has('tags'))
+                    <span class="error">
+                        {{ $errors->first('tags') }}
+                    </span>
+                @endif
+
                 <button type="submit">Submit</button>
             </form>
         </article>

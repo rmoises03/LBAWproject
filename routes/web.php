@@ -136,7 +136,7 @@ Route::controller(SearchController::class)->group(function () {
 
 
 
-
+// Pages
 Route::get('/about', function () {
     return view('about');
 })->name('about');
@@ -144,6 +144,6 @@ Route::get('/about', function () {
 Route::delete('/profile/{username}', 'App\Http\Controllers\ProfileController@destroy')->name('profile.destroy');
 
 
-// Routes in web.php
+// Categories and Tags
 Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('category.show');
 Route::get('/tags/{tag}', [TagController::class, 'show'])->name('tag.show');

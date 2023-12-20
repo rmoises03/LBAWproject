@@ -7,12 +7,18 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+
 use App\Models\Post;
+use App\Models\Category;
+use App\Models\Tag;
 use App\Models\User;
 use App\Models\Comment;
 use App\Notifications\PostVoted;
 use App\Models\UserVote;
+
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+
+use function Laravel\Prompts\alert;
 
 class PostController extends Controller
 {
@@ -66,10 +72,14 @@ class PostController extends Controller
     {
         // Get posts for user ordered by id.
         $posts = Post::orderBy('id')->get();
+        $categories = Category::orderBy('id')->get();
+        $tags = Tag::orderBy('id')->get();
 
         // Use the pages.posts template to display all posts.
         return view('pages.posts', [
-            'posts' => $posts
+            'posts' => $posts,
+            'categories' => $categories,
+            'tags' => $tags
         ]);
     }
 
@@ -104,20 +114,31 @@ class PostController extends Controller
     /**
      * Creates a new post.
      */
-        public function create(Request $request)
+    public function create(Request $request)
     {
         $this->authorize('create', Post::class);
 
         $request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
+            'category' => 'required|exists:categories,id',
+            'tags' => 'array|nullable|exists:tags,id',
         ]);
 
         $post = new Post();
         $post->title = $request->title;
         $post->description = $request->description;
+        
         $post->user_id = Auth::id(); // Or $request->user()->id
         $post->save();
+
+        $post->categories()->attach($request->category);
+        #alert($post->category()->first()->name);
+
+        if ($request->tags) {
+            $post->tags()->attach($request->tags);
+        }
+        #alert($post->tags->first()->name);
 
         return redirect()->route('posts');
     }
