@@ -12,14 +12,12 @@
         </span>
     @endif
 
-    <button type="submit">
-        {{ __('Send Password Reset Link') }}
-    </button>
+    <button type="submit">{{ __('Send Password Reset Link') }}</button>
     
     @if(session('status'))
-    <div class="alert alert-success">
-        Email sent. Please check your inbox.
-    </div>
+    <span class="alert alert-success">
+        {{ session('status') }}
+    </span>
     @endif
 
 </form>
