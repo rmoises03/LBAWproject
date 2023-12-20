@@ -18,8 +18,6 @@ use App\Models\UserVote;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-use function Laravel\Prompts\alert;
-
 class PostController extends Controller
 {
     /**
@@ -80,8 +78,8 @@ class PostController extends Controller
         $categories = Category::orderBy('id')->get();
         $tags = Tag::orderBy('id')->get();
 
-        // Return JSON response
-        return response()->json([
+       // Use the pages.posts template to display all posts.
+       return view('pages.posts', [
             'posts' => $posts,
             'categories' => $categories,
             'tags' => $tags
