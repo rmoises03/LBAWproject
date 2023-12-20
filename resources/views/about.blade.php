@@ -30,6 +30,6 @@
 
     <div class="contacts">
         <h2>Contact Us</h2>
-        <p>Email: news4u@gmail.com</p>
+        <p>Email: lbaw2382@gmail.com</p>
     </div>
 @endsection

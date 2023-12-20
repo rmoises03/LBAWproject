@@ -26,4 +26,25 @@ class SearchController extends Controller
 
         return view('search.results', compact('posts', 'users', 'comments'));
     }
+
+    public function ajaxSearch(Request $request)
+    {
+        $query = $request->input('query');
+        $ftsQuery = pg_escape_string($query); 
+
+        $posts = Post::whereRaw("tsv @@ to_tsquery('english', ?)", [$ftsQuery])->get();
+
+
+        $comments = Comment::whereRaw("tsv @@ to_tsquery('english', ?)", [$ftsQuery])->get();
+
+    
+        $users = User::whereRaw("name ILIKE ? OR username ILIKE ?", ['%' . $query . '%', '%' . $query . '%'])->get();
+
+        return response()->json([
+            'posts' => $posts,
+            'users' => $users,
+            'comments' => $comments
+        ]);
+    }
+
 }

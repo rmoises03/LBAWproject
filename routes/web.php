@@ -35,14 +35,15 @@ Route::controller(PostController::class)->group(function () {
     Route::get('/posts/{id}', 'show');
     Route::get('/posts/{id}', 'open')->name('post.open');
     Route::get('/posts/{id}/edit', 'edit')->name('post.edit');
-    Route::post('posts/{post_id}/upvote', 'PostController@upvote_post')->name('post.upvote');
-    Route::post('posts/{post_id}/downvote', 'PostController@downvote_post')->name('post.downvote');
-    Route::get('posts/{post_id}/upvotes', 'PostController@get_upvotes')->name('get_upvotes');
-    Route::get('posts/{post_id}/downvotes', 'PostController@get_downvotes')->name('get_downvotes');
+    Route::post('posts/{post_id}/upvote', 'upvote_post')->name('post.upvote');
+    Route::post('posts/{post_id}/downvote', 'downvote_post')->name('post.downvote');
+    Route::get('posts/{post_id}/upvotes', 'get_upvotes')->name('get_upvotes');
+    Route::get('posts/{post_id}/downvotes', 'get_downvotes')->name('get_downvotes');
     Route::put('/posts/{id}', 'update')->name('post.update');
+    Route::post('posts/{post_id}/vote/{vote_type}', 'vote')->name('post.vote');
+
 
 });
-
 
 // API - POSTS
 Route::controller(PostController::class)->group(function () {
@@ -62,10 +63,7 @@ Route::controller(CommentController::class)->group(function () {
     Route::put('/api/posts/{post_id}', 'create');
     Route::post('/api/comment/{id}', 'update');
     Route::delete('/api/comment/{id}', 'delete');
-    
-
 });
-
 
 // Authentication
 Route::controller(LoginController::class)->group(function () {
@@ -127,10 +125,15 @@ Route::middleware(['admin'])->controller(AdminController::class)->group(function
 
 Route::controller(SearchController::class)->group(function () {
     Route::get('/search', 'global_search')->name('search.results');
+    Route::get('/ajax-search', 'ajaxSearch')->name('ajax.search');
 });
+
+
+
 
 
 Route::get('/about', function () {
     return view('about');
 })->name('about');
 
+Route::delete('/profile/{username}', 'App\Http\Controllers\ProfileController@destroy')->name('profile.destroy');

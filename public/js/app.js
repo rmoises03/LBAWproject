@@ -227,11 +227,39 @@ function addEventListeners() {
     }
 }
 
-function upvotePost(postId) {
-  $.post('/posts/' + postId + '/upvote', {
-      "_token": "{{ csrf_token() }}",
+function getCsrfToken() {
+  return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+}
+
+function votePost(postId, voteType) {
+  $.post('/posts/' + postId + '/vote/' + voteType, {
+      "_token": getCsrfToken(),
   }, function(response) {
       // Handle the response
+      refreshVotes(postId);
+  }).fail(function(jqXHR, textStatus, errorThrown) {
+      console.log("Request failed: " + textStatus + ", " + errorThrown);
+  });
+}
+
+
+function upvotePost(postId) {
+  $.post('/posts/' + postId + '/upvote', {
+      "_token": getCsrfToken(),
+  }, function(response) {
+      // Handle the response
+      refreshVotes(postId);
+  }).fail(function(jqXHR, textStatus, errorThrown) {
+      console.log("Request failed: " + textStatus + ", " + errorThrown);
+  });
+}
+
+function downvotePost(postId) {
+  $.post('/posts/' + postId + '/downvote', {
+      "_token": getCsrfToken(),
+  }, function(response) {
+      // Handle the response
+      refreshVotes(postId);
   }).fail(function(jqXHR, textStatus, errorThrown) {
       console.log("Request failed: " + textStatus + ", " + errorThrown);
   });
@@ -239,21 +267,18 @@ function upvotePost(postId) {
 
 
 
-function downvotePost(postId) {
-  $.post('/posts/' + postId + '/downvote', {"_token": "{{ csrf_token() }}"}, function() {
-      refreshVotes(postId);
+function refreshVotes(postId) {
+  var baseUrl = window.location.origin;
+
+  $.getJSON(baseUrl + '/posts/' + postId + '/upvotes', function(data) {
+      $("#upvotes-count-" + postId).text(data.upvotes);
+  });
+
+  $.getJSON(baseUrl + '/posts/' + postId + '/downvotes', function(data) {
+      $("#downvotes-count-" + postId).text(data.downvotes);
   });
 }
 
-
-function refreshVotes(postId) {
-$.getJSON('{{ url("posts") }}/' + postId + '/upvotes', function(data) {
-  $("#upvotes-count-" + postId).text(data.upvotes);
-});
-$.getJSON('{{ url("posts") }}/' + postId + '/downvotes', function(data) {
-  $("#downvotes-count-" + postId).text(data.downvotes);
-});
-}
 
 function openDeleteOverlay(actionUrl) {
   document.getElementById('deletePostForm').action = actionUrl;
@@ -280,3 +305,119 @@ document.getElementById('menuToggle').onclick = function() {
   var sidebar = document.getElementById('sidebarMenu');
   sidebar.style.width = sidebar.style.width === '250px' ? '0' : '250px';
 }
+
+function hideSearchResults() {
+  $(".search-results").hide();
+}
+
+// Event listener for clicking outside the search results
+
+function searchQuery() {
+  var query = $("input[name='query']").val();
+  if (query === '') {
+    hideSearchResults();
+  } else {
+    // Fetch and display search results
+    fetchSearchResults(query);
+  }
+}
+
+function fetchSearchResults(query) {
+
+  query = $("input[name=query]").val();
+  console.log("Query: ", query); 
+  
+    $.ajax({
+        url: ajaxSearchUrl, 
+        method: 'GET',
+        data: { query: query },
+        success: function(response) {
+            console.log("Response: ", response); 
+
+            // Clear previous results
+            $(".search-results").empty();
+            showSearchResults(); 
+
+            // Process and display the new results
+            appendSearchResults(response);
+        },
+        error: function(xhr, status, error) {
+            console.error("AJAX error: ", error); // Log any errors
+        }
+    });
+  
+
+}
+
+function showSearchResults() {
+  $('.search-results').show();
+  if ($('.search-category:visible').length > 0) {
+    $('.category-buttons').show(); // Show category buttons only if there are visible categories
+  }
+}
+
+
+
+
+function appendSearchResults(data) {
+  // Clear existing results
+  $(".search-results").empty();
+  var postResults = '<div class="search-category" id="posts"><h3>Posts (' + data.posts.length + ')</h3><div class="results">';
+  var userResults = '<div class="search-category" id="users"><h3>Users (' + data.users.length + ')</h3><div class="results">';
+  var commentResults = '<div class="search-category" id="comments"><h3>Comments (' + data.comments.length + ')</h3><div class="results">'
+
+  // Append posts
+  var postResults = '<div class="search-category"><h3>Posts</h3><div class="results">';
+  if (data.posts.length) {
+    data.posts.forEach(function(post) {
+      postResults += '<div class="result-item"><a href="/post/open/' + post.id + '">' + post.title + '</a></div>';
+    });
+  } else {
+    postResults += '<p>No posts found.</p>';
+  }
+  postResults += '</div></div>';
+
+  // Append users
+  var userResults = '<div class="search-category"><h3>Users</h3><div class="results">';
+  if (data.users.length) {
+    data.users.forEach(function(user) {
+      userResults += '<div class="result-item"><a href="/profile/' + user.username + '">' + user.name + '</a></div>';
+    });
+  } else {
+    userResults += '<p>No users found.</p>';
+  }
+  userResults += '</div></div>';
+
+  // Append comments
+  var commentResults = '<div class="search-category"><h3>Comments</h3><div class="results">';
+  if (data.comments.length) {
+    data.comments.forEach(function(comment) {
+      commentResults += '<div class="result-item"><a href="/post/open/' + comment.post_id + '">' + comment.text + '</a></div>';
+    });
+  } else {
+    commentResults += '<p>No comments found.</p>';
+  }
+  commentResults += '</div></div>';
+
+  // Append everything to the search-results div
+  $(".search-results").append(postResults + userResults + commentResults);
+  showCategory('posts');
+}
+
+function showCategory(categoryId) {
+  $('.search-category').removeClass('active');
+  $('#' + categoryId).addClass('active');
+}
+$(document).on('click', function(event) {
+  if (!$(event.target).closest('.search-results, input[name="query"]').length) {
+    hideSearchResults();
+  }
+});
+
+function hideSearchResults() {
+  $('.search-results').hide();
+  $('.category-buttons').hide();
+}
+
+
+
