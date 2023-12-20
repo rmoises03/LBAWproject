@@ -4,7 +4,10 @@
 @section('content')
     <h1>Posts with Tag: {{ $tag->name }}</h1>
     @foreach ($tag->posts as $post)
-        <div>{{ $post->title }}</div>
-        {{-- Add more post details here --}}
+        <div>
+            <a href="{{ route('post.open', ['id' => $post->id]) }}">
+            {{ $post->title }}
+            </a>
+        </div>
     @endforeach
 @endsection
