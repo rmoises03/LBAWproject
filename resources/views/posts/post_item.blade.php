@@ -132,10 +132,46 @@
                 @method('PUT')
                 <label for="title">Title:</label>
                 <input type="text" id="edit_title" name="title" value="{{ $post->title }}" required>
+                @if ($errors->has('title'))
+                    <span class="error">
+                        {{ $errors->first('title') }}
+                    </span>
+                @endif
     
                 <label for="description">Description:</label>
                 <textarea id="edit_description" name="description" required>{{ $post->description }}</textarea>
-    
+                @if ($errors->has('description'))
+                    <span class="error">
+                        {{ $errors->first('description') }}
+                    </span>
+                @endif
+
+                <label for="category">Category:</label>
+                <select id="edit_category" name="category" required>
+                    <option value="{{ old('category') }}" disabled selected>Select a Category</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}" {{ $post->categories->contains($category->id) ? 'selected' : '' }}>{{ $category->name }}</option>
+                    @endforeach
+                </select>
+                @if ($errors->has('category'))
+                    <span class="error">
+                        {{ $errors->first('category') }}
+                    </span>
+                @endif
+
+                <label for="tags">Tags:</label>
+                <select id="edit_tags" name="tags[]" multiple>
+                    <option value="" {{ empty($post->tags) ? 'selected' : '' }}>No selection</option>
+                    @foreach ($tags as $tag)
+                        <option value="{{ $tag->id }}" {{ $post->tags->contains($tag->id) ? 'selected' : '' }}>{{ $tag->name }}</option>
+                    @endforeach
+                </select>
+                @if ($errors->has('tags'))
+                    <span class="error">
+                        {{ $errors->first('tags') }}
+                    </span>
+                @endif
+
                 <button type="submit" class="button">Update Post</button>
                 <button type="button" onclick="closeEditOverlay()">Cancel</button>
             </form>
