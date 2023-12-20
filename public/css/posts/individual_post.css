@@ -202,3 +202,8 @@
 .comment-depth-3 {
   margin-left: 60px;
 }
+
+.category-link, .tag-link {
+  margin-right: 10px;
+  display: inline-block; /* Or use 'inline' if you prefer */
+}

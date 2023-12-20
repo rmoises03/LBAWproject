@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 // Added to define Eloquent relationships.
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Post extends Model
 {
@@ -35,6 +36,8 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    
 
         /**
      * The categories that belong to the post.

@@ -11,7 +11,8 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\ProfileController;
-
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TagController;
 
 /*
 |--------------------------------------------------------------------------
@@ -141,3 +142,8 @@ Route::get('/about', function () {
 })->name('about');
 
 Route::delete('/profile/{username}', 'App\Http\Controllers\ProfileController@destroy')->name('profile.destroy');
+
+
+// Routes in web.php
+Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('category.show');
+Route::get('/tags/{tag}', [TagController::class, 'show'])->name('tag.show');
