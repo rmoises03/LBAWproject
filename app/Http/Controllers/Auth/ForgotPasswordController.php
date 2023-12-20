@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Log;
 
 class ForgotPasswordController extends Controller
 {
@@ -38,6 +39,8 @@ class ForgotPasswordController extends Controller
             $request->only('email')
         );
 
-        return $status === Password::RESET_LINK_SENT ? back()->with('status', trans('password.sent')) : back()->withErrors(['email' => 'The provided email address does not match our records.'])->onlyInput();
+        return $status === Password::RESET_LINK_SENT ?
+            back()->with('status', trans('Email sent! Please check your inbox.')) :
+            back()->withErrors(['email' => trans('Email not sent! Please check internet connection and try again.')])->onlyInput();
     }
 }
