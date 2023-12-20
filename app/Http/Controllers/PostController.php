@@ -46,7 +46,10 @@ class PostController extends Controller
     {
         // Get the post.
         $post = Post::findOrFail($id);
-
+        // Get the categories.
+        $categories = Category::orderBy('id')->get();
+        // Get the tags.
+        $tags = Tag::orderBy('id')->get();
         // Get the comments for the post.
         $comments = Comment::where('post_id', $id)->orderBy('id')->get();
 
@@ -61,6 +64,8 @@ class PostController extends Controller
             'post' => $post,
             'comments' => $comments,
             'postVote' => $postVote,
+            'categories' => $categories,
+            'tags' => $tags
         ]);
     }
 
@@ -75,14 +80,13 @@ class PostController extends Controller
         $categories = Category::orderBy('id')->get();
         $tags = Tag::orderBy('id')->get();
 
-        // Use the pages.posts template to display all posts.
-        return view('pages.posts', [
+        // Return JSON response
+        return response()->json([
             'posts' => $posts,
             'categories' => $categories,
             'tags' => $tags
         ]);
     }
-
     /**
      * Shows all posts of user.
      */
@@ -133,12 +137,10 @@ class PostController extends Controller
         $post->save();
 
         $post->categories()->attach($request->category);
-        #alert($post->category()->first()->name);
 
         if ($request->tags) {
             $post->tags()->attach($request->tags);
         }
-        #alert($post->tags->first()->name);
 
         return redirect()->route('posts');
     }
@@ -241,15 +243,22 @@ class PostController extends Controller
     
     public function update(Request $request, $id)
     {
+        #$this->authorize('update', Post::class);
+
         $request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
+            'category' => 'required|exists:categories,id',
+            'tags' => 'array|nullable|exists:tags,id',
         ]);
 
         $post = Post::findOrFail($id);
         $post->title = $request->title;
         $post->description = $request->description;
         $post->save();
+
+        $post->categories()->sync($request->category);
+        $post->tags()->sync($request->tags);
 
         return redirect()->route('post.open', ['id' => $id]);
     }
