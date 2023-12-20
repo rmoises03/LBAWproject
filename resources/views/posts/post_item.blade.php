@@ -161,6 +161,7 @@
 
                 <label for="tags">Tags:</label>
                 <select id="edit_tags" name="tags[]" multiple>
+                    <option value="" {{ empty($post->tags) ? 'selected' : '' }}>No selection</option>
                     @foreach ($tags as $tag)
                         <option value="{{ $tag->id }}" {{ $post->tags->contains($tag->id) ? 'selected' : '' }}>{{ $tag->name }}</option>
                     @endforeach

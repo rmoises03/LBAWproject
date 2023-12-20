@@ -245,20 +245,37 @@ class PostController extends Controller
     {
         #$this->authorize('update', Post::class);
 
-        $request->validate([
-            'title' => 'required|max:255',
-            'description' => 'required',
-            'category' => 'required|exists:categories,id',
-            'tags' => 'array|nullable|exists:tags,id',
-        ]);
+        if ($request->tags === [null]) {
+            $request->validate([
+                'title' => 'required|max:255',
+                'description' => 'required',
+                'category' => 'required|exists:categories,id',
+            ]);
 
-        $post = Post::findOrFail($id);
-        $post->title = $request->title;
-        $post->description = $request->description;
-        $post->save();
+            $post = Post::findOrFail($id);
+            $post->title = $request->title;
+            $post->description = $request->description;
+            $post->save();
 
-        $post->categories()->sync($request->category);
-        $post->tags()->sync($request->tags);
+            $post->categories()->sync($request->category);
+            $post->tags()->sync([]);
+        }
+        else {
+            $request->validate([
+                'title' => 'required|max:255',
+                'description' => 'required',
+                'category' => 'required|exists:categories,id',
+                'tags' => 'array|nullable|exists:tags,id',
+            ]);
+        
+            $post = Post::findOrFail($id);
+            $post->title = $request->title;
+            $post->description = $request->description;
+            $post->save();
+
+            $post->categories()->sync($request->category);
+            $post->tags()->sync($request->tags);
+        }
 
         return redirect()->route('post.open', ['id' => $id]);
     }
