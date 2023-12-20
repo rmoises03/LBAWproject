@@ -21,6 +21,7 @@ DROP TABLE IF EXISTS user_relationships CASCADE;
 DROP TABLE IF EXISTS notifications CASCADE;
 DROP TABLE IF EXISTS admins CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS password_reset_tokens CASCADE;
 
 --
 CREATE DOMAIN Today AS DATE DEFAULT CURRENT_DATE;
@@ -59,6 +60,13 @@ CREATE TABLE notifications (
     is_read BOOLEAN DEFAULT FALSE,
     post_id INT,
     comment_id INT
+);
+
+-- password_resets table
+CREATE TABLE password_reset_tokens (
+    email varchar(250) NOT NULL PRIMARY KEY REFERENCES users(email),
+    token varchar(250) NOT NULL,
+    created_at timestamp NULL DEFAULT NULL
 );
 
 -- user_relationships table

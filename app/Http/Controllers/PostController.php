@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Comment;
-use App\Notifications\PostLiked;
+use App\Notifications\PostVoted;
 use App\Models\UserVote;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -206,6 +206,8 @@ class PostController extends Controller
                 ]);
             }
     
+            $post->user->notify(new PostVoted($post));
+
             return response()->json(['upvotes' => $post->upvotes, 'downvotes' => $post->downvotes]);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Post not found'], 404);

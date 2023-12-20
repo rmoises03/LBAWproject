@@ -37,9 +37,7 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
-    
-
-        /**
+    /**
      * The categories that belong to the post.
      */
     public function categories(): BelongsToMany
