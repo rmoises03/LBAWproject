@@ -11,6 +11,9 @@
     <form method="POST" action="{{ route('comment.create', ['post_id' => $comment->post_id, 'parent_comment_id' => $comment->id]) }}">
         @csrf
         <textarea name="comment" required placeholder="Reply to this comment"></textarea><br>
+        @if ($errors->has('comment'))
+            <span class="error">{{ $errors->first('comment') }}</span>
+        @endif
         <button type="submit">Reply</button>
     </form>
 

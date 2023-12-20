@@ -10,7 +10,17 @@
             <form method="POST" action="{{ route('post.create') }}">
                 @csrf
                 <input name="title" type="text" placeholder="Title" required>
+                @if ($errors->has('title'))
+                    <span class="error">
+                        {{ $errors->first('title') }}
+                    </span>
+                @endif
                 <textarea name="description" placeholder="Description" required></textarea>
+                @if ($errors->has('description'))
+                    <span class="error">
+                        {{ $errors->first('description') }}
+                    </span>
+                @endif
                 <button type="submit">Submit</button>
             </form>
         </article>

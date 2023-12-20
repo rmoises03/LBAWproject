@@ -45,7 +45,6 @@ Route::controller(PostController::class)->group(function () {
 
 });
 
-
 // API - POSTS
 Route::controller(PostController::class)->group(function () {
     Route::put('/api/posts', 'create');
@@ -64,10 +63,7 @@ Route::controller(CommentController::class)->group(function () {
     Route::put('/api/posts/{post_id}', 'create');
     Route::post('/api/comment/{id}', 'update');
     Route::delete('/api/comment/{id}', 'delete');
-    
-
 });
-
 
 // Authentication
 Route::controller(LoginController::class)->group(function () {
