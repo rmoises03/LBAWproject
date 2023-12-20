@@ -44,11 +44,12 @@ class PostController extends Controller
         // Get the comments for the post.
         $comments = Comment::where('post_id', $id)->orderBy('id')->get();
 
-        $user_id = Auth::user()->id;
-
-        // Retrieve user's vote for the post.
-        $postVote = UserVote::where('user_id', $user_id)->where('post_id', $id)->first();
-
+        if(Auth::check()){
+            $user_id = Auth::user()->id;
+            $postVote = UserVote::where('user_id', $user_id)->where('post_id', $id)->first();
+        }else{
+            $postVote = null;
+        }
 
         return view('posts.post_item', [
             'post' => $post,

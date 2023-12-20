@@ -45,13 +45,6 @@ CREATE TABLE users (
     remember_token VARCHAR
 );
 
--- password-resets table
-CREATE TABLE password_reset_tokens (
-    email varchar(250) NOT NULL PRIMARY KEY,
-    token varchar(250) NOT NULL,
-    created_at timestamp NULL DEFAULT NULL
-);
-
 -- admins table
 CREATE TABLE admins (
     id SERIAL PRIMARY KEY REFERENCES users(id)
@@ -106,6 +99,15 @@ CREATE TABLE user_votes (
     vote_type INT, -- 1 for upvote, -1 for downvote
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE(user_id, post_id)
+);
+
+CREATE TABLE comment_votes (
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id),
+    comment_id INT REFERENCES comments(id),
+    vote_type INT, -- 1 for upvote, -1 for downvote
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(user_id, comment_id)
 );
 
 

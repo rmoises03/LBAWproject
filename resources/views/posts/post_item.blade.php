@@ -18,9 +18,6 @@
                     <p>{{ $post->description }}</p>
                 </div>
                 
-                @if(Auth::user()->id == $post->user_id || Auth::user()->isAdmin()->exists())
-                    <!-- <a class="button" href="route" class="btn">Edit Post</a> -->
-                @endif
             </div>
             <div class="post-data">
                 <div>
@@ -28,6 +25,7 @@
                     <span>by  <a href="{{ route('profile.show', ['username' => $post->user->username]) }}">{{ $post->user->username }} </a></span>
                 </div>
             </div>
+            
             <div class="post-data">
                 <div>
                     <span>Upvotes: <span id="upvotes-count-{{ $post->id }}">{{ $post->upvotes }}</span>
@@ -39,20 +37,21 @@
             </div>
 
         
+            @auth
+                @php
+                    $upvoted = $postVote && $postVote->vote_type == 1;
+                    $downvoted = $postVote && $postVote->vote_type == -1;
+                @endphp
 
-            @php
-                $upvoted = $postVote && $postVote->vote_type == 1;
-                $downvoted = $postVote && $postVote->vote_type == -1;
-            @endphp
-
-            <div class="interactive-post-buttons">
-                <span>
-                    <button onclick="votePost({{ $post->id }}, 1)" class="bi bi-arrow-up {{ $upvoted ? 'upvoted-class' : '' }}"></button>
-                </span>
-                <span>
-                    <button onclick="votePost({{ $post->id }}, -1)" class="bi bi-arrow-down {{ $downvoted ? 'downvoted-class' : '' }}"></button>
-                </span>
-            </div>
+                <div class="interactive-post-buttons">
+                    <span>
+                        <button onclick="votePost({{ $post->id }}, 1)" class="bi bi-arrow-up {{ $upvoted ? 'upvoted-class' : '' }}"></button>
+                    </span>
+                    <span>
+                        <button onclick="votePost({{ $post->id }}, -1)" class="bi bi-arrow-down {{ $downvoted ? 'downvoted-class' : '' }}"></button>
+                    </span>
+                </div>
+            @endauth
         </div>
         @if (Auth::check() && Auth::user()->id == $post->user_id)
         <div class="post-data">
