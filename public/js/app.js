@@ -231,6 +231,35 @@ function getCsrfToken() {
   return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 }
 
+function voteComment(commentId, voteType) {
+  $.ajax({
+      url: '/comments/' + commentId + '/vote/' + voteType,
+      type: 'POST',
+      data: {
+          "_token": getCsrfToken(), // Use getCsrfToken method here
+      },
+      success: function(response) {
+          // Update the vote counters
+          $('#upvotes-count-' + commentId).text(response.upvotes);
+          $('#downvotes-count-' + commentId).text(response.downvotes);
+
+          // Optional: Add visual feedback for the voting buttons
+          if (voteType === 1) {
+              $('#upvote-button-' + commentId).addClass('active');
+              $('#downvote-button-' + commentId).removeClass('active');
+          } else if (voteType === -1) {
+              $('#downvote-button-' + commentId).addClass('active');
+              $('#upvote-button-' + commentId).removeClass('active');
+          }
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+          console.error("Request failed: " + textStatus + ", " + errorThrown);
+          // Handle errors (e.g., showing a notification)
+      }
+  });
+}
+
+
 function votePost(postId, voteType) {
   $.post('/posts/' + postId + '/vote/' + voteType, {
       "_token": getCsrfToken(),
@@ -296,6 +325,37 @@ function openEditOverlay() {
 function closeEditOverlay() {
   document.getElementById('editPostOverlay').style.display = 'none';
 }
+
+function openDeleteCommentOverlay(actionUrl) {
+  document.getElementById('deleteCommentForm').action = actionUrl;
+  document.getElementById('deleteCommentOverlay').style.display = 'block';
+}
+
+function closeDeleteCommentOverlay() {
+  document.getElementById('deleteCommentOverlay').style.display = 'none';
+}
+
+function openEditCommentOverlay(actionUrl, commentText, commentId) {
+    // Set the form action URL
+    document.getElementById('editCommentForm').action = actionUrl;
+
+    // Set the text in the textarea
+    document.getElementById('edit_comment').value = commentText;
+
+    // Optional: if you need to use the comment ID somewhere else in the form
+    // document.getElementById('edit_comment_id').value = commentId;
+
+    // Display the overlay
+    document.getElementById('editCommentOverlay').style.display = 'block';
+}
+
+
+function closeEditCommentOverlay() {
+  document.getElementById('editCommentOverlay').style.display = 'none';
+}
+
+
+
 
 document.getElementById('closeSidebar').onclick = function() {
   document.getElementById('sidebarMenu').style.width = '0';
@@ -369,11 +429,11 @@ function appendSearchResults(data) {
   // Append posts
   var postResults = '<div class="search-category"><h3>Posts</h3><div class="results">';
   if (data.posts.length) {
-    data.posts.forEach(function(post) {
-      postResults += '<div class="result-item"><a href="/post/open/' + post.id + '">' + post.title + '</a></div>';
-    });
+      data.posts.forEach(function(post) {
+          postResults += '<div class="result-item"><a href="/posts/' + post.id + '">' + post.title + '</a></div>';
+      });
   } else {
-    postResults += '<p>No posts found.</p>';
+      postResults += '<p>No posts found.</p>';
   }
   postResults += '</div></div>';
 
@@ -391,11 +451,11 @@ function appendSearchResults(data) {
   // Append comments
   var commentResults = '<div class="search-category"><h3>Comments</h3><div class="results">';
   if (data.comments.length) {
-    data.comments.forEach(function(comment) {
-      commentResults += '<div class="result-item"><a href="/post/open/' + comment.post_id + '">' + comment.text + '</a></div>';
-    });
+      data.comments.forEach(function(comment) {
+          commentResults += '<div class="result-item"><a href="/posts/' + comment.post_id + '#comment-' + comment.id + '">' + comment.text + '</a></div>';
+      });
   } else {
-    commentResults += '<p>No comments found.</p>';
+      commentResults += '<p>No comments found.</p>';
   }
   commentResults += '</div></div>';
 

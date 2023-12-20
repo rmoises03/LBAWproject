@@ -11,7 +11,8 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\ProfileController;
-
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TagController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +33,6 @@ Route::controller(PostController::class)->group(function () {
     Route::get('/posts', 'listPosts')->name('posts');
     Route::post('/posts', 'create')->name('post.create');
     Route::delete('/posts/{id}', 'delete')->name('post.delete');
-    Route::get('/posts/{id}', 'show');
     Route::get('/posts/{id}', 'open')->name('post.open');
     Route::get('/posts/{id}/edit', 'edit')->name('post.edit');
     Route::post('posts/{post_id}/upvote', 'upvote_post')->name('post.upvote');
@@ -56,6 +56,11 @@ Route::controller(CommentController::class)->group(function () {
     Route::get('/posts/{post_id}/comments', 'list');
     Route::get('/posts/{post_id}/comments/{id}', 'show');
     Route::post('/posts/{post_id}/comments/{parent_comment_id}', 'create')->name('comment.create');
+    Route::put('/comments/{id}/edit',  'update')->name('comment.update');
+    Route::delete('/comments/{id}/delete', 'delete')->name('comment.delete');
+    Route::post('/comments/{comment}/vote/{vote_type}','vote')->name('comment.vote');
+
+
 });
 
 // API - COMMENTS
@@ -137,3 +142,8 @@ Route::get('/about', function () {
 })->name('about');
 
 Route::delete('/profile/{username}', 'App\Http\Controllers\ProfileController@destroy')->name('profile.destroy');
+
+
+// Routes in web.php
+Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('category.show');
+Route::get('/tags/{tag}', [TagController::class, 'show'])->name('tag.show');
