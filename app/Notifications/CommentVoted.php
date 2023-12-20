@@ -7,18 +7,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class PostLiked extends Notification
+class CommentVoted extends Notification
 {
     use Queueable;
 
     protected $post;
+    protected $comment;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($post)
+    public function __construct($post, $comment)
     {
         $this->post = $post;
+        $this->comment = $comment;
     }
 
     /**
@@ -39,10 +41,11 @@ class PostLiked extends Notification
         $url = url('/posts/'.$this->post->id);
 
         return (new MailMessage)
-                    ->subject('Your post received an upvote')
+                    ->subject('Your comment received a vote')
                     ->greeting('Hello '.$notifiable->username.'!')
-                    ->line('Your post "'.$this->post->title.'" has received an upvote:')
-                    ->line('Current votes'.$this->post->upvotes - $this->post->downvotes)
+                    ->line('Your comment in the post "'.$this->post->title.'" has received an upvote:')
+                    ->line('Comment:'.$this->comment->text)
+                    ->line('Current votes: '.$this->comment->upvotes - $this->comment->downvotes)
                     ->action('View Post', $url)
                     ->line('Thank you for using our website!');
     }

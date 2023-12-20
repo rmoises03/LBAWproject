@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 use App\Models\Comment;
 use App\Models\Post;
+use App\Models\CommentVote;
 use App\Notifications\PostCommented;
 use App\Notifications\CommentReplied;
-use App\Models\CommentVote;
+use App\Notifications\CommentVoted;
+
 
 class CommentController extends Controller
 {
@@ -146,7 +151,11 @@ class CommentController extends Controller
                     'vote_type' => $vote_type
                 ]);
             }
-    
+
+            $post = $comment->post;
+
+            $comment->user->notify(new CommentVoted($post, $comment));
+
             return response()->json(['upvotes' => $comment->upvotes, 'downvotes' => $comment->downvotes]);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Comment not found'], 404);
