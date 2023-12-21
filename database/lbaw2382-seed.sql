@@ -269,9 +269,26 @@ INSERT INTO admins DEFAULT VALUES;
 
 INSERT INTO categories (name) VALUES ('Technology');
 INSERT INTO categories (name) VALUES ('Health');
+INSERT INTO categories (name) VALUES ('Science');
+INSERT INTO categories (name) VALUES ('Business');
+INSERT INTO categories (name) VALUES ('Sports');
+INSERT INTO categories (name) VALUES ('Politics');
+INSERT INTO categories (name) VALUES ('Entertainment');
+INSERT INTO categories (name) VALUES ('Education');
+INSERT INTO categories (name) VALUES ('Food');
+INSERT INTO categories (name) VALUES ('Travel');
+INSERT INTO categories (name) VALUES ('Lifestyle');
+INSERT INTO categories (name) VALUES ('Others');
+
 
 INSERT INTO tags (name) VALUES ('AI');
 INSERT INTO tags (name) VALUES ('VitaminD');
+INSERT INTO tags (name) VALUES ('Marketing');
+INSERT INTO tags (name) VALUES ('Programming');
+INSERT INTO tags (name) VALUES ('SocialMedia');
+INSERT INTO tags (name) VALUES ('MondayMotivation');
+INSERT INTO tags (name) VALUES ('Tips');
+
 
 
 INSERT INTO posts (title, description, user_id, created_at)
