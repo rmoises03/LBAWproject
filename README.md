@@ -15,7 +15,7 @@ O administrador terá a capacidade de bloquear ou desbloquear contas de usuário
 
 > https://git.fe.up.pt/lbaw/lbaw2324/lbaw2382/-/releases/PA
 
-> ddocker run -it -p 8000:80 --name=lbaw2382 -e DB_DATABASE="lbaw2382" -e DB_SCHEMA="lbaw2382" -e DB_USERNAME="lbaw2382" -e DB_PASSWORD="rcpSWcHJ" git.fe.up.pt:5050/lbaw/lbaw2324/lbaw2382
+> docker run -it -p 8000:80 --name=lbaw2382 -e DB_DATABASE="lbaw2382" -e DB_SCHEMA="lbaw2382" -e DB_USERNAME="lbaw2382" -e DB_PASSWORD="rcpSWcHJ" git.fe.up.pt:5050/lbaw/lbaw2324/lbaw2382
 
 ## Usage
 
