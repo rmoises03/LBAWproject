@@ -118,29 +118,33 @@ class PostController extends Controller
      */
     public function create(Request $request)
     {
-        $this->authorize('create', Post::class);
+        try {
+            $this->authorize('create', Post::class);
 
-        $request->validate([
-            'title' => 'required|max:255',
-            'description' => 'required',
-            'category' => 'required|exists:categories,id',
-            'tags' => 'array|nullable|exists:tags,id',
-        ]);
+            $request->validate([
+                'title' => 'required|max:255',
+                'description' => 'required',
+                'category' => 'required|exists:categories,id',
+                'tags' => 'array|nullable|exists:tags,id',
+            ]);
 
-        $post = new Post();
-        $post->title = $request->title;
-        $post->description = $request->description;
-        
-        $post->user_id = Auth::id(); // Or $request->user()->id
-        $post->save();
+            $post = new Post();
+            $post->title = $request->title;
+            $post->description = $request->description;
+            
+            $post->user_id = Auth::id(); // Or $request->user()->id
+            $post->save();
 
-        $post->categories()->attach($request->category);
+            $post->categories()->attach($request->category);
 
-        if ($request->tags) {
-            $post->tags()->attach($request->tags);
+            if ($request->tags) {
+                $post->tags()->attach($request->tags);
+            }
+
+            return redirect()->route('posts');
+        } catch (\Exception $e) {
+            return redirect('/login');
         }
-
-        return redirect()->route('posts');
     }
 
     public function delete($id)
@@ -148,6 +152,8 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $this->authorize('delete', $post);
 
+        $post->categories()->detach();
+        $post->tags()->detach();
         $post->delete();
         return redirect()->route('posts');
     }
